@@ -67,8 +67,7 @@ HIVE_DATABASE_HOST={{.Values.metastore.databaseHost}}
 # if an existing Metastore is used 
 # HIVE_METASTORE_HOST=red0
 # if a new Metastore Pod is to be created inside K8s
-HIVE_METASTORE_HOST={{if .Values.create.metastore}}hivemr3-metastore-0.metastore.{{.Release.Namespace}}.svc.cluster.local
-    {{- else}}{{.Values.metastore.host}}{{end}}
+HIVE_METASTORE_HOST={{if .Values.create.metastore}}hivemr3-metastore-0.metastore.{{.Release.Namespace}}.svc.cluster.local {{- else}}{{.Values.metastore.host}}{{end}}
 
 HIVE_METASTORE_PORT={{.Values.metastore.port}}
 HIVE_DATABASE_NAME={{.Values.metastore.databaseName}}

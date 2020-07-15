@@ -67,6 +67,8 @@ spec:
     - name: key-k8s-volume
       mountPath: /opt/mr3-run/ranger/key/
       readOnly: true
+    - name: work-local-dir-volume
+      mountPath: /opt/mr3-run/ranger/work-local-dir/
     - name: work-dir-volume
       mountPath: /opt/mr3-run/ranger/work-dir/
   volumes:
@@ -76,6 +78,8 @@ spec:
   - name: key-k8s-volume
     secret:
       secretName: {{ .Values.name.ranger.secret }}
+  - name: work-local-dir-volume
+    emptyDir: {}
   - name: work-dir-volume
     persistentVolumeClaim:
       claimName: {{ .Values.name.persistentVolumeClaim }}

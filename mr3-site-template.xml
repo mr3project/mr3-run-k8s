@@ -134,7 +134,8 @@
   <name>mr3.am.launch.cmd-opts</name>
   <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC</value>
   <description>
-    Command-line options for launching DAGAppMaster 
+    Command-line options for launching DAGAppMaster.
+    Additional options for optimization: -XX:+UseStringDeduplication
   </description>
 </property>
 
@@ -346,11 +347,31 @@
 </property>
 
 <property>
+  <name>mr3.dag.queue.scheme</name>
+  <value>common</value>
+  <description>
+    Scheme for mapping DAGs to queues of TaskAttempts in TaskScheduler.
+    Available options: common, individual
+  </description>
+</property>
+
+<property>
   <name>mr3.taskattempt.queue.scheme</name>
   <value>simple</value>
   <description>
     Scheme for managing the queue of TaskAttempts in TaskScheduler.
     Available options: basic, simple, opt, indexed
+  </description>
+</property>
+
+<property>
+  <name>mr3.convert.container.address.host.name</name>
+  <value>false</value>
+  <description>
+    true: convert host IP addresses to host names (by calling `InetAddress.getByName()`).
+    The conversion can be expensive, especially if host names are unknown.
+    On Kubernetes, the user should make sure that host IP addresses are registered in `mr3.k8s.host.aliases`.
+    false: do not convert host IP addresses.
   </description>
 </property>
 
@@ -390,6 +411,42 @@
 </property>
 
 <property>
+  <name>mr3.am.task.concurrent.run.threshold.percent</name>
+  <value>100</value>
+  <description>
+    Percentage of Tasks that complete before starting speculative execution.
+    Can be set to an integer between 1 and 100.
+    If set to 100, speculative execution of TaskAttempts is disabled.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.task.concurrent.run.min.threshold.ms</name>
+  <value>10000</value>
+  <description>
+    Minimum of the maximum execution time (in milliseconds) of Tasks that complete before starting speculative execution.
+    For example, a value of 10000 means that if all Tasks complete within 10 seconds before starting speculative execution, we use 10 seconds as their maximum execution time. 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.task.concurrent.run.multiplier</name>
+  <value>2.0d</value>
+  <description>
+    Multiplier of the maximum execution time of Tasks that complete before starting speculative execution
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.notify.destination.vertex.complete</name>
+  <value>false</value>
+  <description>
+    true: notify ContainerWorker of the completion of all destination Vertexes so that it can delete the directory for intermediate data of the source Vertex
+    false: do not notify
+  </description>
+</property>
+
+<property>
   <name>mr3.am.commit-all-outputs-on-dag-success</name>
   <value>true</value>
   <description>
@@ -408,7 +465,7 @@
 
 <property>
   <name>mr3.heartbeat.task.timeout.ms</name>
-  <value>60000</value>
+  <value>120000</value>
   <description>
     Time in milliseconds for triggering heartbeat timeout for TaskAttempts (counted after being fetched by ContainerWorkers)
   </description>
@@ -624,8 +681,9 @@
   <name>mr3.container.use.termination.checker</name>
   <value>true</value>
   <description>
-    true: check whether TaskAttempts are terminated successfully or not after termination requests. 
-    false: do not check.
+    true: check whether TaskAttempts terminate successfully or not after termination requests. 
+    If a TaskAttempt fails to terminate, terminate the ContainerWorker.
+    false: do not check. Do not set to false in production environments.
   </description>
 </property>
 
@@ -633,17 +691,8 @@
   <name>mr3.container.terminate.on.fatal.error</name>
   <value>false</value>
   <description>
-    true: terminate ContainerWorkers that throw fatal errors such as OutOfMemoryError.
-    false: do not terminate.
-  </description>
-</property>
-
-<property>
-  <name>mr3.container.check.terminate.on.nonfatal</name>
-  <value>false</value>
-  <description>
-    true: check if Tasks throwing non-fatal errors terminate normally. 
-    false: do not check.
+    true: always terminate ContainerWorkers that throw fatal errors such as OutOfMemoryError.
+    false: do not terminate ContainerWorkers that manage to recover from fatal errors.
   </description>
 </property>
 
@@ -720,13 +769,22 @@
   <name>mr3.task.am.heartbeat.interval.ms</name>
   <value>250</value>
   <description>
-    Time interval in milliseconds for sending heartbeats from TaskAttempts
+    Time interval in milliseconds for sending heartbeats from TaskAttempts.
+    Set to 100 to disable speculative execution.
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.am.heartbeat.duration.interval.ms</name>
+  <value>15000</value>
+  <description>
+    Time interval in milliseconds for sending durations in heartbeats from TaskAttempts 
   </description>
 </property>
 
 <property>
   <name>mr3.task.am.heartbeat.counter.interval.ms</name>
-  <value>30000</value>
+  <value>60000</value>
   <description>
     Time interval in milliseconds for sending counters in heartbeats from TaskAttempts 
   </description>
@@ -1020,6 +1078,24 @@
 </property>
 
 <property>
+  <name>mr3.k8s.pod.worker.security.context.sysctls</name>
+  <value></value>
+  <description>
+    Comma-separated list of sysctl properties to be set by init containers in ContainerWorker Pods.
+    E.g., net.core.somaxconn=16384,net.ipv4.ip_local_port_range='1024 65535'
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.init.container.image</name>
+  <value></value>
+  <description>
+    Docker image for init containers when mr3.k8s.pod.worker.security.context.sysctls is set.
+    `busybox` works okay.
+  </description>
+</property>
+
+<property>
   <name>mr3.k8s.master.working.dir</name>
   <value>
   </value>
@@ -1130,7 +1206,7 @@
 
 <property>
   <name>mr3.k8s.worker.total.max.memory.gb</name>
-  <value>1024 * 1024</value>
+  <value>1048576</value>
   <description>
     Max memory in GB for all ContainerWorker Pods
   </description>
@@ -1138,9 +1214,25 @@
 
 <property>
   <name>mr3.k8s.worker.total.max.cpu.cores</name>
-  <value>1024 * 1024</value>
+  <value>1048576</value>
   <description>
     Max number of cores for all ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.cpu.cores.max.multiplier</name>
+  <value>1.0d</value>
+  <description>
+    Multiplier for the limit of CPU cores for each ContainerWorker Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.memory.max.multiplier</name>
+  <value>1.0d</value>
+  <description>
+    Multiplier for the limit of memory for each ContainerWorker Pod
   </description>
 </property>
 
@@ -1204,6 +1296,54 @@
   <description>
     Comma-separated list of pairs of a hostname and an IP address. 
     `foo=1.1.1.1,bar=2.2.2.2` registers host `foo` as IP address 1.1.1.1 in ContainerWorker containers, and so on.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.shuffle.process.ports</name>
+  <value></value>
+  <description>
+    Comma-separated list of port numbers for shuffle handlers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.shufflehandler.process.memory.mb</name>
+  <value>1024</value>
+  <description>
+    Size of memory in MB for the container for shuffle handlers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.initial.delay.secs</name>
+  <value>10</value>
+  <description>
+    Time in seconds before performing the first readiness probe
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.period.secs</name>
+  <value>20</value>
+  <description>
+    Time interval in seconds for performing the readiness probe
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.initial.delay.secs</name>
+  <value>20</value>
+  <description>
+    Time in seconds before performing the first liveness probe
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.period.secs</name>
+  <value>40</value>
+  <description>
+    Time interval in seconds for performing the liveness probe
   </description>
 </property>
 

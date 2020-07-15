@@ -77,6 +77,16 @@ spec:
         ports:
         - containerPort: 9852
           protocol: TCP
+        readinessProbe:
+          tcpSocket:
+            port: 9852
+          initialDelaySeconds: 30
+          periodSeconds: 60
+        livenessProbe:
+          tcpSocket:
+            port: 9852
+          initialDelaySeconds: 30
+          periodSeconds: 60
         volumeMounts:
         - name: env-k8s-volume
           mountPath: {{ .Values.dir.base }}/env.sh

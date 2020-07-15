@@ -123,14 +123,25 @@
 
 <property>
   <name>tez.runtime.shuffle.src-attempt.abort.limit</name>
-  <value>5</value>
+  <value>10</value>
 </property>
 
 <!-- MR3 0.8 -->
 
 <property>
   <name>tez.runtime.shuffle.connect.timeout</name>
-  <value>2500</value>
+  <value>7500</value>
+  <description>
+    Set to 2500 in order not to retry when a connection failure occurs.
+  </description>
+</property>
+
+<!-- MR3 1.1 -->
+
+<property>
+  <name>tez.runtime.local.fetch.compare.port</name>
+  <value>true</value>
+  <!-- irrelevant on Kubernetes because a logical host runs only one ContainerWorker -->
 </property>
 
 <!-- CartesianProductVertexManager -->

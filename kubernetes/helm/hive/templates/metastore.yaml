@@ -94,8 +94,6 @@ spec:
         - name: key-k8s-volume
           mountPath: {{ .Values.dir.keytab }}
           readOnly: true
-        - name: am-local-k8s-volume
-          mountPath: {{ .Values.dir.base }}/am-local-dir
         - name: work-dir-volume
           mountPath: {{ .Values.dir.persistentVolumeClaim }}
         {{- if .Values.metastore.mountLib }}
@@ -120,8 +118,6 @@ spec:
       - name: key-k8s-volume
         secret:
           secretName: {{ .Values.name.hive.secret }}
-      - name: am-local-k8s-volume
-        emptyDir: {} 
       - name: work-dir-volume
         persistentVolumeClaim:
           claimName: {{ .Values.name.persistentVolumeClaim }}

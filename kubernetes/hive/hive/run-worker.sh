@@ -22,17 +22,23 @@ source $BASE_DIR/common-setup.sh
 function run_worker {
     echo -e "\n# Running ContainerWorker: $@ #\n" >&2
 
-    common_setup_cleanup 
-
     JAVA=$JAVA_HOME/bin/java
     JAVA_OPTS="-Djavax.security.auth.useSubjectCredsOnly=false \
 -Djava.security.auth.login.config=/opt/mr3-run/conf/jgss.conf \
 -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf \
 -Dsun.security.jgss.debug=true"
-    $JAVA $JAVA_OPTS $@
 
-    exit_code=$?
-    exit $exit_code
+    runShuffleHandlerProcess=${@: -1}
+    if [ "$runShuffleHandlerProcess" = "true" ]; then
+      $JAVA $JAVA_OPTS $@ &
+    else
+      common_setup_cleanup 
+
+      $JAVA $JAVA_OPTS $@
+
+      exit_code=$?
+      exit $exit_code
+    fi
 }
 
 run_worker $@

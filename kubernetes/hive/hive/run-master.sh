@@ -24,6 +24,9 @@ function run_master {
 
     common_setup_cleanup 
 
+    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    export HTTP2_DISABLE=true
+
     JAVA=$JAVA_HOME/bin/java
     JAVA_OPTS="-Djavax.security.auth.useSubjectCredsOnly=false \
 -Djava.security.auth.login.config=/opt/mr3-run/conf/jgss.conf \

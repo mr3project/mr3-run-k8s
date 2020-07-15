@@ -1,5 +1,23 @@
 ## MR3 
 
+Release 1.1: 2020-7-19
+  - Support DAG scheduling schemes (specified by `mr3.dag.queue.scheme`).
+  - Optimize DAGAppMaster by freeing memory for messages to Tasks when fault tolerance is disabled (with `mr3.am.task.max.failed.attempts` set to 1).
+  - Fix a minor memory leak in DaemonTask (which also prevents MR3 from running more than 2^30 DAGs when using the shuffle handler).
+  - Improve the chance of assigning TaskAttempts to ContainerWorkers that match location hints.
+  - TaskScheduler can use location hints produced by `ONE_TO_ONE` edges.
+  - TaskScheduler can use location hints from HDFS when assigning TaskAttempts to ContainerWorker Pods on Kubernetes (with `mr3.convert.container.address.host.name`).
+  - Introduce `mr3.k8s.pod.cpu.cores.max.multiplier` to specify the multiplier for the limit of CPU cores.
+  - Introduce `mr3.k8s.pod.memory.max.multiplier` to specify the multiplier for the limit of memory.
+  - Introduce `mr3.k8s.pod.worker.security.context.sysctls` to configure kernel parameters of ContainerWorker Pods using init containers.
+  - Support speculative execution of TaskAttempts (with `mr3.am.task.concurrent.run.threshold.percent`).
+  - A ContainerWorker can run multiple instances of shuffle handlers each with a different port. The configuration key `mr3.use.daemon.shufflehandler` now specifies the number of shuffle handler instances in each ContainerWorker.
+  - With speculative execution and multiple instances of shuffle handlers in a single ContainerWorker, fetch delays rarely occur.
+  - A ContainerWorker Pod can run shuffle handlers in a separate container (with `mr3.k8s.shuffle.process.ports`).
+  - On Kubernetes, DAGAppMaster uses ReplicationController instead of Pod, thus making recovery much faster.
+  - On Kubernetes, ConfigMaps `mr3conf-configmap-master` and `mr3conf-configmap-worker` survive MR3, so the user should delete them manually.
+  - Java 8u251/8u252 can be used on Kubernetes 1.17 and later.
+
 Release 1.0: 2020-2-17
   - Support DAG priority schemes (specified by `mr3.dag.priority.scheme`)
     and Vertex priority schemes (specified by `mr3.vertex.priority.scheme`).
@@ -36,7 +54,7 @@ Release 0.6: 2019-3-21
 
 Release 0.5: 2019-2-18
   - Support Kubernetes.
-  - Support the use of a built-in shuffle handler.
+  - Support the use of the built-in shuffle handler.
 
 Release 0.4: 2018-10-29
   - Support auto parallelism for reducers with `ONE_TO_ONE` edges.
@@ -54,6 +72,11 @@ Release 0.1: 2018-3-31
   - Initial release
 
 ## Hive on MR3 on Hadoop
+
+Release 1.1: 2020-7-19
+  - CrossProductHandler asks MR3 DAGAppMaster to set TEZ_CARTESIAN_PRODUCT_MAX_PARALLELISM (Cf. HIVE-16690, Hive 3/4).
+  - Hive 4 on MR3 is stable (currently using 4.0.0-SNAPSHOT).
+  - No longer support Hive 1.
 
 Release 1.0: 2020-2-17
 
@@ -104,6 +127,11 @@ Release 0.1: 2018-3-31
   - Initial release
 
 ## Hive on MR3 on Kubernetes
+
+Release 1.1: 2020-7-19
+  - Ranger uses a local directory (emptyDir volume) for logging.
+  - The open file limit for Solr (in Ranger) is not limited to 1024.
+  - HiveServer2 and DAGAppMaster create readiness and liveness probes.
 
 Release 1.0: 2020-2-17
   - Allow fractions for CPU resources (with `hive.mr3.resource.vcores.divisor`).

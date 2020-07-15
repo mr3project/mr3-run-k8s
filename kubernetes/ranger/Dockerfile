@@ -20,6 +20,7 @@ USER root
 RUN mkdir -p /opt/mr3-run/ranger && \
     mkdir -p /opt/mr3-run/ranger/conf && \
     mkdir -p /opt/mr3-run/ranger/key && \
+    mkdir -p /opt/mr3-run/ranger/work-local-dir && \
     mkdir -p /opt/mr3-run/ranger/work-dir
 
 # copy files

@@ -36,13 +36,10 @@ function setup_solr() {
 
     mkdir -p $SOLR_DATA_HOME
     mkdir -p $SOLR_LOGS_DIR
-    chown -R ranger:ranger $SOLR_HOME
-    chown -R ranger:ranger $SOLR_DATA_HOME
-    chown -R ranger:ranger $SOLR_LOGS_DIR
 }
 
 function start_solr() {
-    su ranger -c "SOLR_INCLUDE=$BASE_DIR/conf/solr.in.sh $BASE_DIR/solr/bin/solr start -f"
+    SOLR_INCLUDE=$BASE_DIR/conf/solr.in.sh $BASE_DIR/solr/bin/solr start -f -force
 }
 
 function main {

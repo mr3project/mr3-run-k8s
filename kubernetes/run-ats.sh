@@ -38,8 +38,8 @@ kubectl create namespace $MR3_NAMESPACE
 if [ $RUN_AWS_EKS = true ]; then
   echo "assume that mount-efs.sh has been executed"
 else
-  kubectl create -f $YAML_DIR/workdir-pv.yaml 
-  kubectl create -n $MR3_NAMESPACE -f $YAML_DIR/workdir-pvc.yaml 
+  kubectl create -f $YAML_DIR/workdir-pv-ats.yaml
+  kubectl create -n $MR3_NAMESPACE -f $YAML_DIR/workdir-pvc-ats.yaml
 fi
 
 # ConfigMaps

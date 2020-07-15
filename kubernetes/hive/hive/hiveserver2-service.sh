@@ -127,6 +127,9 @@ function main {
 
     return_code=0
 
+    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    export HTTP2_DISABLE=true
+
     if [ $START_HIVE_SERVER2 = true ]; then
       echo "Starting HiveServer2..." >&2
       start_hiveserver2

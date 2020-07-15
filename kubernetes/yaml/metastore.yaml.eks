@@ -43,7 +43,7 @@ spec:
         hostnames:
         - "pl"
       containers:
-      - image: mr3project/hive3:1.0
+      - image: mr3project/hive3:1.1
         command: ["/opt/mr3-run/hive/metastore-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always
@@ -89,8 +89,6 @@ spec:
         - name: key-k8s-volume
           mountPath: /opt/mr3-run/key/
           readOnly: true
-        - name: am-local-k8s-volume
-          mountPath: /opt/mr3-run/am-local-dir
         - name: work-dir-volume
           mountPath: /opt/mr3-run/work-dir/
         # - name: work-dir-volume
@@ -108,8 +106,6 @@ spec:
       - name: key-k8s-volume
         secret:
           secretName: hivemr3-keytab-secret
-      - name: am-local-k8s-volume
-        emptyDir: {} 
       - name: work-dir-volume
         persistentVolumeClaim:
           claimName: workdir-pvc

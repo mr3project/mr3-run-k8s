@@ -21,8 +21,8 @@ name:
   persistentVolumeClaim: workdir-pvc
 
 docker:
-  image: mr3project/hive3:1.0
-  containerWorkerImage: mr3project/hive3:1.0
+  image: mr3project/hive3:1.1
+  containerWorkerImage: mr3project/hive3:1.1
   # do not use a composite name like hive@RED, hive/red0@RED
   user: hive
   imagePullPolicy: IfNotPresent
@@ -118,7 +118,7 @@ workDir:
   isNfs: false
   nfs:
     server: "10.1.91.17"
-    path: "/work/nfs/mr3-run-work-dir"
+    path: "/work/nfs/hive"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi
   storageClassName: ""

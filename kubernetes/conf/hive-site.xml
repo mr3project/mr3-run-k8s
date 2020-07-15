@@ -326,11 +326,6 @@
 </property>
 
 <property>
-  <name>hive.mapred.reduce.tasks.speculative.execution</name>
-  <value>false</value>
-</property>
-
-<property>
   <name>hive.merge.mapfiles</name>
   <value>true</value>
 </property>
@@ -1000,6 +995,14 @@
   <value></value>
 </property>
 
+<property>
+  <name>hive.resource.use.hdfs.location</name>
+  <value>true</value>
+  <description>
+    Can be set to false if no additional resources are added (other than hive.aux.jars.path)
+  </description>
+</property>
+    
 <!-- ZooKeeper -->
 
 <property>
@@ -1037,7 +1040,7 @@
 
 <property>
   <name>hive.mr3.container.max.java.heap.fraction</name>
-  <value>0.8f</value>
+  <value>0.7f</value>
 </property>
 
 <property>
@@ -1097,12 +1100,17 @@
 
 <property>
   <name>hive.mr3.use.daemon.shufflehandler</name>
-  <value>true</value>
+  <value>1</value>
 </property>
 
 <property>
   <name>hive.mr3.am.task.max.failed.attempts</name>
-  <value>2</value>
+  <value>3</value>
+</property>
+
+<property>
+  <name>hive.mr3.delete.vertex.local.directory</name>
+  <value>false</value>
 </property>
 
 <property>
@@ -1118,6 +1126,13 @@
 <property>
   <name>hive.tez.llap.min.reducer.per.executor</name>
   <value>0.2f</value>
+</property>
+
+<!-- speculative execution 1.1 -->
+
+<property>
+  <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
+  <value>95</value>
 </property>
 
 <!-- Kubernetes -->
@@ -1179,6 +1194,18 @@
 
 <property>
   <name>hive.mr3.compaction.using.mr3</name>
+  <value>true</value>
+</property>
+
+<!-- Hive 4 -->
+
+<property>
+  <name>hive.metastore.warehouse.external.dir</name>
+  <value>${hive.warehouse.dir}</value>
+</property>
+
+<property>
+  <name>hive.acid.direct.insert.enabled</name>
   <value>true</value>
 </property>
 

@@ -249,12 +249,12 @@
 
 <property>
   <name>mr3.k8s.worker.total.max.memory.gb</name>
-  <value>1024 * 1024</value>
+  <value>1048576</value>
 </property>
 
 <property>
   <name>mr3.k8s.worker.total.max.cpu.cores</name>
-  <value>1024 * 1024</value>
+  <value>1048576</value>
 </property>
 
 <property>

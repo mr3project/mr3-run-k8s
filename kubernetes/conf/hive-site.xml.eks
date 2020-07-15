@@ -326,11 +326,6 @@
 </property>
 
 <property>
-  <name>hive.mapred.reduce.tasks.speculative.execution</name>
-  <value>false</value>
-</property>
-
-<property>
   <name>hive.merge.mapfiles</name>
   <value>true</value>
 </property>
@@ -1092,12 +1087,17 @@
 
 <property>
   <name>hive.mr3.use.daemon.shufflehandler</name>
-  <value>true</value>
+  <value>1</value>
 </property>
 
 <property>
   <name>hive.mr3.am.task.max.failed.attempts</name>
   <value>2</value>
+</property>
+
+<property>
+  <name>hive.mr3.delete.vertex.local.directory</name>
+  <value>false</value>
 </property>
 
 <property>

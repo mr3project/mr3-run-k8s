@@ -42,7 +42,7 @@ workDir:
   isNfs: true
   nfs:
     server: "10.1.91.17"
-    path: "/work/nfs/mr3-run-work-dir"
+    path: "/work/nfs/ranger"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi
   storageClassName: ""

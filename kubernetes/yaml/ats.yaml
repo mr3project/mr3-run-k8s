@@ -64,4 +64,4 @@ spec:
       secretName: hivemr3-ats-secret
   - name: work-dir-volume
     persistentVolumeClaim:
-      claimName: workdir-pvc
+      claimName: workdir-pvc-ats
