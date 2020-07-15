@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: hivemr3
+  name: hiveserver2
+spec:
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 9852
+    targetPort: 9852
+  selector:
+    hivemr3_app: hiveserver2
+  externalIPs:
+  - 10.1.91.41

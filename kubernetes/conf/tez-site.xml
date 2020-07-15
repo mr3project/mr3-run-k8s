@@ -1,0 +1,196 @@
+<configuration>
+
+<property>
+  <name>tez.counters.max</name>
+  <value>10000</value>
+</property>
+
+<property>
+  <name>tez.counters.max.groups</name>
+  <value>3000</value>
+</property>
+
+<property>
+  <name>tez.runtime.io.sort.mb</name>
+  <value>1040</value>
+</property>
+
+<property>
+  <name>tez.runtime.optimize.local.fetch</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.runtime.pipelined.sorter.sort.threads</name>
+  <value>2</value>
+</property>
+
+<property>
+  <name>tez.runtime.sorter.class</name>
+  <value>PIPELINED</value>
+</property>
+
+<property>
+  <name>tez.runtime.unordered.output.buffer.size-mb</name>
+  <value>307</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.max-src-fraction</name>
+  <value>0.4</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.min-src-fraction</name>
+  <value>0.2</value>
+</property>
+
+<property>
+  <name>tez.runtime.pipelined.sorter.lazy-allocate.memory</name>
+  <value>false</value>
+</property>
+
+<!-- MR3 0.4 -->
+
+<property>
+  <name>tez.runtime.pipelined.sorter.use.soft.reference</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.enable.auto-parallel</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.auto-parallel.min.num.tasks</name>
+  <value>40</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage</name>
+  <value>10</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.use-stats-auto-parallelism</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.shuffle.vertex.manager.auto.parallelism.min.percent</name>
+  <value>20</value>
+</property>
+
+<!-- MR3 0.5 -->
+
+<property>
+  <name>tez.am.shuffle.auxiliary-service.id</name>
+  <value>tez_shuffle</value>
+</property>
+
+<property>
+  <name>tez.shuffle.port</name>
+  <value>15551</value>
+</property>
+
+<property>
+  <name>tez.shuffle.connection-keep-alive.enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.shuffle.max.threads</name>
+  <value>0</value>
+</property>
+
+<property>
+  <name>tez.shuffle.listen.queue.size</name>
+  <value>16384</value>
+</property>
+
+<!-- MR3 0.7 -->
+
+<property>
+  <name>tez.runtime.pipelined-shuffle.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>tez.runtime.enable.final-merge.in.output</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.src-attempt.abort.limit</name>
+  <value>5</value>
+</property>
+
+<!-- MR3 0.8 -->
+
+<property>
+  <name>tez.runtime.shuffle.connect.timeout</name>
+  <value>2500</value>
+</property>
+
+<!-- CartesianProductVertexManager -->
+
+<property>
+  <name>tez.cartesian-product.grouping-fraction</name>
+  <value>0.75</value>
+</property>
+
+<property>
+  <name>tez.cartesian-product.min-ops-per-worker</name>
+  <value>1000000</value>
+</property>
+
+<!-- Secure shuffle -->
+<!-- 
+  if hadoop.security.credential.provider.path is not set in core-site.xml,
+    passwords are read dirctly from tez-site.xml in text.
+  if hadoop.security.credential.provider.path is set in core-site.xml,
+    passwords are read from the credential file.
+ -->
+
+<property>
+  <name>tez.runtime.shuffle.ssl.enable</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>ssl.server.truststore.location</name>
+  <value>/opt/mr3-run/key/mr3-truststore.jks</value>
+</property>
+
+<property>
+  <name>ssl.server.truststore.password</name>
+  <value>truststore_password</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.location</name>
+  <value>/opt/mr3-run/key/mr3-keystore.jks</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.password</name>
+  <value>keystore_password</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.keypassword</name>
+  <value>key_password</value>
+</property>
+
+<property>
+  <name>ssl.client.truststore.location</name>
+  <value>/opt/mr3-run/key/mr3-truststore.jks</value>
+</property>
+
+<property>
+  <name>ssl.client.truststore.password</name>
+  <value>truststore_password</value>
+</property>
+
+</configuration>

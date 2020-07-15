@@ -1,0 +1,19 @@
+<configuration>
+
+<property>
+  <name>yarn.resourcemanager.principal</name>
+  <value>rm/red0@RED</value>
+</property>
+
+<property>
+  <name>yarn.http.policy</name>
+  <value>HTTP_ONLY</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.hostname</name>
+  <value>indigo20</value>
+</property>
+
+</configuration>
+

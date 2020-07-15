@@ -1,0 +1,46 @@
+<configuration>
+
+<property>
+  <name>fs.defaultFS</name>
+  <value>file:///</value>
+</property>
+
+<property>
+  <name>hadoop.security.authentication</name>
+  <value>simple</value>
+</property>
+
+<property>
+  <name>dfs.encryption.key.provider.uri</name>
+  <value></value>
+</property>
+
+<!--
+<property>
+  <name>ipc.client.fallback-to-simple-auth-allowed</name>
+  <value>true</value> 
+</property>
+ -->
+
+<property>
+  <name>hadoop.security.credential.provider.path</name>
+  <value>localjceks://file/opt/mr3-run/key/hivemr3-ssl-certificate.jceks</value>
+</property>
+
+<property>
+  <name>fs.s3a.aws.credentials.provider</name>
+  <value>com.amazonaws.auth.InstanceProfileCredentialsProvider</value>
+</property>
+
+<!-- 
+  Upon the deletion of DAGAppMasterPod, HiveServer2 tries to connect to DAGAppMaster Pod at least twice
+  and up to three times (acknowledgeDagFinished(), getEstimateNumTasksOrNodes(), getApplicationReport().
+  Each wait takes 20 seconds, so HiveServer2 may wait 3 * ipc.client.connect.max.retries.on.timeouts * 20 seconds
+  before creating a new DAGAppMaster Pod.
+ -->
+<property>
+  <name>ipc.client.connect.max.retries.on.timeouts</name>
+  <value>3</value>
+</property>
+
+</configuration>

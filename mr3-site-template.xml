@@ -1,0 +1,1322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+
+<!-- MR3Runtime: MR3Client, DAGAppMaster, ContainerWorker -->
+
+<property>
+  <name>mr3.runtime</name>
+  <value>tez</value>
+  <description>
+    tez: use Tez 0.9.1 runtime.
+    asm: use ASM runtime. 
+  </description>
+</property>
+
+<property>
+  <name>mr3.master.mode</name>
+  <value>yarn</value>
+  <description>
+    local-thread: DAGAppMaster starts as a new thread inside MR3Client.
+    local-process: DAGAppMaster starts as a new process on the same machine where MR3Client is running.
+    yarn: DAGAppMaster starts as a new container in the Hadoop cluster.
+    kubernetes: DAGAppMaster starts as a pod in the Kubernetes cluster.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.acls.enabled</name>
+  <value>true</value>
+  <description>
+    true: enable ACLs for DAGAppMaster and DAGs.
+    false: disable ACLS for DAGAppMaster and DAGs.
+  </description>
+</property>
+
+<property>
+  <name>mr3.cluster.additional.classpath</name>
+  <description>
+    Additional classpath for DAGAppMaster and ContainerWorkers 
+  </description>
+</property>
+
+<property>
+  <name>mr3.cluster.use.hadoop-libs</name>
+  <value>false</value>
+  <description>
+    true: include the classpath defined in YarnConfiguration.YARN_APPLICATION_CLASSPATH.
+    false: do not include the classpath defined in YarnConfiguration.YARN_APPLICATION_CLASSPATH.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.max.java.heap.fraction</name>
+  <value>0.8</value>
+  <description>
+    Fraction of memory to be allocated for Java heap in DAGAppMaster 
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.max.java.heap.fraction</name>
+  <value>0.8</value>
+  <description>
+    Fraction of memory to be allocated for Java heap in ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.async.logging</name>
+  <value>true</value>
+  <description>
+    true: use asynchronous logging.
+    false: use synchronous logging.
+  </description>
+</property>
+
+<!-- MR3Client -->
+
+<property>
+  <name>mr3.lib.uris</name>
+  <value>${liburis}</value>
+  <description>
+    URIs for the MR3 library jar files 
+  </description>
+</property>
+
+<property>
+  <name>mr3.aux.uris</name>
+  <value>${auxuris}</value>
+  <description>
+    URIs for the MR3 auxiliary jar files 
+  </description>
+</property>
+
+<property>
+  <name>mr3.queue.name</name>
+  <description>
+    Name of the Yarn queue to which the MR3 job is submitted 
+  </description>
+</property>
+
+<property>
+  <name>mr3.credentials.path</name>
+  <description>
+    Path to the credentials for MR3 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.staging-dir</name>
+  <value>/tmp/${user.name}/staging</value>
+  <description>
+    Staging directory for DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.resource.memory.mb</name>
+  <value>4096</value>
+  <description>
+    Size of memory in MB for DAGAppMaster 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.resource.cpu.cores</name>
+  <value>1</value>
+  <description>
+    Number of cores for DAGAppMaster 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.launch.cmd-opts</name>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC</value>
+  <description>
+    Command-line options for launching DAGAppMaster 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.launch.env</name>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/</value>
+  <description>
+    Environment variables for launching DAGAppMaster separated by ",". 
+    Each entry takes either "VAR=VALUE" separated by "=" or "VAR".
+    In the latter case, the value in the system environment is used.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.max.app.attempts</name>
+  <value>2</value>
+  <description>
+    Max number of Yarn ApplicationAttempts for the MR3 job 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.log.level</name>
+  <value>INFO</value>
+  <description>
+    Logging level for DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.working-dir</name>
+  <value>"/tmp/${user.name}/mr3/working-dir"</value>
+  <description>
+    Local working directory for DAGAppMaster running in LocalThread or LocalProcess mode
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.log-dir</name>
+  <value>"/tmp/${user.name}/mr3/log-dir"</value>
+  <description>
+    Logging directory for DAGAppMaster running in LocalThread or LocalProcess mode
+  </description>
+</property>
+
+<property>
+  <name>mr3.cancel.delegation.tokens.on.completion</name>
+  <value>true</value>
+  <description>
+    true: cancel delegation tokens when the MR3 job completes.
+    false: do not cancel delegation tokens.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.status.pollinterval.ms</name>
+  <value>1000</value>
+  <description>
+    Time interval in milliseconds for retrieving the status of running DAGs
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.session.mode</name>
+  <value>false</value>
+  <description>
+    true: create MR3 SessionClient. 
+    false: create MR3 JobClient.
+  </description>
+</property>
+
+<!-- MR3SessionClient -->
+
+<property>
+  <name>mr3.session.client.timeout.secs</name>
+  <value>120</value>
+  <description>
+    Time in seconds for terminating MR3 SessionClient with a timeout 
+  </description>
+</property>
+
+<!-- DAGAppMaster -->
+
+<property>
+  <name>mr3.am.worker.mode</name>
+  <value>local</value>
+  <description>
+    local: ContainerWorkers start as threads inside DAGAppMaster.
+    yarn: ContainerWorkers start as containers in the Hadoop cluster.
+    kubernetes: ContainerWorkers start as Pods in the Kubernetes cluster.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.max.num.concurrent.dags</name>
+  <value>128</value>
+  <description>
+    Max number of DAGs that can run concurrently in DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.shutdown.rightaway</name>
+  <value>true</value>
+  <description>
+    true: DAGAppMaster does not wait until MR3Client retrieves the final states of all DAGs.
+    false: DAGAppMaster waits until MR3Client retrieves the final states of all DAGs.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.shutdown.sleep.max.ms</name>
+  <value>5000</value>
+  <description>
+    Time in milliseconds to wait until MR3Client retrieves the final states of all DAGs
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.min.cluster.resource.memory.mb</name>
+  <value>40960</value>
+  <description>
+    Min size of memory in MB that DAGAppMaster assumes as the cluster resource when initializing Map Tasks. Usually affects DAGs when no ContainerWorkers are running.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.min.cluster.resource.cpu.cores</name>
+  <value>10</value>
+  <description>
+    Min number of cores that DAGAppMaster assumes as the cluster resource when initializing Map Tasks. Usually affects DAGs when no ContainerWorkers are running.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.min.memory.mb</name>
+  <value>256</value>
+  <description>
+    Min size of memory in MB to reserve for all local ContainerWorkers running in DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.max.memory.mb</name>
+  <value>4096</value>
+  <description>
+    Max size of memory in MB to reserve for all local ContainerWorkers running in DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.max.cpu.cores</name>
+  <value>16</value>
+  <description>
+    Max number of cores for all local ContainerWorkers running in DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.native.fraction</name>
+  <value>0.0d</value>
+  <description>
+    Fraction of memory to be allocated for native memory for all local ContainerWorkers running in DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.delete.local.working-dir</name>
+  <value>true</value>
+  <description>
+    true: DAGAppMaster running in LocalThread or LocalProcess mode deletes its local working directory upon termination.
+    false: DAGAppMaster running in LocalThread or LocalProcess mode does not delete its local working directory upon termination.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.taskcommunicator.type</name>
+  <value>protobuf</value>
+  <description>
+    protobuf: use Protobuf for communication between TaskCommunicator and ContainerWorkers.
+    protowritable: use Protobuf + Writable for communication between TaskCommunicator and ContainerWorkers.
+    writable: use Writable for communication between TaskCommunicator and ContainerWorkers.
+    direct: use direct communication between TaskCommunicator and local ContainerWorkers.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.taskcommunicator.thread.count</name>
+  <value>30</value>
+  <description>
+    Number of threads in TaskCommunicator for serving requests from ContainerWorkers 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.resourcescheduler.max.requests.per.taskscheduler</name>
+  <value>10</value>
+  <description>
+    Max number of containers that TaskScheduler can request to Yarn ResourceScheduler at once 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.rm.heartbeat.interval.ms</name>
+  <value>1000</value>
+  <description>
+    Time interval in milliseconds of heartbeats in AMRMClientAsync
+  </description>
+</property>
+
+<property>
+  <name>mr3.taskattempt.queue.scheme</name>
+  <value>simple</value>
+  <description>
+    Scheme for managing the queue of TaskAttempts in TaskScheduler.
+    Available options: basic, simple, opt, indexed
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.priority.scheme</name>
+  <value>fifo</value>
+  <description>
+    fifo: assign DAG priorities on FIFO basis.
+    concurrent: assign the same priority to all DAGs.
+  </description>
+</property>
+
+<property>
+  <name>mr3.vertex.priority.scheme</name>
+  <value>vertex.priority.intact</value>
+  <description>
+    Scheme for assigning priorities to Vertexes.
+    Available options: vertex.priority.intact, vertex.priority.from.roots, vertex.priority.from.leaves, vertex.priority.postorder
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.task.max.failed.attempts</name>
+  <value>3</value>
+  <description>
+    Max number of TaskAttempts to create for Task 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.task.retry.on.fatal.error</name>
+  <value>false</value>
+  <description>
+    true: retry even if TaskAttempts fail with fatal errors
+    false: do not retry if TaskAttempts fail with fatal errors
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.commit-all-outputs-on-dag-success</name>
+  <value>true</value>
+  <description>
+    true: commit the output of all Vertexes when DAG completes successfully.
+    false: commit the output when Vertex completes successfully. 
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.client.thread-count</name>
+  <value>8</value>
+  <description>
+    Number of threads in DAGClientServer for serving requests from MR3Clients 
+  </description>
+</property>
+
+<property>
+  <name>mr3.heartbeat.task.timeout.ms</name>
+  <value>60000</value>
+  <description>
+    Time in milliseconds for triggering heartbeat timeout for TaskAttempts (counted after being fetched by ContainerWorkers)
+  </description>
+</property>
+
+<property>
+  <name>mr3.heartbeat.container.timeout.ms</name>
+  <value>600000</value>
+  <description>
+    Time in milliseconds for triggering heartbeat timeout for ContainerWorkers.
+    Should be (much) larger than the total time for sleeping due to mr3.container.task.failure.num.sleeps.
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.heartbeat.timeout.check.ms</name>
+  <value>30000</value>
+  <description>
+    Time interval in milliseconds for checking heartbeat timeout for TaskAttempts
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.heartbeat.timeout.check.ms</name>
+  <value>15000</value>
+  <description>
+    Time interval in milliseconds for checking heartbeat timeout for ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.idle.timeout.ms</name>
+  <value>300000</value>
+  <description>
+    Time in milliseconds for triggering timeout for idle ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.node-blacklisting.enabled</name>
+  <value>false</value>
+  <description>
+    true: enable node blacklisting.
+    false: disable node blacklisting.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.maxtaskfailure.percent</name>
+  <value>5</value>
+  <description>
+    Percentage of TaskAttempt failures that puts a node in an unusable state
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.max.safe.resource.percent.blacklisted</name>
+  <value>50</value>
+  <description>
+    Max percentage of resource to be allocated to a node that is blacklisted
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.min.safe.resource.percent.blacklisted</name>
+  <value>10</value>
+  <description>
+    Min percentage of resource to be allocated to a node that is blacklisted
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.recovery.enabled</name>
+  <value>true</value>
+  <description>
+    true: enable DAG recovery when DAGAppMaster restarts.
+    false: disable DAG recovery when DAGAppMaster restarts.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.max.finished.reported.dags</name>
+  <value>10</value>
+  <description>
+    Max number of DAGs whose final states are kept in DAGAppMaster after being reported to MR3Client
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.generate.dag.graph.viz</name>
+  <value>false</value>
+  <description>
+    true: create DOT graph files showing the structure of DAGs on the working directory of DAGAppMaster.
+    false: do not create DOT graph files.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.permit.custom.user.class</name>
+  <value>false</value>
+  <description>
+    true: allow users to use custom Java Classes inside DAGAppMaster for InputInitializer, VertexManager, OutputCommiter.
+    false: do not allow users to use custom Java classes inside DAGAppMaster.
+  </description>
+</property>
+
+<!-- ContainerGroup -->
+
+<property>
+  <name>mr3.container.stop.cross.dag.reuse</name>
+  <value>true</value>
+  <description>
+    true: stop cross-DAG container reuse for the current ContainerGroup.
+    false: do not update the current ContainerGroup with regard to cross-DAG container reuse.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.reuse</name>
+  <value>false</value>
+  <description>
+    true: reuse ContainerWorkers in the current ContainerGroup.
+    false: use each ContainerWorker only for a single TaskAttempt.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.resourcescheduler.type</name>
+  <value>local</value>
+  <description>
+    local: create local ContainerWorkers in DAGAppMaster for the current ContainerGroup.
+    yarn: create Yarn ContainerWorkers for the current ContainerGroup.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.combine.taskattempts</name>
+  <value>false</value>
+  <description>
+    true: allow multiple TaskAttempts to run concurrently in a ContainerWorker.
+    false: allow only one TaskAttempt to run at a time in a ContainerWorker.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.mix.taskattempts</name>
+  <value>true</value>
+  <description>
+    true: allow TaskAttempts from different DAGs to run concurrently in a ContainerWorker.
+    false: use each ContainerWorker for a single DAG exclusively.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.launch.cmd-opts</name>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC</value>
+  <description>
+    Command-line options for launching ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.launch.env</name>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/</value>
+  <description>
+    Environment variables for launching ContainerWorkers.
+    Each entry takes either "VAR=VALUE" separated by "=" or "VAR".
+    In the latter case, the value in the system environment is used.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.log.level</name>
+  <value>INFO</value>
+  <description>
+    Logging level for ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.kill.policy</name>
+  <value>container.kill.wait.workervertex</value>
+  <description>
+    container.kill.wait.workervertex: stop a ContainerWorker only if no more TaskAttempts are to arrive.
+    container.kill.nowait: stop a ContainerWorker right away if it is not serving any TaskAttempt.
+  </description>
+</property>
+
+<property>
+  <name>mr3.use.daemon.shufflehandler</name>
+  <value>false</value>
+  <description>
+    true: use the shuffle handler as a DaemonTask. 
+    false: do not use shuffle handler.
+  </description>
+</property>
+
+<property>
+  <name>mr3.daemon.shuffle.service-id</name>
+  <description>
+    Service identifier for the shuffle handler
+  </description>
+</property>
+
+<property>
+  <name>mr3.daemon.shuffle.port</name>
+  <description>
+    Port number for the shuffle handler
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.use.termination.checker</name>
+  <value>true</value>
+  <description>
+    true: check whether TaskAttempts are terminated successfully or not after termination requests. 
+    false: do not check.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.terminate.on.fatal.error</name>
+  <value>false</value>
+  <description>
+    true: terminate ContainerWorkers that throw fatal errors such as OutOfMemoryError.
+    false: do not terminate.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.check.terminate.on.nonfatal</name>
+  <value>false</value>
+  <description>
+    true: check if Tasks throwing non-fatal errors terminate normally. 
+    false: do not check.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.termination.checker.timeout.ms</name>
+  <value>120000</value>
+  <description>
+    Time in milliseconds before checking the termination of a TaskAttempt after a termination request. 
+    With the default value, the ContainerWorker checks whether a TaskAttempt has properly terminated 120 seconds after the termination request. 
+    If the TaskAttempt has not terminated, the whole ContainerWorker is shut down.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.elastic.execution.memory.threshold.percent</name>
+  <value>0</value>
+  <description>
+    Maximum percentage of heap memory that is safe for accepting new TaskAttempts. 
+    For example, a value of 90 means that once the heap usage exceeds 90 percent of the total heap memory, ContainerWorker temporarily stops requesting new TaskAttempts. 
+    A value of 0 disables the elastic execution. Not used if mr3.container.combine.taskattempts is set to false.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.elastic.execution.memory.commit.ratio</name>
+  <value>1.0d</value>
+  <description>
+    Multiplier for memory to be allocated to each TaskAttempt. 
+    For exmple, a value of 1.5 means that a TaksAttempt created with memory resource of 4GB is actually allocated 6GB of memory in a ContainerWorker. 
+    When overcommiting memory with a value larger than 1.0, use only in conjunction with `mr3.container.elastic.execution.memory.threshold.percent` strictly smaller than 100.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.task.failure.num.sleeps</name>
+  <value>2</value>
+  <description>
+    Number of times to sleep (60 seconds each) in a ContainerWorker thread after a TaskAttempt fails.
+    Before and after each sleep, the thread tries to allocate a memory block of 1GB to trigger garbage collection.
+    For example, if set to 2, the sequence is:
+    allocate 1GB, sleep 60 seconds, allocate 1GB, sleep 60 seconds, allocate 1GB.
+    If set to 0, do not sleep and do not try to allocate a memory block.
+  </description>
+</property>
+
+<!-- ContainerWorker -->
+
+<property>
+  <name>mr3.container.use.am.credentials.for.daemon</name>
+  <value>true</value>
+  <description>
+    true: use the credentials of DAGAppMaster for all DaemonTaskAttempts
+    false: use the credentials of the DAG for all its DaemonTaskAttempts
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.get.command.interval.ms</name>
+  <value>2000</value>
+  <description>
+    Time interval in milliseconds for retrieving commands in ContainerWorkers that are currently serving TaskAttempts
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.busy.wait.interval.ms</name>
+  <value>100</value>
+  <description>
+    Time interval in milliseconds for retrieving commands in idle ContainerWorkers 
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.am.heartbeat.interval.ms</name>
+  <value>250</value>
+  <description>
+    Time interval in milliseconds for sending heartbeats from TaskAttempts
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.am.heartbeat.counter.interval.ms</name>
+  <value>30000</value>
+  <description>
+    Time interval in milliseconds for sending counters in heartbeats from TaskAttempts 
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.max.events.per.heartbeat</name>
+  <value>500</value>
+  <description>
+    Max number of Task events to include in a heartbeat reply 
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.thread.keep.alive.time.ms</name>
+  <value>4000</value>
+  <description>
+    Time in milliseconds for keeping threads serving TaskAttempts in ContainerWorkers
+  </description>
+</property>
+
+<!-- TokenRenewer -->
+
+<property>
+  <name>mr3.principal</name>
+  <value></value>
+  <description>
+    Kerberos principal
+  </description>
+</property>
+
+<property>
+  <name>mr3.keytab</name>
+  <value></value>
+  <description>
+    Location of the Kerberos keytab file 
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.fraction</name>
+  <value>0.75</value>
+  <description>
+    Fraction of the token renewal interval for renewing tokens conservatively
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.retry.interval.ms</name>
+  <value>3600000</value>
+  <description>
+    Time interval in milliseconds for retrying token renewal 
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.num.credentials.files</name>
+  <value>5</value>
+  <description>
+    Max number of credential files to keep for token renewal 
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.hdfs.enabled</name>
+  <value>false</value>
+  <description>
+    true: automatically renew HDFS tokens.
+    false: do not renew HDFS tokens.
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.hive.enabled</name>
+  <value>false</value>
+  <description>
+    true: automatically renew Hive tokens.
+    false: do not renew Hive tokens.
+  </description>
+</property>
+
+<property>
+  <name>mr3.am.token.renewal.paths</name>
+  <value></value>
+  <description>
+    Path that specifies FileSystem for token renewal. 
+    If empty, DAGAppMaster uses the staging directory.
+  </description>
+</property>
+
+<property>
+  <name>mr3.token.renewal.pass.credentials.via.memory</name>
+  <value>true</value>
+  <description>
+    true: DAGAppMaster passes credentials to ContainerWorkers directly via messages. 
+    false: DAGAppMaster stores credentials on HDFS.
+  </description>
+</property>
+
+<!-- HistoryLogger -->
+
+<property>
+  <name>mr3.app.history.logging.enabled</name>
+  <value>false</value>
+  <description>
+    true: enable history logging for Yarn applications and ContainerWorkers.
+    false: disable history logging for Yarn applications and ContainerWorkers.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.history.logging.enabled</name>
+  <value>false</value>
+  <description>
+    true: enable history logging for DAGs.
+    false: disable history logging for DAGs.
+  </description>
+</property>
+
+<property>
+  <name>mr3.task.history.logging.enabled</name>
+  <value>false</value>
+  <description>
+    true: enable history logging for Tasks.
+    false: disable history logging for Tasks.
+  </description>
+</property>
+
+<!-- tez.common.counters.Limits -->
+
+<property>
+  <name>tez.counters.max</name>
+  <value>1200</value>
+  <description>
+    Max number of Tez counters
+  </description>
+</property>
+
+<property>
+  <name>tez.counters.max.groups</name>
+  <value>500</value>
+  <description>
+    Max number of Tez counters groups
+  </description>
+</property>
+
+<property>
+  <name>tez.counters.counter-name.max-length</name>
+  <value>64</value>
+  <description>
+    Max length of Tez counter names
+  </description>
+</property>
+
+<property>
+  <name>tez.counters.group-name.max-length</name>
+  <value>256</value>
+  <description>
+    Max length of Tez counters group names
+  </description>
+</property>
+
+<!-- Kubernetes -->
+
+<property>
+  <name>mr3.k8s.api.server.url</name>
+  <value>https://kubernetes.default.svc</value>
+  <description>
+    URL for the Kubernetes API server
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.namespace</name>
+  <value>mr3</value>
+  <description>
+    Kubernetes namespace to use when creating a Kubernetes client
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.service.account.token.path</name>
+  <value>/var/run/secrets/kubernetes.io/serviceaccount/token</value>
+  <description>
+    Token path for the service account
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.service.account.token.ca.cert.path</name>
+  <value>/var/run/secrets/kubernetes.io/serviceaccount/ca.crt</value>
+  <description>
+    Certificate path for the service account
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.nodes.polling.interval.ms</name>
+  <value>60000</value>
+  <description>
+    Time interval in milliseconds for querying states of Kubernetes Nodes
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pods.polling.interval.ms</name>
+  <value>15000</value>
+  <description>
+    Time interval in milliseconds for querying Pod states
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.creation.timeout.ms</name>
+  <value>60000</value>
+  <description>
+    Time in milliseconds to wait until a new Pod is created
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.image.pull.policy</name>
+  <value>IfNotPresent</value>
+  <description>
+    Image pull policy for Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.image.pull.secrets</name>
+  <value>
+  </value>
+  <description>
+    Image pull secrets for Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.serviceaccount</name>
+  <value>
+  </value>
+  <description>
+    ServiceAccount for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.image</name>
+  <value>
+  </value>
+  <description>
+    Docker image for DAGAppMaster containers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.user</name>
+  <value>
+  </value>
+  <description>
+    User for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.emptydirs</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of directories where emptyDir volumes are mounted for DAGAppMaster
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.hostpaths</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of directories (on each node) to which hostPath volumes point for DAGAppMaster. 
+    `foo1=bar1,foo2=bar2,foo3=bar3` mounts PersistentVolumeClaim `foo1` on directory `bar1` in DAGAppMaster container, and so on.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.node.selector</name>
+  <value>
+  </value>
+  <description>
+    Node selector for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.master.working.dir</name>
+  <value>
+  </value>
+  <description>
+    Working directory for DAGAppMaster container
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.master.persistentvolumeclaim.mounts</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of pairs of a PersistentVolumeClaim and its mount point for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.master.command</name>
+  <value>/usr/bin/java</value>
+  <description>
+    Command for launching JVM for DAGAppMaster container
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.master.pod.affinity.match.label</name>
+  <value>
+  </value>
+  <description>
+    Label for specifying Pod affinity for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.image</name>
+  <value></value>
+  <description>
+    Docker image for ContainerWorker containers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.user</name>
+  <value></value>
+  <description>
+    User for ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.emptydirs</name>
+  <value></value>
+  <description>
+    Comma-separated list of directories where emptyDir volumes are mounted for ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.hostpaths</name>
+  <value></value>
+  <description>
+    Comma-separated list of directories (on each node) to which hostPath volumes point for ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.node.selector</name>
+  <value></value>
+  <description>
+    Node selector for ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.working.dir</name>
+  <value></value>
+  <description>
+    Working directory for ContainerWorker containers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.java.io.tmpdir</name>
+  <value>/tmp</value>
+  <description>
+    Temporary directory for Java in ContainerWorker containers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.persistentvolumeclaim.mounts</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of pairs of a PersistentVolumeClaim and its mount point. 
+    `foo1=bar1,foo2=bar2,foo3=bar3` mounts PersistentVolumeClaim `foo1` on directory `bar1` in ContainerWorker containers, and so on.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.command</name>
+  <value>/usr/bin/java</value>
+  <description>
+    Command for launching JVM for ContainerWorker containers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.total.max.memory.gb</name>
+  <value>1024 * 1024</value>
+  <description>
+    Max memory in GB for all ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.total.max.cpu.cores</name>
+  <value>1024 * 1024</value>
+  <description>
+    Max number of cores for all ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.conf.dir.configmap</name>
+  <value></value>
+  <description>
+    Name of the ConfigMap carrying all configuration files (such as `mr3-site.xml`
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.conf.dir.mount.dir</name>
+  <value></value>
+  <description>
+    Mount path for the ConfigMap carrying all configuration files
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.keytab.secret</name>
+  <value></value>
+  <description>
+    Name of the Secret containing the Keytab file to be passed from DAGAppMaster to ContainerWorkers
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.keytab.mount.dir</name>
+  <value></value>
+  <description>
+    Mount path for the Secret containing the keytab file
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.keytab.mount.file</name>
+  <value></value>
+  <description>
+    File name for the Secret containing the keytab file. 
+    `mr3.k8s.keytab.mount.dir` and `mr3.k8s.keytab.mount.file` specify the full path for the keytab file mounted inside ContainerWorker containers.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.mount.keytab.secret</name>
+  <value>false</value>
+  <description>
+    true: mount `mr3.k8s.keytab.secret` to `mr3.k8s.mount.keytab.secret`.
+    false: do not mount.
+    Set to true when secure shuffle is used (`tez.runtime.shuffle.ssl.enable` is set to true in `tez-site.xml`)
+    so as to pass keystore and truststore files.
+    Note that if either `mr3.token.renewal.hdfs.enabled` or `mr3.token.renewal.hive.enabled` is set to true,
+    MR3 mounts `mr3.k8s.keytab.secret` regardless of `mr3.k8s.mount.keytab.secret`.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.host.aliases</name>
+  <value></value>
+  <description>
+    Comma-separated list of pairs of a hostname and an IP address. 
+    `foo=1.1.1.1,bar=2.2.2.2` registers host `foo` as IP address 1.1.1.1 in ContainerWorker containers, and so on.
+  </description>
+</property>
+
+<!-- memory usage and auto-scaling -->
+
+<property>
+  <name>mr3.memory.usage.check.scheme</name>
+  <value>none</value>
+  <description>
+    average: calculate the average memory usage of the current window. 
+    maximum: calculate the maximum memory usage of the current window. 
+    none: do not calculate memory usage.
+  </description>
+</property>
+
+<property>
+  <name>mr3.memory.usage.check.window.length.secs</name>
+  <value>600</value>
+  <description>
+    Window length in seconds for calculating memory usage
+  </description>
+</property>
+
+<property>
+  <name>mr3.check.memory.usage.event.interval.secs</name>
+  <value>10</value>
+  <description>
+    Time interval in seconds for generating events for calculating memory usage
+  </description>
+</property>
+
+<property>
+  <name>mr3.enable.auto.scaling</name>
+  <value>false</value>
+  <description>
+    true: enable auto-scaling.
+    false: disable auto-scaling.
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.threshold.percent</name>
+  <value>80</value>
+  <description>
+    Minimum percentage of memory usage to trigger scale-out
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.threshold.percent</name>
+  <value>50</value>
+  <description>
+    Maximum percentage of memory usage to trigger scale-in
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.min.hosts</name>
+  <value>1</value>
+  <description>
+    Minimum number of nodes that should remain when performing scale-in
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.grace.period.secs</name>
+  <value>300</value>
+  <description>
+    Cooldown period in seconds after triggering scale-out
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.delay.after.scale.out.secs</name>
+  <value>60</value>
+  <description>
+    Minimum time in seconds to wait after leaving scale-out before triggering scale-in (corresponding to --scale-down-delay-after-add in Kubernetes Autoscaler)
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.grace.period.secs</name>
+  <value>300</value>
+  <description>
+    Cooldown period in seconds after triggering scale-in
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.wait.dag.finished</name>
+  <value>true</value>
+  <description>
+    true: wait until all running DAGs complete before terminating containers in the event of scale-in.
+    false: do not wait and terminate containers immediately.
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.num.increment.containers</name>
+  <value>0</value>
+  <description>
+    greater than zero: number of containers to add in the case of scale-out
+    zero or less: use mr3.auto.scale.out.threshold.percent to calculate the number of containers to add
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.num.decrement.hosts</name>
+  <value>0</value>
+  <description>
+    greater than zero: number of hosts to remove in the case of scale-in
+    zero or less: use mr3.auto.scale.in.threshold.percent to calculate the number of hosts to remove
+  </description>
+</property>
+
+</configuration>

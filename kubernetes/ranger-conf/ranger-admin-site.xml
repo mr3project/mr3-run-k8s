@@ -1,0 +1,406 @@
+<configuration>
+
+  <property>
+    <name>ranger.jpa.jdbc.driver</name>
+    <value>net.sf.log4jdbc.DriverSpy</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.jpa.jdbc.url</name>
+    <value>jdbc:log4jdbc:mysql://indigo0/ranger</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.jpa.jdbc.dialect</name>
+    <value>org.eclipse.persistence.platform.database.MySQLPlatform</value>
+    <description></description>
+  </property>
+  <property>
+    <name>ranger.jpa.audit.jdbc.dialect</name>
+    <value>org.eclipse.persistence.platform.database.MySQLPlatform</value>
+    <description></description>
+  </property>
+  <property>
+    <name>ranger.jpa.audit.jdbc.driver</name>
+    <value>net.sf.log4jdbc.DriverSpy</value>
+    <description></description>
+  </property>
+  <property>
+    <name>ranger.jpa.jdbc.user</name>
+    <value>rangeradmin</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.jpa.jdbc.password</name>
+    <value>_</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.externalurl</name>
+    <value>http://indigo20:6080</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.scheduler.enabled</name>
+    <value>true</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.audit.solr.urls</name>
+    <value>http://indigo20:6083/solr/ranger_audits</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.audit.source.type</name>
+    <value>solr</value>
+    <description />
+  </property>
+
+  <property>
+    <name>ranger.service.http.enabled</name>
+    <value>true</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.authentication.method</name>
+    <value>NONE</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.url</name>
+    <value>ldap://</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.user.dnpattern</name>
+    <value>uid={0},ou=users,dc=xasecure,dc=net</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.group.searchbase</name>
+    <value>ou=groups,dc=xasecure,dc=net</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.group.searchfilter</name>
+    <value>(member=uid={0},ou=users,dc=xasecure,dc=net)</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.group.roleattribute</name>
+    <value>cn</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.base.dn</name>
+    <value />
+    <description>LDAP base dn or search base</description>
+  </property>
+  <property>
+    <name>ranger.ldap.bind.dn</name>
+    <value />
+    <description>LDAP bind dn or manager dn</description>
+  </property>
+  <property>
+    <name>ranger.ldap.bind.password</name>
+    <value />
+    <description>LDAP bind password</description>
+  </property>
+  <property>
+    <name>ranger.ldap.default.role</name>
+    <value>ROLE_USER</value>
+  </property>
+  <property>
+    <name>ranger.ldap.referral</name>
+    <value />
+    <description>follow or ignore</description>
+  </property>
+  <property>
+    <name>ranger.ldap.ad.domain</name>
+    <value>example.com</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.ad.url</name>
+    <value />
+    <description>ldap://</description>
+  </property>
+
+  <property>
+    <name>ranger.ldap.ad.base.dn</name>
+    <value>dc=example,dc=com</value>
+    <description>AD base dn or search base</description>
+  </property>
+  <property>
+    <name>ranger.ldap.ad.bind.dn</name>
+    <value>cn=administrator,ou=users,dc=example,dc=com</value>
+    <description>AD bind dn or manager dn</description>
+  </property>
+  <property>
+    <name>ranger.ldap.ad.bind.password</name>
+    <value />
+    <description>AD bind password</description>
+  </property>
+
+  <property>
+    <name>ranger.ldap.ad.referral</name>
+    <value />
+    <description>follow or ignore</description>
+  </property>
+  <property>
+    <name>ranger.service.https.attrib.ssl.enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.attrib.keystore.keyalias</name>
+    <value>ssl-private-key</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.attrib.keystore.pass</name>
+    <value>_</value>
+  </property>
+
+  <property>
+    <name>ranger.service.host</name>
+    <value>localhost</value>
+  </property>
+
+  <property>
+    <name>ranger.service.http.port</name>
+    <value>6080</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.port</name>
+    <value>6182</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.attrib.keystore.file</name>
+    <value>/opt/mr3-run/ranger/key/hivemr3-ssl-certificate.jks</value>
+  </property>
+
+  <property>
+    <name>ranger.audit.solr.zookeepers</name>
+    <value />
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.user.searchfilter</name>
+    <value>(uid={0})</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.ldap.ad.user.searchfilter</name>
+    <value>(sAMAccountName={0})</value>
+    <description />
+  </property>
+
+  <property>
+    <name>ranger.sso.providerurl</name>
+    <value>https://127.0.0.1:8443/gateway/knoxsso/api/v1/websso</value>
+  </property>
+  <property>
+    <name>ranger.sso.publicKey</name>
+    <value />
+  </property>
+  <property>
+    <name>ranger.sso.enabled</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>ranger.sso.browser.useragent</name>
+    <value>Mozilla,chrome</value>
+  </property>
+
+  <property>
+    <name>ranger.admin.kerberos.token.valid.seconds</name>
+    <value>30</value>
+  </property>
+  <property>
+    <name>ranger.admin.kerberos.cookie.domain</name>
+    <value>indigo20</value>
+  </property>
+  <property>
+    <name>ranger.admin.kerberos.cookie.path</name>
+    <value>/</value>
+  </property>
+  <property>
+    <name>ranger.admin.kerberos.principal</name>
+    <value>rangeradmin/indigo20@RED</value>
+  </property>
+  <property>
+    <name>ranger.admin.kerberos.keytab</name>
+    <value>/opt/mr3-run/ranger/key/rangeradmin.keytab</value>
+  </property>
+  <property>
+    <name>ranger.spnego.kerberos.principal</name>
+    <value>HTTP/indigo20@RED</value>
+  </property>
+  <property>
+    <name>ranger.spnego.kerberos.keytab</name>
+    <value>/opt/mr3-run/ranger/key/spnego.service.keytab</value>
+  </property>
+  <property>
+    <name>ranger.lookup.kerberos.principal</name>
+    <value>rangerlookup/indigo20@RED</value>
+  </property>
+  <property>
+    <name>ranger.lookup.kerberos.keytab</name>
+    <value>/opt/mr3-run/ranger/key/rangerlookup.keytab</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.loginModuleName</name>
+    <value>com.sun.security.auth.module.Krb5LoginModule</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.loginModuleControlFlag</name>
+    <value>required</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.option.useTicketCache</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.option.useKeyTab</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.option.keyTab</name>
+    <value>/opt/mr3-run/ranger/key/rangeradmin.keytab</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.option.storeKey</name>
+    <value>true</value>
+  </property>
+  <property>
+    <name>xasecure.audit.jaas.Client.option.principal</name>
+    <value>rangeradmin/indigo20@RED</value>
+  </property>
+
+  <property>
+    <name>ranger.supportedcomponents</name>
+    <value>hive</value>
+  </property>
+  <property>
+    <name>ranger.downloadpolicy.session.log.enabled</name>
+    <value>false</value>
+  </property>
+
+  <property>
+    <name>ranger.kms.service.user.hdfs</name>
+    <value>hdfs</value>
+  </property>
+  <property>
+    <name>ranger.kms.service.user.hive</name>
+    <value>hive</value>
+  </property>
+
+  <property>
+    <name>ranger.audit.hive.query.visibility</name>
+    <value>true</value>
+    <description />
+  </property>
+  <property>
+    <name>ranger.credential.provider.path</name>
+    <value>jceks://file/opt/mr3-run/ranger/ranger-admin/ews/webapp/WEB-INF/classes/conf/.jceks/rangeradmin.jceks,jceks://file/opt/mr3-run/ranger/key/hivemr3-ssl-certificate.jceks</value>
+  </property>
+  <property>
+    <name>ranger.jpa.jdbc.credential.alias</name>
+    <value>ranger.db.password</value>
+    <description></description>
+  </property>
+  <property>
+    <name>ranger.service.https.attrib.keystore.credential.alias</name>
+    <value>keyStoreCredentialAlias</value>
+  </property>
+  <property>
+    <name>ranger.tomcat.ciphers</name>
+    <value />
+  </property>
+
+  <property>
+    <name>ranger.audit.solr.collection.name</name>
+    <value>ranger_audits</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.config.name</name>
+    <value>ranger_audits</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.no.shards</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.max.shards.per.node</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.no.replica</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.acl.user.list.sasl</name>
+    <value>solr,infra-solr</value>
+  </property>
+  <property>
+    <name>ranger.audit.solr.bootstrap.enabled</name>
+    <value />
+  </property>
+  <property>
+    <name>ranger.audit.solr.max.retry</name>
+    <value />
+    <description>Maximum no. of retry to setup solr</description>
+  </property>
+
+  <property>
+    <name>ranger.truststore.file</name>
+    <value>/opt/mr3-run/ranger/key/hivemr3-ssl-certificate.jks</value>
+  </property>
+  <property>
+    <name>ranger.truststore.password</name>
+    <value>_</value>
+  </property>
+  <property>
+    <name>ranger.truststore.alias</name>
+    <value>trustStoreAlias</value>
+  </property>
+  <property>
+    <name>ranger.keystore.file</name>
+    <value>/opt/mr3-run/ranger/key/hivemr3-ssl-certificate.jks</value>
+  </property>
+  <property>
+    <name>ranger.keystore.password</name>
+    <value>_</value>
+  </property>
+  <property>
+    <name>ranger.keystore.alias</name>
+    <value>keyStoreAlias</value>
+  </property>
+
+  <property>
+    <name>ranger.db.ssl.enabled</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>ranger.db.ssl.required</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>ranger.db.ssl.verifyServerCertificate</name>
+    <value>false</value>
+  </property>
+  <property>
+    <name>ranger.db.ssl.auth.type</name>
+    <value>2-way</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.attrib.client.auth</name>
+    <value>want</value>
+  </property>
+
+</configuration>

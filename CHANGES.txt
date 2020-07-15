@@ -1,0 +1,135 @@
+## MR3 
+
+Release 1.0: 2020-2-17
+  - Support DAG priority schemes (specified by `mr3.dag.priority.scheme`)
+    and Vertex priority schemes (specified by `mr3.vertex.priority.scheme`).
+  - Support secure shuffle (using SSL mode) without requiring separate configuration files.
+  - ContainerWorker tries to avoid OutOfMemoryErrors by sleeping after a TaskAttempt fails (specified by `mr3.container.task.failure.num.sleeps`).
+  - Errors from InputInitializers are properly passed to MR3Client.
+  - MasterControl supports two new commands for gracefully stopping DAGAppMaster and ContainerWorkers.
+
+Release 0.11: 2019-12-4
+  - Support autoscaling.
+
+Release 0.10: 2019-10-18
+  - TaskScheduler supports a new scheduling policy (specified by `mr3.taskattempt.queue.scheme`) which significantly improves the throughput for concurrent queries.
+  - DAGAppMaster recovers from OutOfMemoryErrors due to the exhaustion of threads.
+
+Release 0.9: 2019-7-25
+  - Each DAG uses its own ClassLoader.
+
+Release 0.8: 2019-6-22
+  - A new DAGAppMaster properly recovers DAGs that have not been completed in the previous DAGAppMaster.
+  - Fault tolerance after fetch failures works much faster.
+  - On Kubernetes, the shutdown handler of DAGAppMaster deletes all running Pods.
+  - On both Yarn and Kubernetes, MR3Client automatically connects to a new DAGAppMaster after an initial DAGAppMaster is killed.
+
+Release 0.7: 2019-4-26
+  - Resolve deadlock when Tasks fail or ContainerWorkers are killed.
+  - Support fault tolerance after fetch failures.
+  - Support node blacklisting.
+
+Release 0.6: 2019-3-21
+  - DAGAppMaster can run in its own Pod on Kubernetes.
+  - Support elastic execution of RuntimeTasks in ContainerWorkers.
+  - MR3-UI requires only Timeline Server.
+
+Release 0.5: 2019-2-18
+  - Support Kubernetes.
+  - Support the use of a built-in shuffle handler.
+
+Release 0.4: 2018-10-29
+  - Support auto parallelism for reducers with `ONE_TO_ONE` edges.
+  - Auto parallelism can use input statistics when reassigning partitions to reducers.
+  - Support ByteBuffer sharing among RuntimeTasks.
+
+Release 0.3: 2018-8-15
+  - Extend the runtime to support Hive 3.
+
+Release 0.2: 2018-5-18
+  - Support asynchronous logging (with `mr3.async.logging` in `mr3-site.xml`).
+  - Delete DAG-local directories after each DAG is finished.
+
+Release 0.1: 2018-3-31
+  - Initial release
+
+## Hive on MR3 on Hadoop
+
+Release 1.0: 2020-2-17
+
+Release 0.11: 2019-12-4
+  - Memory and CPUs for Tasks can be set to zero.
+  - Support autoscaling on Amazon EMR.
+
+Release 0.10: 2019-10-18
+  - Compaction sends DAGs to MR3, instead of MapReduce, when `hive.mr3.compaction.using.mr3` is set to true.
+  - LlapDecider asks MR3 DAGAppMaster for the number of Reducers.
+  - ConvertJoinMapJoin asks MR3 DAGAppMaster for the currrent number of Nodes to estimate the cost of Bucket Map Join.
+  - Support Hive 3.1.2 and 2.3.6.
+
+Release 0.9: 2019-7-25
+  - Each DAG uses its own ClassLoader.
+
+Release 0.8: 2019-6-26
+  - Hive 3 for MR3 supports high availability on Yarn via ZooKeeper.
+  - On both Yarn and Kubernetes, multiple HiveServer2 instances can share a common MR3 DAGAppMaster (and thus all its ContainerWorkers as well).
+
+Release 0.7: 2019-4-26
+  - Introduce a new configuration key `hive.mr3.am.task.max.failed.attempts`.
+  - Apply HIVE-20618.
+
+Release 0.6: 2019-3-21
+  - Support memory monitoring when loading hash tables for Map-side join.
+
+Release 0.5: 2019-2-18
+  - Support Hive 3.1.1 and 2.3.5.
+
+Release 0.4: 2018-10-29
+  - Support Hive 3.1.0.
+  - Hive 1 uses Tez 0.9.1.
+  - MetaStore checks the inclusion of `__HIVE_DEFAULT_PARTITION__` when retrieving column statistics.
+  - MR3JobMonitor returns immediately from MR3 DAGAppMaster when the DAG completes.
+
+Release 0.3: 2018-08-15
+  - Support Hive 3.0.0.
+  - Support query re-execution.
+  - Support per-query cache in Hive 2 and 3.
+
+Release 0.2: 2018-5-18
+  - Support LLAP IO for Hive 2.
+  - Support Hive 2.2.0.
+  - Use Hive 2.3.3 instead of Hive 2.3.2.
+
+Release 0.1: 2018-3-31
+  - Initial release
+
+## Hive on MR3 on Kubernetes
+
+Release 1.0: 2020-2-17
+  - Allow fractions for CPU resources (with `hive.mr3.resource.vcores.divisor`).
+  - Support rolling updates.
+  - Hive on MR3 can access S3 using AWS credentials (with or without Helm).
+  - On Amazon EKS, the user can use S3 instead of PersistentVolumes on EFS.
+  - Hive on MR3 can use environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to access S3 outside Amazon AWS.
+
+Release 0.11: 2019-12-4
+  - Support autoscaling on Amazon EKS.
+
+Release 0.10: 2019-10-18
+  - Support Helm charts.
+  - Compaction works okay on Kubernetes.
+
+Release 0.9: 2019-07-25
+  - LLAP I/O works properly on Kubernetes.
+  - UDFs work okay on Kubernetes.
+
+Release 0.8: 2019-6-26
+  - Support Apache Ranger.
+  - Support Timeline Server.
+
+Release 0.7: 2019-4-26
+
+Release 0.6: 2019-3-21
+
+Release 0.5: 2019-2-18
+  - Initial release for Hive on MR3 on Kubernetes

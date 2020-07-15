@@ -1,0 +1,52 @@
+name:
+  ats:
+    configMap: hivemr3-ats-configmap
+    secret: hivemr3-ats-secret
+  envConfigMap: ats-env-configmap
+  persistentVolume: workdir-ats-pv
+  persistentVolumeClaim: workdir-ats-pvc
+
+docker:
+  image: 10.1.91.17:5000/ats-2.7.7:latest
+  user: ats
+  imagePullPolicy: Always
+  imagePullSecrets: 
+
+ats:
+  # if not set, a random value will be generated
+  secretKey: 
+    
+  httpPort: 8188
+  httpsPort: 8190
+  externalIp: 10.1.91.41
+
+  createSecret: true
+
+  resources:
+    requests:
+      cpu: 1
+      memory: 4Gi
+    limits:
+      cpu: 1
+      memory: 4Gi
+  heapSize: 2048
+
+workDir:
+  # if false, the user should manually create PersistentVolumeClaim of the same name specified by the 
+  # field name.persistentVolume, and PersistentVolume if necessary
+  create: true
+  
+  isNfs: true
+  nfs:
+    server: "10.1.91.17"
+    path: "/work/nfs/mr3-run-work-dir"
+  volumeSize: 10Gi
+  volumeClaimSize: 10Gi
+  storageClassName: ""
+  # if isNfs == false, configure a volume like below.
+  # volumeStr should be indented properly with a double space (or multiple double spaces) after '\n'.
+  #   ex. okay  -> volumeStr: "hostPath:\n  path: /work/nfs/mr3-run-work-dir"
+  #   ex. wrong -> volumeStr: "hostPath:\n path: /work/nfs/mr3-run-work-dir"
+  volumeStr: 
+
+logLevel: INFO

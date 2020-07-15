@@ -1,0 +1,58 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: hive-mr3
+  region: ap-northeast-2
+  version: "1.14"
+
+vpc:
+  nat:
+    gateway: Single
+
+nodeGroups:
+  - name: mr3-master
+    instanceType: m5.xlarge
+    labels: { roles: masters }
+    ssh:
+      allow: true
+    desiredCapacity: 1
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
+      withAddonPolicies:
+        efs: true
+    preBootstrapCommands:
+      - "wget http://your.address/mysql-connector-java-8.0.12.jar"
+      - "mkdir -p /home/ec2-user/lib"
+      - "mv mysql-connector-java-8.0.12.jar /home/ec2-user/lib"
+  - name: mr3-worker
+    instanceType: mixed
+    labels: { roles: workers }
+    ssh:
+      allow: true
+    desiredCapacity: 0
+    minSize: 0
+    maxSize: 3
+    instancesDistribution:
+      instanceTypes: ["m5d.xlarge", "m5d.2xlarge"] 
+      onDemandBaseCapacity: 0
+      onDemandPercentageAboveBaseCapacity: 0
+      spotInstancePools: 1
+    iam:
+      attachPolicyARNs:
+        - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
+        - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
+      withAddonPolicies:
+        efs: true
+    tags:
+      k8s.io/cluster-autoscaler/enabled: "true"
+      k8s.io/cluster-autoscaler/hive-mr3: "owned"
+    preBootstrapCommands:
+      - "mkfs -t ext4 /dev/nvme1n1"
+      - "mkdir -p /ephemeral1"
+      - "mount /dev/nvme1n1 /ephemeral1"
+      - "chown ec2-user:ec2-user /ephemeral1"

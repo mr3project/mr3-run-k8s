@@ -1,0 +1,71 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # namespace: hivemr3
+  name: hivemr3-ats
+  labels:
+    hivemr3_app: ats
+    mr3-pod-role: master-role
+spec:
+  restartPolicy: Always
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          topologyKey: kubernetes.io/hostname
+          labelSelector:
+            matchLabels:
+              hivemr3_app: metastore
+  {{- if .Values.docker.imagePullSecrets }}
+  imagePullSecrets:
+  - name: {{ .Values.docker.imagePullSecrets }}
+  {{- end }}
+  containers:
+  - image: {{ .Values.docker.image }}
+    command: ["/opt/mr3-run/ats/timeline-service.sh"]
+    imagePullPolicy: {{ .Values.docker.imagePullPolicy }}
+    name: timelineserver
+    env:
+    - name: ATS_SECRET_KEY
+      valueFrom:
+        configMapKeyRef:
+          name: client-ats-config
+          key: ats-secret-key
+    resources:
+      requests:
+        cpu: {{ .Values.ats.resources.requests.cpu }}
+        memory: {{ .Values.ats.resources.requests.memory }}
+      limits:
+        cpu: {{ .Values.ats.resources.limits.cpu }}
+        memory: {{ .Values.ats.resources.limits.memory }}
+    ports:
+    - containerPort: 8188
+      protocol: TCP
+    - containerPort: 8190
+      protocol: TCP
+    volumeMounts:
+    - name: env-k8s-volume
+      mountPath: /opt/mr3-run/ats/env.sh
+      subPath: env.sh
+    - name: ats-conf-k8s-volume
+      mountPath: /opt/mr3-run/ats/conf/
+      readOnly: true
+    - name: ats-key-k8s-volume
+      mountPath: /opt/mr3-run/ats/key/
+      readOnly: true
+    - name: work-dir-volume
+      mountPath: /opt/mr3-run/ats/work-dir/
+  volumes:
+  - name: env-k8s-volume
+    configMap:
+      name: {{ .Values.name.envConfigMap }}
+  - name: ats-conf-k8s-volume
+    configMap:
+      name: {{ .Values.name.ats.configMap }}
+  - name: ats-key-k8s-volume
+    secret:
+      secretName: {{ .Values.name.ats.secret }}
+  - name: work-dir-volume
+    persistentVolumeClaim:
+      claimName: {{ .Values.name.persistentVolumeClaim }}

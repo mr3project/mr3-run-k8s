@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: hivemr3
+  name: hivemr3-ranger
+  labels:
+    hivemr3_app: ranger
+    mr3-pod-role: master-role
+spec:
+  restartPolicy: Never
+  hostAliases:
+  - ip: "10.1.91.4"
+    hostnames:
+    - "red0"
+  - ip: "10.1.91.17"
+    hostnames:
+    - "indigo0"
+  - ip: "10.1.91.41"
+    hostnames:
+    - "indigo20"
+  containers:
+  - image: 10.1.91.17:5000/ranger
+    command: ["/opt/mr3-run/ranger/start-solr.sh"]
+    imagePullPolicy: Always
+    name: solr
+    resources:
+      requests:
+        cpu: 1
+        memory: 4Gi
+      limits:
+        cpu: 1
+        memory: 4Gi
+    ports:
+    - containerPort: 6083
+      protocol: TCP
+    volumeMounts:
+    - name: conf-k8s-volume
+      mountPath: /opt/mr3-run/ranger/conf/
+      readOnly: true
+    - name: key-k8s-volume
+      mountPath: /opt/mr3-run/ranger/key/
+      readOnly: true
+    - name: work-dir-volume
+      mountPath: /opt/mr3-run/ranger/work-dir/
+  - image: 10.1.91.17:5000/ranger
+    command: ["/opt/mr3-run/ranger/start-ranger.sh"]
+    imagePullPolicy: Always
+    name: ranger
+    resources:
+      requests:
+        cpu: 1
+        memory: 4Gi
+      limits:
+        cpu: 1
+        memory: 4Gi
+    ports:
+    - containerPort: 6080
+      protocol: TCP
+    - containerPort: 6182
+      protocol: TCP
+    volumeMounts:
+    - name: conf-k8s-volume
+      mountPath: /opt/mr3-run/ranger/conf/
+      readOnly: true
+    - name: key-k8s-volume
+      mountPath: /opt/mr3-run/ranger/key/
+      readOnly: true
+    - name: work-dir-volume
+      mountPath: /opt/mr3-run/ranger/work-dir/
+  volumes:
+  - name: conf-k8s-volume
+    configMap:
+      name: hivemr3-ranger-conf-configmap
+  - name: key-k8s-volume
+    secret:
+      secretName: hivemr3-ranger-secret
+  - name: work-dir-volume
+    persistentVolumeClaim:
+      claimName: workdir-pvc

@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License. See accompanying LICENSE file.
+-->
+<configuration>
+
+<property>
+  <name>yarn.timeline-service.leveldb-timeline-store.path</name>
+  <value>/opt/mr3-run/ats/work-dir/ats</value>
+</property>
+
+<property>
+  <name>yarn.http.policy</name>
+  <value>HTTP_ONLY</value>
+</property>
+<property>
+  <name>yarn.timeline-service.webapp.https.address</name>
+  <value>${yarn.timeline-service.hostname}:8190</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-cross-origin.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.type</name>
+  <value>kerberos</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.kerberos.principal</name>
+  <value>HTTP/indigo20@RED</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.kerberos.keytab</name>
+  <value>/opt/mr3-run/ats/key/spnego.service.keytab</value>
+</property>
+
+<property>
+  <name>yarn.acl.enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.admin.acl</name>
+  <value> </value>
+</property>
+
+</configuration>

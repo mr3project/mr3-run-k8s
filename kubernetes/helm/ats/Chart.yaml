@@ -1,0 +1,7 @@
+apiVersion: v1
+name: ats
+version: 1.0.0
+description: YARN Timeline Server for mr3
+home: https://datamonad.com
+sources:
+  - https://github.com/mr3-project/timeline-mr3
