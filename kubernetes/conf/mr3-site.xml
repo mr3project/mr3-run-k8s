@@ -167,13 +167,11 @@
 
 <property>
   <name>mr3.am.worker.mode</name>
-  <!-- <value>local</value> -->
   <value>kubernetes</value>
 </property>
 
 <property>
   <name>mr3.container.resourcescheduler.type</name>
-  <!-- <value>local</value> -->
   <value>kubernetes</value>
 </property>
 
@@ -330,12 +328,10 @@
   <value>/opt/mr3-run/work-local-dir</value>
 </property>
 
-<!--
 <property>
   <name>mr3.k8s.pod.master.hostpaths</name>
   <value></value>
 </property>
- -->
 
 <!--
 <property>
@@ -373,7 +369,7 @@
 
 <property>
   <name>mr3.k8s.mount.keytab.secret</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <property>

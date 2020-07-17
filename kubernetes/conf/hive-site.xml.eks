@@ -1032,7 +1032,12 @@
 
 <property>
   <name>hive.mr3.container.max.java.heap.fraction</name>
-  <value>0.8f</value>
+  <value>0.7f</value>
+</property>
+
+<property>
+  <name>hive.mr3.resource.vcores.divisor</name>
+  <value>1</value>
 </property>
 
 <property>
@@ -1092,7 +1097,7 @@
 
 <property>
   <name>hive.mr3.am.task.max.failed.attempts</name>
-  <value>2</value>
+  <value>3</value>
 </property>
 
 <property>
@@ -1113,6 +1118,13 @@
 <property>
   <name>hive.tez.llap.min.reducer.per.executor</name>
   <value>0.2f</value>
+</property>
+
+<!-- speculative execution 1.1 -->
+
+<property>
+  <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
+  <value>100</value>
 </property>
 
 <!-- Kubernetes -->
@@ -1174,6 +1186,18 @@
 
 <property>
   <name>hive.mr3.compaction.using.mr3</name>
+  <value>true</value>
+</property>
+
+<!-- Hive 4 -->
+
+<property>
+  <name>hive.metastore.warehouse.external.dir</name>
+  <value>${hive.warehouse.dir}</value>
+</property>
+
+<property>
+  <name>hive.acid.direct.insert.enabled</name>
   <value>true</value>
 </property>
 

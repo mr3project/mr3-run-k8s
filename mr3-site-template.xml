@@ -778,7 +778,8 @@
   <name>mr3.task.am.heartbeat.duration.interval.ms</name>
   <value>15000</value>
   <description>
-    Time interval in milliseconds for sending durations in heartbeats from TaskAttempts 
+    Time interval in milliseconds for sending durations in heartbeats from TaskAttempts.
+    It also determines the granularity of updating the duration of TaskAttempts in speculative execution.
   </description>
 </property>
 

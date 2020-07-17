@@ -58,7 +58,7 @@
  
 <property>
   <name>mr3.am.task.max.failed.attempts</name>
-  <value>2</value>
+  <value>3</value>
 </property>
 
 <property>
@@ -118,7 +118,7 @@
 
 <property>
   <name>mr3.heartbeat.task.timeout.ms</name>
-  <value>60000</value>
+  <value>120000</value>
 </property>
 
 <property>
@@ -138,7 +138,7 @@
 
 <property>
   <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>300000</value>
+  <value>120000</value>
 </property>
 
 <!-- Kubernetes -->
@@ -258,6 +258,16 @@
 </property>
 
 <property>
+  <name>mr3.k8s.pod.cpu.cores.max.multiplier</name>
+  <value>1.0d</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.memory.max.multiplier</name>
+  <value>1.0d</value>
+</property>
+
+<property>
   <name>mr3.k8s.api.server.url</name>
   <value>https://kubernetes.default.svc</value>
 </property>
@@ -310,6 +320,11 @@
   <value></value>
 </property>
 
+<property>
+  <name>mr3.convert.container.address.host.name</name>
+  <value>false</value>
+</property>
+
 <!-- no instance storage for master Pod -->
 
 <property>
@@ -322,21 +337,16 @@
   <value></value>
 </property>
 
-<!-- no instance storage for worker Pod -->
+<!-- with no instance storage for worker Pod -->
 
 <!--
 <property>
   <name>mr3.k8s.pod.worker.emptydirs</name>
   <value>/opt/mr3-run/work-local-dir</value>
 </property>
-
-<property>
-  <name>mr3.k8s.pod.worker.hostpaths</name>
-  <value></value>
-</property>
  -->
 
-<!-- instance storage mounted on /ephemeral1 for worker Pod -->
+<!-- with instance storage mounted on /ephemeral1 for worker Pod -->
 
 <property>
   <name>mr3.k8s.pod.worker.emptydirs</name>
@@ -366,6 +376,31 @@
 </property>
 
 <property>
+  <name>mr3.k8s.mount.keytab.secret</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.initial.delay.secs</name>
+  <value>30</value>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.period.secs</name>
+  <value>30</value>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.initial.delay.secs</name>
+  <value>30</value>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.period.secs</name>
+  <value>60</value>
+</property>
+
+<property>
   <name>mr3.app.history.logging.enabled</name>
   <value>false</value>
 </property>
@@ -383,6 +418,11 @@
 <property>
   <name>mr3.container.termination.checker.timeout.ms</name>
   <value>300000</value>
+</property>
+
+<property>
+  <name>mr3.container.task.failure.num.sleeps</name>
+  <value>2</value>
 </property>
 
 <!-- auto-scaling -->
@@ -459,4 +499,28 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>mr3.am.task.concurrent.run.threshold.percent</name>
+  <value>95</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.security.context.sysctls</name>
+  <value>net.core.somaxconn=16384</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.init.container.image</name>
+  <value>busybox</value>
+</property>
+
+<property>
+  <name>mr3.k8s.shufflehandler.process.memory.mb</name>
+  <value>2048</value>
+</property>
+
+<property>
+  <name>mr3.k8s.shuffle.process.ports</name>
+  <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610</value>
+</property>
 </configuration>
