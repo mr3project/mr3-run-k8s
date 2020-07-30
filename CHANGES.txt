@@ -73,6 +73,9 @@ Release 0.1: 2018-3-31
 
 ## Hive on MR3 on Hadoop
 
+Release 1.2: 2020-9-19 (???)
+  - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
+
 Release 1.1: 2020-7-19
   - CrossProductHandler asks MR3 DAGAppMaster to set TEZ_CARTESIAN_PRODUCT_MAX_PARALLELISM (Cf. HIVE-16690, Hive 3/4).
   - Hive 4 on MR3 is stable (currently using 4.0.0-SNAPSHOT).

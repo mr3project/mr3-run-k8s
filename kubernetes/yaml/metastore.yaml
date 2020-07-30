@@ -77,6 +77,17 @@ spec:
         ports:
         - containerPort: 9850
           protocol: TCP
+        # uncomment to use readiness/liveness probes
+        # readinessProbe:
+        #   tcpSocket:
+        #     port: 9850
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 60
+        # livenessProbe:
+        #   tcpSocket:
+        #     port: 9850
+        #   initialDelaySeconds: 30
+        #   periodSeconds: 60
         volumeMounts:
         - name: env-k8s-volume
           mountPath: /opt/mr3-run/env.sh

@@ -113,7 +113,6 @@ TOKEN_RENEWAL_HIVE_ENABLED={{.Values.hive.tokenRenewalEnabled}}
 # For Timeline Server, Ranger, see their configuration files
 HIVE_SERVER2_SSL_TRUSTSTORE=$KEYTAB_MOUNT_DIR/{{.Values.hive.sslTruststore}}
 HIVE_SERVER2_SSL_TRUSTSTORETYPE={{.Values.hive.sslTruststoreType}}
-HIVE_SERVER2_SSL_TRUSTSTOREPASS={{.Values.hive.sslTruststorePass}}
 
 #
 # Step 6. Reading from a secure HDFS

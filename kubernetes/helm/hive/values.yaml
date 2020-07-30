@@ -85,7 +85,6 @@ hive:
   # file name under dir.keytab
   sslTruststore: hivemr3-ssl-certificate.jks
   sslTruststoreType: jks
-  sslTruststorePass: 
 
   resources:
     requests:

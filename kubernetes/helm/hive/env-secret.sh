@@ -12,7 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+HIVE_SERVER2_SSL_TRUSTSTOREPASS=
+export HADOOP_CREDSTORE_PASSWORD=
+
 # Here the user can define additional environment variables using 'EXPORT', e.g.:
 #   export FOO=bar
-
 

@@ -759,7 +759,7 @@
 
 <property> 
   <name>hive.security.authorization.sqlstd.confwhitelist.append</name>
-  <value>hive\.querylog\.location.*</value>
+  <value>hive\.querylog\.location.*|hive\.mr3\.map\.task.*|hive\.mr3\.reduce\.task.*</value>
 </property>
 
 <!-- Metastore -->

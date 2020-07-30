@@ -58,6 +58,7 @@ function check_if_output_files_already_exist {
 
 function generate_keystore_password {
     PASSWORD=$(cat /proc/sys/kernel/random/uuid)
+    export HADOOP_CREDSTORE_PASSWORD=$PASSWORD
     echo -e "Generated keystore password: $PASSWORD" >&2
 }
 
@@ -128,6 +129,7 @@ function main {
     init
     generate_keystore
     generate_keystore_credential_file
+    unset HADOOP_CREDSTORE_PASSWORD
 }
 
 main $@
