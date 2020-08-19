@@ -52,10 +52,19 @@ fi
 
 kubectl create -f $YAML_DIR/cluster-role.yaml
 kubectl create -f $YAML_DIR/hive-role.yaml
+kubectl create -f $YAML_DIR/master-role.yaml
+kubectl create -f $YAML_DIR/worker-role.yaml
 kubectl create -f $YAML_DIR/hive-service-account.yaml
+kubectl create -f $YAML_DIR/master-service-account.yaml
+kubectl create -f $YAML_DIR/worker-service-account.yaml
 
 kubectl create clusterrolebinding hive-clusterrole-binding --clusterrole=node-reader --serviceaccount=$MR3_NAMESPACE:$MR3_SERVICE_ACCOUNT
 kubectl create rolebinding hive-role-binding --role=hive-role --serviceaccount=$MR3_NAMESPACE:$MR3_SERVICE_ACCOUNT -n $MR3_NAMESPACE
+
+kubectl create clusterrolebinding master-clusterrole-binding --clusterrole=node-reader --serviceaccount=$MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT
+kubectl create rolebinding master-role-binding --role=master-role --serviceaccount=$MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT -n $MR3_NAMESPACE
+
+kubectl create rolebinding worker-role-binding --role=worker-role --serviceaccount=$MR3_NAMESPACE:$WORKER_SERVICE_ACCOUNT -n $MR3_NAMESPACE
 
 # reuse CLIENT_TO_AM_TOKEN_KEY if already defined; use a random UUID otherwise
 RANDOM_CLIENT_TO_AM_TOKEN_KEY=$(cat /proc/sys/kernel/random/uuid)
@@ -82,6 +91,10 @@ kubectl create -n $MR3_NAMESPACE configmap client-am-config \
   --from-literal=timestamp=$MR3_APPLICATION_ID_TIMESTAMP \
   --from-literal=mr3sessionid=$MR3_SHARED_SESSION_ID \
   --from-literal=ats-secret-key=$ATS_SECRET_KEY
+
+if [ $CREATE_PROMETHEUS_SERVICE = true ]; then
+  kubectl create -f $YAML_DIR/prometheus-service.yaml
+fi
 
 kubectl create -f $YAML_DIR/hive.yaml
 kubectl create -f $YAML_DIR/hiveserver2-service.yaml

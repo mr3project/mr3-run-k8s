@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,7 +21,8 @@ function mr3_setup_update_hadoop_opts {
     local_mode=$1
 
     MR3_KUBERNETES_OPTS="-Dmr3.k8s.namespace=$MR3_NAMESPACE \
--Dmr3.k8s.pod.master.serviceaccount=$MR3_SERVICE_ACCOUNT \
+-Dmr3.k8s.pod.master.serviceaccount=$MASTER_SERVICE_ACCOUNT \
+-Dmr3.k8s.pod.worker.serviceaccount=$WORKER_SERVICE_ACCOUNT \
 -Dmr3.k8s.pod.master.image=$DOCKER_HIVE_IMG \
 -Dmr3.k8s.pod.worker.image=$DOCKER_HIVE_WORKER_IMG \
 -Dmr3.k8s.pod.master.user=$DOCKER_USER -Dmr3.k8s.master.working.dir=$REMOTE_WORK_DIR \

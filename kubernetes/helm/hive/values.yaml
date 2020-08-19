@@ -12,6 +12,9 @@ name:
     serviceAccount: hive-service-account
     configMap: hivemr3-conf-configmap
     secret: hivemr3-keytab-secret
+  mr3:
+    masterServiceAccount: master-service-account
+    workerServiceAccount: worker-service-account
   metastore:
     service: metastore
   envConfigMap: env-configmap
@@ -24,7 +27,7 @@ docker:
   image: mr3project/hive3:1.1
   containerWorkerImage: mr3project/hive3:1.1
   # do not use a composite name like hive@RED, hive/red0@RED
-  user: hive
+  user: root
   imagePullPolicy: IfNotPresent
   imagePullSecrets: 
 
@@ -126,6 +129,11 @@ workDir:
   #   ex. okay  -> volumeStr: "hostPath:\n  path: /work/nfs/mr3-run-work-dir"
   #   ex. wrong -> volumeStr: "hostPath:\n path: /work/nfs/mr3-run-work-dir"
   volumeStr: "hostPath:\n  path: /data1/gla/workdir"
+
+prometheus:
+  create: false
+  port: 9890
+  externalIp: 12.34.56.78
 
 logLevel: INFO
 

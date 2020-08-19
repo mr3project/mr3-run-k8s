@@ -831,7 +831,7 @@
 
 <property>
   <name>hive.users.in.admin.role</name>
-  <value>hive</value>
+  <value>root,hive</value>
 </property>
 
 <property>
@@ -1187,7 +1187,11 @@
 
 <property>
   <name>hive.cluster.delegation.token.renew-interval</name>
-  <value>86400000</value>
+  <value>1</value>
+  <description>
+    Hive 3 and Hive 4: The unit is days, not milli-seconds.
+    Hive 2: The unit is milli-seconds.
+  </description>
 </property>
 
 <!-- Compaction -->

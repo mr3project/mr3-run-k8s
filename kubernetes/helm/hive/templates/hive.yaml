@@ -102,8 +102,10 @@ spec:
           readOnly: true
         - name: am-local-k8s-volume
           mountPath: {{ .Values.dir.base }}/am-local-dir
+        {{- if .Values.workDir.create }}
         - name: work-dir-volume
           mountPath: {{ .Values.dir.persistentVolumeClaim }}
+        {{- end }}
         - name: hiveserver2-ranger-policy-k8s-volume
           mountPath: {{ .Values.dir.base }}/hiveserver2-ranger-policycache
       volumes:
@@ -121,8 +123,10 @@ spec:
           secretName: {{ .Values.name.hive.secret }}
       - name: am-local-k8s-volume
         emptyDir: {} 
+      {{- if .Values.workDir.create }}
       - name: work-dir-volume
         persistentVolumeClaim:
           claimName: {{ .Values.name.persistentVolumeClaim }}
+      {{- end }}
       - name: hiveserver2-ranger-policy-k8s-volume
         emptyDir: {}

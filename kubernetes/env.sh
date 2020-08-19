@@ -52,7 +52,7 @@ DOCKER_ATS_IMG=10.1.91.17:5000/ats-2.7.7:latest
 DOCKER_ATS_FILE=Dockerfile
 
 # do not use a composite name like hive@RED, hive/red0@RED (which results in NPE in ContainerWorker)
-DOCKER_USER=hive
+DOCKER_USER=root
 
 #
 # Step 2. Configuring Pods
@@ -60,6 +60,8 @@ DOCKER_USER=hive
 
 MR3_NAMESPACE=hivemr3
 MR3_SERVICE_ACCOUNT=hive-service-account
+MASTER_SERVICE_ACCOUNT=master-service-account
+WORKER_SERVICE_ACCOUNT=worker-service-account
 CONF_DIR_CONFIGMAP=hivemr3-conf-configmap
 
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.
@@ -86,6 +88,7 @@ CREATE_ATS_SECRET=true      # specifies whether or not to create a Secret from a
 # HIVE_METASTORE_PORT = port for Hive Metastore 
 # HIVE_DATABASE_NAME = database name in Hive Metastore 
 # HIVE_WAREHOUSE_DIR = directory for the Hive warehouse 
+
 HIVE_DATABASE_HOST=indigo0
 
 # if an existing Metastore is used 
@@ -159,6 +162,8 @@ TOKEN_RENEWAL_HDFS_ENABLED=true
 #
 # Step 7. Additional settings
 #
+
+CREATE_PROMETHEUS_SERVICE=false
 
 # Logging level 
 # TODO: Currently LOG_LEVEL does not update the logging level of MR3.

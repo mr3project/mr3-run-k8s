@@ -105,8 +105,10 @@ spec:
         - name: key-k8s-volume
           mountPath: {{ .Values.dir.keytab }}
           readOnly: true
+        {{- if .Values.workDir.create }}
         - name: work-dir-volume
           mountPath: {{ .Values.dir.persistentVolumeClaim }}
+        {{- end }}
         {{- if .Values.metastore.mountLib }}
         - name: work-dir-volume
           mountPath: {{ .Values.dir.base }}/lib
@@ -129,9 +131,11 @@ spec:
       - name: key-k8s-volume
         secret:
           secretName: {{ .Values.name.hive.secret }}
+      {{- if .Values.workDir.create }}
       - name: work-dir-volume
         persistentVolumeClaim:
           claimName: {{ .Values.name.persistentVolumeClaim }}
+      {{- end }}
       {{- if .Values.metastore.hostLib }}
       - name: host-lib-volume
         hostPath:

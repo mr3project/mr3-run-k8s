@@ -222,6 +222,7 @@
 <!-- These variables are all set in mr3/mr3-setup.sh (for Kubernetes):
   mr3.k8s.namespace
   mr3.k8s.pod.master.serviceaccount
+  mr3.k8s.pod.worker.serviceaccount
   mr3.k8s.pod.master.image
   mr3.k8s.pod.master.user
   mr3.k8s.master.working.dir
@@ -414,7 +415,7 @@
 
 <property>
   <name>mr3.container.task.failure.num.sleeps</name>
-  <value>2</value>
+  <value>0</value>
 </property>
 
 <!-- auto-scaling -->
@@ -508,6 +509,38 @@
   <name>mr3.k8s.shuffle.process.ports</name>
   <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610</value>
   <!-- <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610,16500,16510,16520,16530,16540,16550,16560,16570</value> -->
+</property>
+
+<!-- Prometheus -->
+
+<property>
+  <name>mr3.prometheus.enable.metrics</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.enable.jvm.metrics</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.k8s.master.pod.additional.labels</name>
+  <value>hivemr3_aux=prometheus</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.worker.enable.metrics</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.worker.enable.jvm.metrics</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.worker.httpserver.port</name>
+  <value>9890</value>
 </property>
 
 </configuration>

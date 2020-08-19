@@ -39,6 +39,8 @@ DOCKER_USER={{.Values.docker.user}}
 
 MR3_NAMESPACE={{.Release.Namespace}}
 MR3_SERVICE_ACCOUNT={{.Values.name.hive.serviceAccount}}
+MASTER_SERVICE_ACCOUNT={{.Values.name.mr3.masterServiceAccount}}
+WORKER_SERVICE_ACCOUNT={{.Values.name.mr3.workerServiceAccount}}
 CONF_DIR_CONFIGMAP={{.Values.name.hive.configMap}}
 
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.

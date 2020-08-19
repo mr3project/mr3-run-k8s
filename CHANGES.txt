@@ -1,5 +1,11 @@
 ## MR3 
 
+Release 1.2: 2020-9-19 (???)
+  - DAGAppMaster and ContainerWorkers can publish Prometheus metrics.
+  - The default value of mr3.container.task.failure.num.sleeps is 0.
+  - Reduce the log size of DAGAppMaster and ContainerWorker.
+  - TaskScheduler can process about twice as many events (`TaskSchedulerEventTaskAttemptFinished`) per unit time as in MR3 1.1, thus doubling the maximum cluster size that MR3 can manage. 
+
 Release 1.1: 2020-7-19
   - Support DAG scheduling schemes (specified by `mr3.dag.queue.scheme`).
   - Optimize DAGAppMaster by freeing memory for messages to Tasks when fault tolerance is disabled (with `mr3.am.task.max.failed.attempts` set to 1).
@@ -130,6 +136,10 @@ Release 0.1: 2018-3-31
   - Initial release
 
 ## Hive on MR3 on Kubernetes
+
+Release 1.2: 2020-9-19 (???)
+  - MR3 creates three ServiceAccounts: 1) for Metastore and HiveSever2 Pods; 2) for DAGAppMaster Pod; 3) for ContainerWorker Pods. The user can use IAM roles for ServiceAccounts.
+  - Docker containers start as `root`. In `kubernetes/env.sh`, `DOCKER_USER` should be set to `root` and the service principal name in `HIVE_SERVER2_KERBEROS_PRINCIPAL` should be `root`.
 
 Release 1.1: 2020-7-19
   - Ranger uses a local directory (emptyDir volume) for logging.
