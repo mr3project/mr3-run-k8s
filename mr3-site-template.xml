@@ -707,22 +707,11 @@
 </property>
 
 <property>
-  <name>mr3.container.elastic.execution.memory.threshold.percent</name>
-  <value>0</value>
-  <description>
-    Maximum percentage of heap memory that is safe for accepting new TaskAttempts. 
-    For example, a value of 90 means that once the heap usage exceeds 90 percent of the total heap memory, ContainerWorker temporarily stops requesting new TaskAttempts. 
-    A value of 0 disables the elastic execution. Not used if mr3.container.combine.taskattempts is set to false.
-  </description>
-</property>
-
-<property>
   <name>mr3.container.elastic.execution.memory.commit.ratio</name>
   <value>1.0d</value>
   <description>
     Multiplier for memory to be allocated to each TaskAttempt. 
     For exmple, a value of 1.5 means that a TaksAttempt created with memory resource of 4GB is actually allocated 6GB of memory in a ContainerWorker. 
-    When overcommiting memory with a value larger than 1.0, use only in conjunction with `mr3.container.elastic.execution.memory.threshold.percent` strictly smaller than 100.
   </description>
 </property>
 
@@ -735,6 +724,15 @@
     For example, if set to 2, the sequence is:
     allocate 1GB, sleep 60 seconds, allocate 1GB, sleep 60 seconds, allocate 1GB.
     If set to 0, do not sleep and do not try to allocate a memory block.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.use.framework.counters</name>
+  <value>false</value>
+  <description>
+    true: collect framework counters (on garbage collection and process statistics) in ContainerWorkers.
+    false: do not collect framework counters.
   </description>
 </property>
 

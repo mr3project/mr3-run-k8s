@@ -915,6 +915,16 @@
 </property>
     
 <property>
+  <name>hive.llap.io.allocator.mmap</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.llap.io.allocator.mmap.path</name>
+  <value>/ephemeral1/llapio</value>
+</property>
+
+<property>
   <name>hive.llap.io.memory.size</name>
   <value>72Gb</value>
 </property>
@@ -1202,22 +1212,6 @@
 </property>
 
 <!-- S3 -->
-
-<property>
-  <name>fs.s3a.connection.ssl.enabled</name>
-  <value>false</value>
-</property>
-
-<property>
-  <name>fs.s3a.connection.maximum</name>
-  <value>250</value>
-</property>
-
-<property>
-  <name>fs.s3a.threads.core</name>
-  <value>250</value>
-  <description>The value of fs.s3a.threads.max is 256.</description>
-</property>
 
 <property>
   <name>hive.exec.input.listing.max.threads</name>

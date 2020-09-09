@@ -359,6 +359,11 @@
   <value>/ephemeral1</value>
 </property>
 
+<property>
+  <name>mr3.k8s.pod.worker.additional.hostpaths</name>
+  <value></value>
+</property>
+
 <!--
 <property>
   <name>mr3.k8s.worker.local.dir.persistentvolumes</name>

@@ -24,7 +24,7 @@
 
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.security.auth.useSubjectCredsOnly=false -Djava.security.auth.login.config=/opt/mr3-run/conf/jgss.conf -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf -Dsun.security.jgss.debug=true -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
 
 <property>
@@ -92,7 +92,7 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
   <!-- -XX:SoftRefLRUPolicyMSPerMB=25 --> 
 </property>
 
@@ -344,6 +344,11 @@
 <property>
   <name>mr3.k8s.pod.worker.hostpaths</name>
   <value>/data1/k8s,/data2/k8s,/data3/k8s,/data4/k8s,/data5/k8s,/data6/k8s</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.additional.hostpaths</name>
+  <value></value>
 </property>
 
 <property>

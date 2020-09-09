@@ -100,6 +100,7 @@ function hive_setup_server2_update_hadoop_opts {
 -Djava.security.auth.login.config=$REMOTE_BASE_DIR/conf/jgss.conf \
 -Djava.security.krb5.conf=$REMOTE_BASE_DIR/conf/krb5.conf \
 -Dsun.security.jgss.debug=true"
+    # TODO: unnecessary because of hive_setup_init_run_configs --> hive_setup_metastore_update_hadoop_opts 
     if [ -f $HIVE_SERVER2_SSL_TRUSTSTORE ]; then
       export HADOOP_OPTS="$HADOOP_OPTS \
 -Djavax.net.ssl.trustStore=$HIVE_SERVER2_SSL_TRUSTSTORE \

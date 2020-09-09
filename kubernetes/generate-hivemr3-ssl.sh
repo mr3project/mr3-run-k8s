@@ -104,7 +104,7 @@ function init {
 function generate_keystore {
     echo -e "\n# Generating a keystore ($MR3_SSL_KEYSTORE) #" >&2
 
-    keytool -genkeypair -alias ssl-private-key -keyalg RSA -dname "CN=hivemr3-ssl" -keypass $PASSWORD \
+    keytool -genkeypair -alias ssl-private-key -keyalg RSA -dname "CN=red0" -keypass $PASSWORD \
       -ext san=$SUBJECT_ALTERNATIVE_NAME -validity $VALID_DAYS -storetype jks -keystore $MR3_SSL_KEYSTORE \
       -storepass $PASSWORD
 }

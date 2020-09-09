@@ -776,7 +776,7 @@
 
 <property>
   <name>javax.jdo.option.ConnectionURL</name>
-  <value>jdbc:mysql://${hive.database.host}/${hive.database.name}?createDatabaseIfNotExist=true</value>
+  <value>jdbc:mysql://${hive.database.host}/${hive.database.name}?createDatabaseIfNotExist=true&amp;useSSL=false</value>
   <!-- <value>jdbc:mysql://${hive.database.host}/${hive.database.name}?createDatabaseIfNotExist=true&amp;useSSL=true&amp;verifyServerCertificate=true</value> -->
 </property>
 
@@ -913,7 +913,17 @@
   <name>hive.llap.io.enabled</name>
   <value>false</value>
 </property>
-    
+
+<property>
+  <name>hive.llap.io.allocator.mmap</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.llap.io.allocator.mmap.path</name>
+  <value>/data1/llap</value>
+</property>
+
 <property>
   <name>hive.llap.io.memory.size</name>
   <value>72Gb</value>

@@ -23,6 +23,7 @@ function run_worker {
     echo -e "\n# Running ContainerWorker: $@ #\n" >&2
 
     JAVA=$JAVA_HOME/bin/java
+    # alternatively these options can be added to mr3.am.launch.cmd-opts
     JAVA_OPTS="-Djavax.security.auth.useSubjectCredsOnly=false \
 -Djava.security.auth.login.config=/opt/mr3-run/conf/jgss.conf \
 -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf \

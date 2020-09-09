@@ -1,6 +1,8 @@
 ## MR3 
 
 Release 1.2: 2020-9-19 (???)
+  - Introduce `mr3.k8s.pod.worker.additional.hostpaths` to mount additional hostPath volumes.
+  - `mr3.k8s.worker.total.max.memory.gb` and `mr3.k8s.worker.total.max.cpu.cores` work okay when autoscaling is enabled.
   - DAGAppMaster and ContainerWorkers can publish Prometheus metrics.
   - The default value of mr3.container.task.failure.num.sleeps is 0.
   - Reduce the log size of DAGAppMaster and ContainerWorker.
@@ -80,6 +82,7 @@ Release 0.1: 2018-3-31
 ## Hive on MR3 on Hadoop
 
 Release 1.2: 2020-9-19 (???)
+  - Compute the memory size of ContainerWorker correctly when `hive.llap.io.allocator.mmap` is set to true.
   - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
 
 Release 1.1: 2020-7-19

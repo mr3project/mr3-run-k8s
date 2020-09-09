@@ -99,7 +99,7 @@ HIVE_METASTORE_HOST=hivemr3-metastore-0.metastore.hivemr3.svc.cluster.local
 HIVE_METASTORE_PORT=9850
 HIVE_DATABASE_NAME=hive5mr3
 
-# path to the data warehouse, e.g., hdfs://red0:8020/user/hive/warehouse
+# path to the data warehouse, e.g., hdfs://red0:8020/user/hive/warehouse, s3a://mr3-bucket/warehouse
 HIVE_WAREHOUSE_DIR=/opt/mr3-run/work-dir/warehouse/
 
 # Specifies hive.metastore.sasl.enabled 

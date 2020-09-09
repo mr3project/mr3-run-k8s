@@ -51,6 +51,8 @@ MR3_RANGER_MYSQL_CERTIFICATE=/home/hive/mr3-run/kubernetes/mr3-ranger-mysql.cert
 MR3_METASTORE_MYSQL_CERTIFICATE=/home/hive/mr3-run/kubernetes/mr3-metastore.cert
 # Certificate for connecting to KMS
 MR3_KMS_CERTIFICATE=/home/hive/mr3-run/kubernetes/mr3-kms.cert
+# Certificate for connecting to S3
+MR3_S3_CERTIFICATE=/home/hive/mr3-run/kubernetes/s3-public.cert
 
 #
 # create_hivemr3_ssl_certificate()
@@ -83,7 +85,7 @@ function import_certificate {
 function import_certificates {
     keystore=$1
 
-    certificates="$MR3_RANGER_MYSQL_CERTIFICATE $MR3_METASTORE_MYSQL_CERTIFICATE $MR3_KMS_CERTIFICATE"
+    certificates="$MR3_RANGER_MYSQL_CERTIFICATE $MR3_METASTORE_MYSQL_CERTIFICATE $MR3_KMS_CERTIFICATE $MR3_S3_CERTIFICATE"
     index=0
     for certificate in $certificates; do
       if [ -f $certificate ]; then
