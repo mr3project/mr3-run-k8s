@@ -297,12 +297,22 @@
 </property>
 
 <property>
+  <name>mr3.k8s.pod.master.toleration.specs</name>
+  <value></value>
+</property>
+
+<property>
   <name>mr3.k8s.master.pod.affinity.match.label</name>
   <value>hivemr3_app=hiveserver2</value>
 </property>
 
 <property>
   <name>mr3.k8s.pod.worker.node.selector</name>
+  <value></value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.toleration.specs</name>
   <value></value>
 </property>
 

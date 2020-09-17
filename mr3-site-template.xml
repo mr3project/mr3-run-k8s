@@ -1086,6 +1086,26 @@
 </property>
 
 <property>
+  <name>mr3.k8s.pod.master.toleration.specs</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of toleration specifications for DAGAppMaster Pod.
+    The format of each entry is [key]:[operator]:[value]:[effect]:[toleration in seconds]
+    where [value] and [toleration in seconds] are optional.
+    Here are a few valid examples:
+      `hello:Equal:world:NoSchedule`
+      `hello:Exists::NoSchedule`
+      `hello:Equal:world:NoExecute:300`
+      `hello:Exists::NoExecute:300`
+    Note that a wrong specification fails the creation of DAGAppMaster Pod.
+    For example, `foo:Equal::NoSchedule` is a wrong specification
+    because [value] must be empty when [operator] is `Exists`.
+    (Cf. `foo:Equal::NoSchedule` is okay.)
+  </description>
+</property>
+
+<property>
   <name>mr3.k8s.pod.worker.security.context.sysctls</name>
   <value></value>
   <description>
@@ -1167,7 +1187,8 @@
   <name>mr3.k8s.pod.worker.emptydirs</name>
   <value></value>
   <description>
-    Comma-separated list of directories where emptyDir volumes are mounted for ContainerWorkers
+    Comma-separated list of directories where emptyDir volumes are mounted for ContainerWorkers.
+    These volumes become local directories where intermediate data is written.
   </description>
 </property>
 
@@ -1175,7 +1196,16 @@
   <name>mr3.k8s.pod.worker.hostpaths</name>
   <value></value>
   <description>
-    Comma-separated list of directories (on each node) to which hostPath volumes point for ContainerWorkers
+    Comma-separated list of directories (on each node) to which hostPath volumes point for ContainerWorkers.
+    These volumes become local directories where intermediate data is written.
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.additional.hostpaths</name>
+  <value></value>
+  <description>
+    Comma-separated list of additional directories (on each node) to which hostPath volumes point for ContainerWorkers
   </description>
 </property>
 
@@ -1184,6 +1214,16 @@
   <value></value>
   <description>
     Node selector for ContainerWorker Pods
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.toleration.specs</name>
+  <value>
+  </value>
+  <description>
+    Comma-separated list of toleration specifications for ContainerWorker Pods.
+    See the description of mr3.k8s.pod.worker.toleration.specs for the format and examples.
   </description>
 </property>
 

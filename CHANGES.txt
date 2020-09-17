@@ -1,6 +1,8 @@
 ## MR3 
 
 Release 1.2: 2020-9-19 (???)
+  - Introduce `mr3.k8s.pod.master.toleration.specs` and `mr3.k8s.pod.worker.toleration.specs` to specify tolerations for DAGAppMaster and ContainerWorker Pods.
+  - Setting `mr3.dag.queue.scheme` to `individual` properly implements fair scheduling among concurrent DAGs.
   - Introduce `mr3.k8s.pod.worker.additional.hostpaths` to mount additional hostPath volumes.
   - `mr3.k8s.worker.total.max.memory.gb` and `mr3.k8s.worker.total.max.cpu.cores` work okay when autoscaling is enabled.
   - DAGAppMaster and ContainerWorkers can publish Prometheus metrics.
