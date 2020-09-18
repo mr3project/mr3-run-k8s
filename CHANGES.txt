@@ -1,6 +1,7 @@
 ## MR3 
 
 Release 1.2: 2020-9-19 (???)
+  - Introduce `mr3.k8s.pod.worker.init.container.command` to execute a shell command in a privileged init container.
   - Introduce `mr3.k8s.pod.master.toleration.specs` and `mr3.k8s.pod.worker.toleration.specs` to specify tolerations for DAGAppMaster and ContainerWorker Pods.
   - Setting `mr3.dag.queue.scheme` to `individual` properly implements fair scheduling among concurrent DAGs.
   - Introduce `mr3.k8s.pod.worker.additional.hostpaths` to mount additional hostPath volumes.

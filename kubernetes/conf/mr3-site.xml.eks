@@ -526,6 +526,11 @@
 </property>
 
 <property>
+  <name>mr3.k8s.pod.worker.init.container.command</name>
+  <value></value>
+</property>
+
+<property>
   <name>mr3.k8s.pod.worker.init.container.image</name>
   <value>busybox</value>
 </property>

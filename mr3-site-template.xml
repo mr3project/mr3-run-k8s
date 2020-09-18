@@ -1092,7 +1092,7 @@
   <description>
     Comma-separated list of toleration specifications for DAGAppMaster Pod.
     The format of each entry is [key]:[operator]:[value]:[effect]:[toleration in seconds]
-    where [value] and [toleration in seconds] are optional.
+    where [value] and :[toleration in seconds] are optional.
     Here are a few valid examples:
       `hello:Equal:world:NoSchedule`
       `hello:Exists::NoSchedule`
@@ -1109,8 +1109,18 @@
   <name>mr3.k8s.pod.worker.security.context.sysctls</name>
   <value></value>
   <description>
-    Comma-separated list of sysctl properties to be set by init containers in ContainerWorker Pods.
+    Comma-separated list of sysctl properties to be set by an init container in a ContainerWorker Pod.
     E.g., net.core.somaxconn=16384,net.ipv4.ip_local_port_range='1024 65535'
+  </description>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.init.container.command</name>
+  <value></value>
+  <description>
+    Shell command to be executed by an init container in a ContainerWorker Pod.
+    Before executing the shell command, the init container mounts hostPath volumes specified by `mr3.k8s.pod.worker.hostpaths`.
+    Example: chown 1000:1000 /data1/k8s/; ls -alt /data1/k8s.
   </description>
 </property>
 
