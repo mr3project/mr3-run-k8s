@@ -34,6 +34,8 @@ docker:
 create:
   # specifies whether or not to create metastore service inside k8s
   metastore: true
+  # specifies whether or not to create ServiceAccounts (hive-service-account, master-service-account, worker-service-account)
+  serviceAccount: true
 
 metastore:
   # if create.metastore == true, this field will be ignored and 

@@ -1,0 +1,16 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: hive-mr3
+  region: ap-northeast-1
+
+fargateProfiles:
+  - name: mr3-worker
+    selectors:
+      - namespace: hivemr3
+        labels:
+          mr3-pod-role: container-role
+    subnets:
+      - subnet-0483e779eab046575
+

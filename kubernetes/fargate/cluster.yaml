@@ -1,0 +1,26 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: hive-mr3
+  region: ap-northeast-1
+
+vpc:
+  nat:
+    gateway: Single
+
+availabilityZones: ["ap-northeast-1a", "ap-northeast-1c", "ap-northeast-1d"]
+
+nodeGroups:
+  - name: mr3-master
+    availabilityZones: ["ap-northeast-1a"]
+    instanceType: m5.xlarge
+    labels: { roles: masters }
+    ssh:
+      allow: true
+    desiredCapacity: 1
+    preBootstrapCommands:
+      - "wget http://pl.postech.ac.kr/~gla/mysql-connector-java-8.0.12.jar"
+      - "mkdir -p /home/ec2-user/lib"
+      - "mv mysql-connector-java-8.0.12.jar /home/ec2-user/lib"
+

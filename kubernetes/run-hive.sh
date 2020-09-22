@@ -35,7 +35,7 @@ kubectl create namespace $MR3_NAMESPACE
 
 # Volumes
 if [ $RUN_AWS_EKS = true ]; then
-  echo "assume that mount-efs.sh has been executed"
+  echo "assume that PersistentVolumeClaim workdir-pvc has been created"
 else
   kubectl create -f $YAML_DIR/workdir-pv.yaml 
   kubectl create -n $MR3_NAMESPACE -f $YAML_DIR/workdir-pvc.yaml 
@@ -54,9 +54,11 @@ kubectl create -f $YAML_DIR/cluster-role.yaml
 kubectl create -f $YAML_DIR/hive-role.yaml
 kubectl create -f $YAML_DIR/master-role.yaml
 kubectl create -f $YAML_DIR/worker-role.yaml
-kubectl create -f $YAML_DIR/hive-service-account.yaml
-kubectl create -f $YAML_DIR/master-service-account.yaml
-kubectl create -f $YAML_DIR/worker-service-account.yaml
+if [ $CREATE_SERVICE_ACCOUNTS = true ]; then
+  kubectl create -f $YAML_DIR/hive-service-account.yaml
+  kubectl create -f $YAML_DIR/master-service-account.yaml
+  kubectl create -f $YAML_DIR/worker-service-account.yaml
+fi
 
 kubectl create clusterrolebinding hive-clusterrole-binding --clusterrole=node-reader --serviceaccount=$MR3_NAMESPACE:$MR3_SERVICE_ACCOUNT
 kubectl create rolebinding hive-role-binding --role=hive-role --serviceaccount=$MR3_NAMESPACE:$MR3_SERVICE_ACCOUNT -n $MR3_NAMESPACE

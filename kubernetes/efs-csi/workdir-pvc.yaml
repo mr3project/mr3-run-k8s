@@ -3,11 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   namespace: hivemr3
   name: workdir-pvc
-  annotations:
-    volume.beta.kubernetes.io/storage-class: "aws-efs"
 spec:
   accessModes:
   - ReadWriteMany
+  storageClassName: efs-sc
   resources:
     requests:
       storage: 1Mi

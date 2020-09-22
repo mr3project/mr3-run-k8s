@@ -177,12 +177,12 @@
 
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native</value>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_REGION</value>
 </property>
 
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native</value>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_REGION</value>
 </property>
 
 <property>
@@ -520,11 +520,13 @@
   <value>95</value>
 </property>
 
+<!-- Fargate does not support privileged init containers -->
 <property>
   <name>mr3.k8s.pod.worker.security.context.sysctls</name>
   <value>net.core.somaxconn=16384</value>
 </property>
 
+<!-- Fargate does not support privileged init containers -->
 <property>
   <name>mr3.k8s.pod.worker.init.container.command</name>
   <value></value>

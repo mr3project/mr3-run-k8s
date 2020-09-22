@@ -36,7 +36,7 @@ kubectl create namespace $MR3_NAMESPACE
 
 # Volumes
 if [ $RUN_AWS_EKS = true ]; then
-  echo "assume that mount-efs.sh has been executed"
+  echo "assume that PersistentVolumeClaim workdir-pvc has been created"
 else
   kubectl create -f $YAML_DIR/workdir-pv-ranger.yaml
   kubectl create -n $MR3_NAMESPACE -f $YAML_DIR/workdir-pvc-ranger.yaml
