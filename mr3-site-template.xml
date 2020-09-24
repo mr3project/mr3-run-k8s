@@ -1081,7 +1081,7 @@
   <value>
   </value>
   <description>
-    Node selector for DAGAppMaster Pod
+    Comma-separated list of node selectors for DAGAppMaster Pod (e.g., `masternode=true,hivemr3=true`)
   </description>
 </property>
 
@@ -1223,7 +1223,7 @@
   <name>mr3.k8s.pod.worker.node.selector</name>
   <value></value>
   <description>
-    Node selector for ContainerWorker Pods
+    Comma-separated list of node selectors for ContainerWorker Pods (e.g., `workernode=true,hivemr3=true`)
   </description>
 </property>
 
