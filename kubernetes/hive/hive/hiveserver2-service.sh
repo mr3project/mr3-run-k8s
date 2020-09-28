@@ -26,7 +26,7 @@ source $HIVE_BASE_DIR/hive-setup.sh
 
 function print_usage {
     echo "Usage: hiveserver2-service.sh [command] [option(s)]"
-    echo " start                                  Start HiveServer2 on port defined in HIVE_SERVER2_PORT."
+    echo " start                                  Start HiveServer2 on port defined in HIVE_SERVER2_PORT/HIVE_SERVER2_HTTP_PORT."
     common_setup_print_usage_common_options
     hive_setup_print_usage_conf_mode
     hive_setup_print_usage_hiveconf
@@ -93,6 +93,7 @@ function hive_setup_server2_update_hadoop_opts {
     export HADOOP_OPTS="$HADOOP_OPTS \
 -Dhive.server2.host=$HIVE_SERVER2_HOST \
 -Dhive.server2.port=$HIVE_SERVER2_PORT \
+-Dhive.server2.http.port=$HIVE_SERVER2_HTTP_PORT \
 -Dhive.server2.authentication.mode=$HIVE_SERVER2_AUTHENTICATION \
 -Dhive.server2.keytab.file=$HIVE_SERVER2_KERBEROS_KEYTAB \
 -Dhive.server2.principal=$HIVE_SERVER2_KERBEROS_PRINCIPAL \
@@ -110,7 +111,7 @@ function hive_setup_server2_update_hadoop_opts {
 
 function start_hiveserver2 {
     return_code=0
-    echo "Starting HiveServer2 on port $HIVE_SERVER2_PORT..."
+    echo "Starting HiveServer2 on port $HIVE_SERVER2_PORT/$HIVE_SERVER2_HTTP_PORT..."
     hive --service hiveserver2 --skiphbasecp  # remove --skiphbasecp for Hive 1.2.2
     return $return_code
 }

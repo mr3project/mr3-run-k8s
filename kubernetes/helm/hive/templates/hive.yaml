@@ -75,16 +75,18 @@ spec:
             cpu: {{ .Values.hive.resources.limits.cpu }}
             memory: {{ .Values.hive.resources.limits.memory }}
         ports:
-        - containerPort: 9852
+        - containerPort: {{ .Values.hive.port }}
+          protocol: TCP
+        - containerPort: {{ .Values.hive.httpport }}
           protocol: TCP
         readinessProbe:
           tcpSocket:
-            port: 9852
+            port: {{ .Values.hive.port }}
           initialDelaySeconds: 30
           periodSeconds: 60
         livenessProbe:
           tcpSocket:
-            port: 9852
+            port: {{ .Values.hive.port }}
           initialDelaySeconds: 30
           periodSeconds: 60
         volumeMounts:

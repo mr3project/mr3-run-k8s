@@ -9,6 +9,11 @@ spec:
   - protocol: TCP
     port: 9852
     targetPort: 9852
+    name: thrift
+  - protocol: TCP
+    port: 10001
+    targetPort: 10001
+    name: http
   selector:
     hivemr3_app: hiveserver2
   externalIPs:

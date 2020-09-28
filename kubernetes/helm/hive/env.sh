@@ -90,10 +90,12 @@ HIVE_METASTORE_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/{{.Values.metastore.kerberosKey
 # Step 5. Configuring HiveServer2 - connecting to HiveServer2
 #
 
-# HIVE_SERVER2_PORT = port for HiveServer2 (for both cluster mode and local mode)
+# HIVE_SERVER2_PORT = thrift port for HiveServer2 (for both cluster mode and local mode)
+# HIVE_SERVER2_HTTP_PORT = http port for HiveServer2
 #
 HIVE_SERVER2_HOST=$HOSTNAME
 HIVE_SERVER2_PORT={{.Values.hive.port}}
+HIVE_SERVER2_HTTP_PORT={{.Values.hive.httpport}}
 
 # Heap size in MB for HiveServer2
 # With --local option, mr3.am.resource.memory.mb and mr3.am.local.resourcescheduler.max.memory.mb should be smaller. 

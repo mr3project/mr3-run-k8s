@@ -8,7 +8,12 @@ spec:
   ports:
   - protocol: TCP
     port: {{ .Values.hive.port }}
-    targetPort: 9852
+    targetPort: {{ .Values.hive.port }}
+    name: thrift
+  - protocol: TCP
+    port: {{ .Values.hive.httpport }}
+    targetPort: {{ .Values.hive.httpport }}
+    name: http
   selector:
     hivemr3_app: hiveserver2
   externalIPs:

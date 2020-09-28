@@ -856,7 +856,7 @@
 
 <property>
   <name>hive.server2.thrift.http.port</name>
-  <value>10001</value>
+  <value>${hive.server2.http.port}</value>
 </property>
 
 <property>

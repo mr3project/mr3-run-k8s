@@ -71,6 +71,7 @@ metastore:
 
 hive:
   port: 9852
+  httpport: 10001
   externalIp: 12.34.56.78
   replicas: 1
   # amMode options: kubernetes, localthread, and localprocess
