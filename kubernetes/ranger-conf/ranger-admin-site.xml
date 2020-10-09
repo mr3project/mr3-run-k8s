@@ -38,6 +38,7 @@
   <property>
     <name>ranger.externalurl</name>
     <value>http://indigo20:6080</value>
+    <!-- <value>https://indigo20:6182</value> -->
     <description />
   </property>
   <property>
@@ -306,7 +307,7 @@
   </property>
   <property>
     <name>ranger.credential.provider.path</name>
-    <value>jceks://file/opt/mr3-run/ranger/ranger-admin/ews/webapp/WEB-INF/classes/conf/.jceks/rangeradmin.jceks,jceks://file/opt/mr3-run/ranger/key/hivemr3-ssl-certificate.jceks</value>
+    <value>jceks://file/opt/mr3-run/ranger/ranger-admin/ews/webapp/WEB-INF/classes/conf/.jceks/rangeradmin.jceks</value>
   </property>
   <property>
     <name>ranger.jpa.jdbc.credential.alias</name>
@@ -315,7 +316,7 @@
   </property>
   <property>
     <name>ranger.service.https.attrib.keystore.credential.alias</name>
-    <value>keyStoreCredentialAlias</value>
+    <value>keyStoreAlias</value>
   </property>
   <property>
     <name>ranger.tomcat.ciphers</name>
@@ -401,6 +402,11 @@
   <property>
     <name>ranger.service.https.attrib.client.auth</name>
     <value>want</value>
+  </property>
+
+  <property>
+    <name>ranger.admin.cookie.name</name>
+    <value>RANGERADMINSESSIONID</value>
   </property>
 
 </configuration>

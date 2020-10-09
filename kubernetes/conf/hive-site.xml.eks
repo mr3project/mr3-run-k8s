@@ -496,7 +496,7 @@
 
 <property>
   <name>hive.server2.transport.mode</name>
-  <value>binary</value>
+  <value>all</value>
 </property>
 
 <property>

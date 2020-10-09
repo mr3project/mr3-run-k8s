@@ -11,7 +11,7 @@
 # limitations under the License.
 
 FROM openjdk:8-jdk-stretch
-MAINTAINER Junseung Hwang "j5hw4n9@gmail.com"
+MAINTAINER Sungwoo Park "glapark@gmail.com"
 
 USER root
 

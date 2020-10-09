@@ -21,7 +21,7 @@ source $BASE_DIR/env.sh
 
 run_kubernetes_parse_args $@
 
-if [ $ENABLE_SSL = true ]; then
+if [ $ENABLE_SSL_RANGER = true ]; then
   create_hivemr3_ssl_certificate $BASE_DIR/ranger-key
 fi
 

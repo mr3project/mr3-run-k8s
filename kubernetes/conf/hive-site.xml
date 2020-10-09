@@ -405,6 +405,9 @@
   <value>24</value>
 </property>
 
+<!--
+  see HiveServer2.startPrivilegeSynchronizer() to learn when HiveServer2 creates ZooKeeperClient
+ -->
 <property>
   <name>hive.metastore.pre.event.listeners</name>
   <value>org.apache.hadoop.hive.ql.security.authorization.AuthorizationPreEventListener</value>
@@ -496,7 +499,7 @@
 
 <property>
   <name>hive.server2.transport.mode</name>
-  <value>binary</value>
+  <value>all</value>
 </property>
 
 <property>
@@ -718,6 +721,16 @@
   <!-- <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdConfOnlyAuthorizerFactory</value> -->
   <!-- <value>org.apache.hadoop.hive.ql.security.authorization.plugin.sqlstd.SQLStdHiveAuthorizerFactory</value> -->
   <value>org.apache.ranger.authorization.hive.authorizer.RangerHiveAuthorizerFactory</value>
+</property>
+
+<!-- set to false in order not to create ZooKeeperClient in HiveServer2
+  With Ranger 2.1.0:
+    RangerHiveAuthorizerBase.getHivePolicyProvider() returns RangerHivePolicyProvider.
+    Hence we should explicitly set hive.privilege.synchronizer to false.
+ -->
+<property>
+  <name>hive.privilege.synchronizer</name>
+  <value>false</value>
 </property>
 
 <property>

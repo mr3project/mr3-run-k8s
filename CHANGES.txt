@@ -87,6 +87,7 @@ Release 0.1: 2018-3-31
 Release 1.2: 2020-9-19 (???)
   - Compute the memory size of ContainerWorker correctly when `hive.llap.io.allocator.mmap` is set to true.
   - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
+  - `hive.server2.transport.mode` can be set to `all` (with HIVE-5312).
 
 Release 1.1: 2020-7-19
   - CrossProductHandler asks MR3 DAGAppMaster to set TEZ_CARTESIAN_PRODUCT_MAX_PARALLELISM (Cf. HIVE-16690, Hive 3/4).
@@ -146,6 +147,7 @@ Release 0.1: 2018-3-31
 Release 1.2: 2020-9-19 (???)
   - MR3 creates three ServiceAccounts: 1) for Metastore and HiveSever2 Pods; 2) for DAGAppMaster Pod; 3) for ContainerWorker Pods. The user can use IAM roles for ServiceAccounts.
   - Docker containers start as `root`. In `kubernetes/env.sh`, `DOCKER_USER` should be set to `root` and the service principal name in `HIVE_SERVER2_KERBEROS_PRINCIPAL` should be `root`.
+  - Use Ranger 2.1.0
 
 Release 1.1: 2020-7-19
   - Ranger uses a local directory (emptyDir volume) for logging.

@@ -33,6 +33,7 @@ function setup_ranger() {
 }
 
 function start_ranger {
+    chown -R ranger:ranger /opt/mr3-run/ranger/ranger-admin/ews/webapp/WEB-INF/classes/conf
     su ranger -p -c "$BASE_DIR/ranger-admin/ews/ranger-admin-services.sh start"
     sleep infinity
 }
