@@ -1,6 +1,6 @@
 ## MR3 
 
-Release 1.2: 2020-9-19 (???)
+Release 1.2: 2020-10-26
   - Introduce `mr3.k8s.pod.worker.init.container.command` to execute a shell command in a privileged init container.
   - Introduce `mr3.k8s.pod.master.toleration.specs` and `mr3.k8s.pod.worker.toleration.specs` to specify tolerations for DAGAppMaster and ContainerWorker Pods.
   - Setting `mr3.dag.queue.scheme` to `individual` properly implements fair scheduling among concurrent DAGs.
@@ -10,6 +10,9 @@ Release 1.2: 2020-9-19 (???)
   - The default value of mr3.container.task.failure.num.sleeps is 0.
   - Reduce the log size of DAGAppMaster and ContainerWorker.
   - TaskScheduler can process about twice as many events (`TaskSchedulerEventTaskAttemptFinished`) per unit time as in MR3 1.1, thus doubling the maximum cluster size that MR3 can manage. 
+  - Optimize the use of CodecPool shared by concurrent TaskAttempts.
+  - The `getDags` command of MasterControl prints both IDs and names of DAGs.
+  - On Kubernetes, the `updateResourceLimit` command of MasterControl updates the limit on the total resources for all ContainerWorker Pods. The user can further improve resource utilization when autoscaling is enabled.
 
 Release 1.1: 2020-7-19
   - Support DAG scheduling schemes (specified by `mr3.dag.queue.scheme`).
@@ -84,7 +87,7 @@ Release 0.1: 2018-3-31
 
 ## Hive on MR3 on Hadoop
 
-Release 1.2: 2020-9-19 (???)
+Release 1.2: 2020-10-26
   - Compute the memory size of ContainerWorker correctly when `hive.llap.io.allocator.mmap` is set to true.
   - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
   - `hive.server2.transport.mode` can be set to `all` (with HIVE-5312).
@@ -144,10 +147,10 @@ Release 0.1: 2018-3-31
 
 ## Hive on MR3 on Kubernetes
 
-Release 1.2: 2020-9-19 (???)
+Release 1.2: 2020-10-26
   - MR3 creates three ServiceAccounts: 1) for Metastore and HiveSever2 Pods; 2) for DAGAppMaster Pod; 3) for ContainerWorker Pods. The user can use IAM roles for ServiceAccounts.
   - Docker containers start as `root`. In `kubernetes/env.sh`, `DOCKER_USER` should be set to `root` and the service principal name in `HIVE_SERVER2_KERBEROS_PRINCIPAL` should be `root`.
-  - Use Ranger 2.1.0
+  - Support Ranger 2.0.0 and 2.1.0.
 
 Release 1.1: 2020-7-19
   - Ranger uses a local directory (emptyDir volume) for logging.
@@ -182,3 +185,60 @@ Release 0.6: 2019-3-21
 
 Release 0.5: 2019-2-18
   - Initial release for Hive on MR3 on Kubernetes
+
+## Patches applied to Hive 3 on MR3 since Hive 3.1.0
+
+HIVE-20648  LLAP: Vector group by operator should use memory per executor
+HIVE-20344  PrivilegeSynchronizer for SBA might hit AccessControlException
+HIVE-5312   Let HiveServer2 run simultaneously in HTTP (over thrift) and Binary (normal thrift transport) mode
+HIVE-22891  Skip PartitionDesc Extraction In CombineHiveRecord For Non-LLAP Execution Mode
+HIVE-21329  Custom Tez runtime unordered output buffer size depending on operator pipeline
+HIVE-18871  hive on tez execution error due to set hive.aux.jars.path to hdfs://
+HIVE-22485  Cross product should set the conf in UnorderedPartitionedKVEdgeConfig
+HIVE-22815  reduce the unnecessary file system object creation in MROutput
+HIVE-20618  During join selection BucketMapJoin might be choosen for non bucketed tables
+HIVE-18786  NPE in Hive windowing functions
+HIVE-20649  LLAP aware memory manager for Orc writers
+HIVE-21171  Skip creating scratch dirs for tez if RPC is on
+HIVE-20187  Incorrect query results in hive when hive.convert.join.bucket.mapjoin.tez is set to true
+HIVE-20213  Upgrade Calcite to 1.17.0
+HIVE-22704  Distribution package incorrectly ships the upgrade.order files from the metastore module
+HIVE-22708  Fix for HttpTransport to replace String.equals
+HIVE-22407  Hive metastore upgrade scripts have incorrect (or outdated) comment syntax
+HIVE-22241  Implement UDF to interpret date/timestamp using its internal representation and Gregorian-Julian hybrid calendar
+HIVE-21508  ClassCastException when initializing HiveMetaStoreClient on JDK10 or newer
+HIVE-19667  Remove distribution management tag from pom.xml
+HIVE-21980  Parsing time can be high in case of deeply nested subqueries
+HIVE-22105  Update ORC to 1.5.6 in branch-3
+HIVE-20057  For ALTER TABLE t SET TBLPROPERTIES ('EXTERNAL'='TRUE'); `TBL_TYPE` attribute change not reflecting for non-CAPS
+HIVE-18874  JDBC: HiveConnection shades log4j interfaces
+HIVE-21821  Backport HIVE-21739 to branch-3.1
+HIVE-21786  Update repo URLs in poms - branch 3.1 version
+HIVE-21755  Backport HIVE-21462 to branch-3. Upgrading SQL server backed metastore when changing data type of a column with constraints
+HIVE-21758  DBInstall tests broken on master and branch-3.1
+HIVE-21291  Restore historical way of handling timestamps in Avro while keeping the new semantics at the same time
+HIVE-21564  Load data into a bucketed table is ignoring partitions specs and loads data into default partition
+HIVE-20593  Load Data for partitioned ACID tables fails with bucketId out of range: -1
+HIVE-21600  GenTezUtils.removeSemiJoinOperator may throw out of bounds exception for TS with multiple children
+HIVE-21613  Queries with join condition having timestamp or timestamp with local time zone literal throw SemanticException
+HIVE-18624  Parsing time is extremely high (~10 min) for queries with complex select expressions
+HIVE-21540  Query with join condition having date literal throws SemanticException
+HIVE-21342  Analyze compute stats for column leave behind staging dir on hdfs
+HIVE-21290  Restore historical way of handling timestamps in Parquet while keeping the new semantics at the same time
+HIVE-20126  OrcInputFormat does not pass conf to orc reader options
+HIVE-21376  Incompatible change in Hive bucket computation
+HIVE-21236  SharedWorkOptimizer should check table properties
+HIVE-21156  SharedWorkOptimizer may preserve filter in TS incorrectly
+HIVE-21039  CURRENT_TIMESTAMP returns value in UTC time zone
+HIVE-20010  Fix create view over literals
+HIVE-20420  Provide a fallback authorizer when no other authorizer is in use
+HIVE-18767  Some alterPartitions invocations throw 'NumberFormatException: null'
+HIVE-18778  Needs to capture input/output entities in explain
+HIVE-20555  HiveServer2: Preauthenticated subject for http transport is not retained for entire duration of http communication in some cases
+HIVE-20227  Exclude glassfish javax.el dependency
+HIVE-19027  Make materializations invalidation cache work with multiple active remote metastores (addendum)
+HIVE-20102  Add a couple of additional tests for query parsing
+HIVE-20123  Fix masking tests after HIVE-19617
+HIVE-20076  ACID: Fix Synthetic ROW__ID generation for vectorized orc readers
+HIVE-20135  Fix incompatible change in TimestampColumnVector to default to UTC
+

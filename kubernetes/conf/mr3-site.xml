@@ -23,6 +23,7 @@
 </property>
 
 <property>
+  <!-- add -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf for LocalProcess with Kerberos -->
   <name>mr3.am.launch.cmd-opts</name>
   <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
@@ -138,7 +139,7 @@
 
 <property>
   <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>120000</value>
+  <value>300000</value>
 </property>
 
 <!-- Kubernetes -->

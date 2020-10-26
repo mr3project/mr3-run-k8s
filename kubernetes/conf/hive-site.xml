@@ -1236,4 +1236,24 @@
   <value>true</value>
 </property>
 
+<property>
+  <name>hive.optimize.scan.probedecode</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.zookeeper.killquery.enable</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.llap.io.proactive.eviction.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.mapred.reduce.tasks.speculative.execution</name>
+  <value>false</value>
+</property>
+
 </configuration>

@@ -138,7 +138,7 @@
 
 <property>
   <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>120000</value>
+  <value>300000</value>
 </property>
 
 <!-- Kubernetes -->

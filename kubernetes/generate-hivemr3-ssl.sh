@@ -112,9 +112,11 @@ function generate_keystore {
 function generate_keystore_credential_file {
     echo -e "\n# Generating a credential file ($MR3_SSL_CREDENTIAL_PROVIDER) #" >&2
 
-    entries="ssl.server.keystore.password ssl.server.keystore.keypassword keyStoreAlias trustStoreAlias \
-keyStoreCredentialAlias sslKeyStore sslTrustStore solr.jetty.keystore.password \
-solr.jetty.truststore.password hive.server2.keystore.password hive.metastore.keystore.password hive.metastore.truststore.password"
+    entries="ssl.server.keystore.password ssl.server.truststore.password ssl.server.keystore.keypassword \
+ssl.client.truststore.password \
+keyStoreAlias trustStoreAlias keyStoreCredentialAlias sslKeyStore sslTrustStore \
+solr.jetty.keystore.password solr.jetty.truststore.password \
+hive.server2.keystore.password hive.metastore.keystore.password hive.metastore.truststore.password"
     for entry in $entries; do
       $HADOOP_HOME_LOCAL/bin/hadoop credential create $entry \
         -provider jceks://file/$MR3_SSL_CREDENTIAL_PROVIDER \
