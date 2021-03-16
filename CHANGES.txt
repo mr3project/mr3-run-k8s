@@ -1,6 +1,26 @@
-## MR3 
+## Release 1.3: 2021-??-??
 
-Release 1.2: 2020-10-26
+MR3
+  - Introduce `mr3.am.task.no.retry.errors` to specify the names of errors that prevent the re-execution of Tasks (e.g., `OutOfMemoryError,MapJoinMemoryExhaustionError`).
+  - For reporting to MR3-UI, MR3 uses System.currentTimeMillis() instead of MonotonicClock.
+  - DAGAppMaster correctly reports to MR3Client the time from DAG submission to DAG execution.
+  - Introduce `mr3.container.localize.python.working.dir.unsafe` to localize Python scripts in working directories of ContainerWorkers. Localizing Python scripts is an unsafe operation: 1) Python scripts are shared by all DAGs; 2) once localized, Python scripts are not deleted.
+  - The image pull policy specified in `mr3.k8s.pod.image.pull.policy` applies to init containers as well as ContainerWorker containers.
+  - Introduce `mr3.auto.scale.out.num.initial.containers` which specifies the number of new ContainerWorkers to create in a scale-out operation when no ContainerWorkers are running. 
+  - Introduce `mr3.container.runtime.auto.start.input` to automatically start LogicalInputs in RuntimeTasks.
+  - On both Hadoop and Kubernetes, there is no limit on the aggregate memory of ContainerWorkers, so MR3 can run in a cluster of any size.
+  - Speculative execution works on Vertexes with a single Task.
+
+Hive on MR3 
+  - Metastore correctly uses MR3 for compaction on Kubernetes.
+  - Auto parallelism is correctly enabled or disabled according to the result of compiling queries by overriding `tez.shuffle-vertex-manager.enable.auto-parallel`, so `tez.shuffle-vertex-manager.enable.auto-parallel` can be set to false.
+  - Support the TRANSFORM clause with Python scripts (with `mr3.container.localize.python.working.dir.unsafe` to true in `mr3-site.xml`).
+  - Introduce `hive.mr3.llap.orc.memory.per.thread.mb` to specify the memory allocated to each ORC manager in low-level LLAP I/O threads.
+  - Support Hive 3.1.3.
+
+## Release 1.2: 2020-10-26
+
+MR3 
   - Introduce `mr3.k8s.pod.worker.init.container.command` to execute a shell command in a privileged init container.
   - Introduce `mr3.k8s.pod.master.toleration.specs` and `mr3.k8s.pod.worker.toleration.specs` to specify tolerations for DAGAppMaster and ContainerWorker Pods.
   - Setting `mr3.dag.queue.scheme` to `individual` properly implements fair scheduling among concurrent DAGs.
@@ -9,12 +29,22 @@ Release 1.2: 2020-10-26
   - DAGAppMaster and ContainerWorkers can publish Prometheus metrics.
   - The default value of mr3.container.task.failure.num.sleeps is 0.
   - Reduce the log size of DAGAppMaster and ContainerWorker.
-  - TaskScheduler can process about twice as many events (`TaskSchedulerEventTaskAttemptFinished`) per unit time as in MR3 1.1, thus doubling the maximum cluster size that MR3 can manage. 
+  - TaskScheduler can process about twice as many events (`TaskSchedulerEventTaskAttemptFinished`) per unit time as in MR3 1.1, thus doubling the maximum cluster size that MR3 can manage.
   - Optimize the use of CodecPool shared by concurrent TaskAttempts.
   - The `getDags` command of MasterControl prints both IDs and names of DAGs.
   - On Kubernetes, the `updateResourceLimit` command of MasterControl updates the limit on the total resources for all ContainerWorker Pods. The user can further improve resource utilization when autoscaling is enabled.
 
-Release 1.1: 2020-7-19
+Hive on MR3 
+  - Compute the memory size of ContainerWorker correctly when `hive.llap.io.allocator.mmap` is set to true.
+  - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
+  - `hive.server2.transport.mode` can be set to `all` (with HIVE-5312).
+  - MR3 creates three ServiceAccounts: 1) for Metastore and HiveSever2 Pods; 2) for DAGAppMaster Pod; 3) for ContainerWorker Pods. The user can use IAM roles for ServiceAccounts.
+  - Docker containers start as `root`. In `kubernetes/env.sh`, `DOCKER_USER` should be set to `root` and the service principal name in `HIVE_SERVER2_KERBEROS_PRINCIPAL` should be `root`.
+  - Support Ranger 2.0.0 and 2.1.0.
+
+## Release 1.1: 2020-7-19
+
+MR3 
   - Support DAG scheduling schemes (specified by `mr3.dag.queue.scheme`).
   - Optimize DAGAppMaster by freeing memory for messages to Tasks when fault tolerance is disabled (with `mr3.am.task.max.failed.attempts` set to 1).
   - Fix a minor memory leak in DaemonTask (which also prevents MR3 from running more than 2^30 DAGs when using the shuffle handler).
@@ -25,14 +55,24 @@ Release 1.1: 2020-7-19
   - Introduce `mr3.k8s.pod.memory.max.multiplier` to specify the multiplier for the limit of memory.
   - Introduce `mr3.k8s.pod.worker.security.context.sysctls` to configure kernel parameters of ContainerWorker Pods using init containers.
   - Support speculative execution of TaskAttempts (with `mr3.am.task.concurrent.run.threshold.percent`).
-  - A ContainerWorker can run multiple instances of shuffle handlers each with a different port. The configuration key `mr3.use.daemon.shufflehandler` now specifies the number of shuffle handler instances in each ContainerWorker.
-  - With speculative execution and multiple instances of shuffle handlers in a single ContainerWorker, fetch delays rarely occur.
+  - A ContainerWorker can run multiple shuffle handlers each with a different port. The configuration key `mr3.use.daemon.shufflehandler` now specifies the number of shuffle handlers in each ContainerWorker.
+  - With speculative execution and the use of multiple shuffle handlers in a single ContainerWorker, fetch delays rarely occur.
   - A ContainerWorker Pod can run shuffle handlers in a separate container (with `mr3.k8s.shuffle.process.ports`).
   - On Kubernetes, DAGAppMaster uses ReplicationController instead of Pod, thus making recovery much faster.
   - On Kubernetes, ConfigMaps `mr3conf-configmap-master` and `mr3conf-configmap-worker` survive MR3, so the user should delete them manually.
   - Java 8u251/8u252 can be used on Kubernetes 1.17 and later.
 
-Release 1.0: 2020-2-17
+Hive on MR3
+  - CrossProductHandler asks MR3 DAGAppMaster to set `TEZ_CARTESIAN_PRODUCT_MAX_PARALLELISM` (Cf. HIVE-16690, Hive 3/4).
+  - Hive 4 on MR3 is stable (currently using 4.0.0-SNAPSHOT).
+  - No longer support Hive 1.
+  - Ranger uses a local directory (emptyDir volume) for logging.
+  - The open file limit for Solr (in Ranger) is not limited to 1024.
+  - HiveServer2 and DAGAppMaster create readiness and liveness probes.
+
+## Release 1.0: 2020-2-17
+
+MR3 
   - Support DAG priority schemes (specified by `mr3.dag.priority.scheme`)
     and Vertex priority schemes (specified by `mr3.vertex.priority.scheme`).
   - Support secure shuffle (using SSL mode) without requiring separate configuration files.
@@ -40,205 +80,130 @@ Release 1.0: 2020-2-17
   - Errors from InputInitializers are properly passed to MR3Client.
   - MasterControl supports two new commands for gracefully stopping DAGAppMaster and ContainerWorkers.
 
-Release 0.11: 2019-12-4
-  - Support autoscaling.
-
-Release 0.10: 2019-10-18
-  - TaskScheduler supports a new scheduling policy (specified by `mr3.taskattempt.queue.scheme`) which significantly improves the throughput for concurrent queries.
-  - DAGAppMaster recovers from OutOfMemoryErrors due to the exhaustion of threads.
-
-Release 0.9: 2019-7-25
-  - Each DAG uses its own ClassLoader.
-
-Release 0.8: 2019-6-22
-  - A new DAGAppMaster properly recovers DAGs that have not been completed in the previous DAGAppMaster.
-  - Fault tolerance after fetch failures works much faster.
-  - On Kubernetes, the shutdown handler of DAGAppMaster deletes all running Pods.
-  - On both Yarn and Kubernetes, MR3Client automatically connects to a new DAGAppMaster after an initial DAGAppMaster is killed.
-
-Release 0.7: 2019-4-26
-  - Resolve deadlock when Tasks fail or ContainerWorkers are killed.
-  - Support fault tolerance after fetch failures.
-  - Support node blacklisting.
-
-Release 0.6: 2019-3-21
-  - DAGAppMaster can run in its own Pod on Kubernetes.
-  - Support elastic execution of RuntimeTasks in ContainerWorkers.
-  - MR3-UI requires only Timeline Server.
-
-Release 0.5: 2019-2-18
-  - Support Kubernetes.
-  - Support the use of the built-in shuffle handler.
-
-Release 0.4: 2018-10-29
-  - Support auto parallelism for reducers with `ONE_TO_ONE` edges.
-  - Auto parallelism can use input statistics when reassigning partitions to reducers.
-  - Support ByteBuffer sharing among RuntimeTasks.
-
-Release 0.3: 2018-8-15
-  - Extend the runtime to support Hive 3.
-
-Release 0.2: 2018-5-18
-  - Support asynchronous logging (with `mr3.async.logging` in `mr3-site.xml`).
-  - Delete DAG-local directories after each DAG is finished.
-
-Release 0.1: 2018-3-31
-  - Initial release
-
-## Hive on MR3 on Hadoop
-
-Release 1.2: 2020-10-26
-  - Compute the memory size of ContainerWorker correctly when `hive.llap.io.allocator.mmap` is set to true.
-  - Hive expands all system properties in configuration files (such as core-site.xml) before passing to MR3.
-  - `hive.server2.transport.mode` can be set to `all` (with HIVE-5312).
-
-Release 1.1: 2020-7-19
-  - CrossProductHandler asks MR3 DAGAppMaster to set TEZ_CARTESIAN_PRODUCT_MAX_PARALLELISM (Cf. HIVE-16690, Hive 3/4).
-  - Hive 4 on MR3 is stable (currently using 4.0.0-SNAPSHOT).
-  - No longer support Hive 1.
-
-Release 1.0: 2020-2-17
-
-Release 0.11: 2019-12-4
-  - Memory and CPUs for Tasks can be set to zero.
-  - Support autoscaling on Amazon EMR.
-
-Release 0.10: 2019-10-18
-  - Compaction sends DAGs to MR3, instead of MapReduce, when `hive.mr3.compaction.using.mr3` is set to true.
-  - LlapDecider asks MR3 DAGAppMaster for the number of Reducers.
-  - ConvertJoinMapJoin asks MR3 DAGAppMaster for the currrent number of Nodes to estimate the cost of Bucket Map Join.
-  - Support Hive 3.1.2 and 2.3.6.
-
-Release 0.9: 2019-7-25
-  - Each DAG uses its own ClassLoader.
-
-Release 0.8: 2019-6-26
-  - Hive 3 for MR3 supports high availability on Yarn via ZooKeeper.
-  - On both Yarn and Kubernetes, multiple HiveServer2 instances can share a common MR3 DAGAppMaster (and thus all its ContainerWorkers as well).
-
-Release 0.7: 2019-4-26
-  - Introduce a new configuration key `hive.mr3.am.task.max.failed.attempts`.
-  - Apply HIVE-20618.
-
-Release 0.6: 2019-3-21
-  - Support memory monitoring when loading hash tables for Map-side join.
-
-Release 0.5: 2019-2-18
-  - Support Hive 3.1.1 and 2.3.5.
-
-Release 0.4: 2018-10-29
-  - Support Hive 3.1.0.
-  - Hive 1 uses Tez 0.9.1.
-  - MetaStore checks the inclusion of `__HIVE_DEFAULT_PARTITION__` when retrieving column statistics.
-  - MR3JobMonitor returns immediately from MR3 DAGAppMaster when the DAG completes.
-
-Release 0.3: 2018-08-15
-  - Support Hive 3.0.0.
-  - Support query re-execution.
-  - Support per-query cache in Hive 2 and 3.
-
-Release 0.2: 2018-5-18
-  - Support LLAP IO for Hive 2.
-  - Support Hive 2.2.0.
-  - Use Hive 2.3.3 instead of Hive 2.3.2.
-
-Release 0.1: 2018-3-31
-  - Initial release
-
-## Hive on MR3 on Kubernetes
-
-Release 1.2: 2020-10-26
-  - MR3 creates three ServiceAccounts: 1) for Metastore and HiveSever2 Pods; 2) for DAGAppMaster Pod; 3) for ContainerWorker Pods. The user can use IAM roles for ServiceAccounts.
-  - Docker containers start as `root`. In `kubernetes/env.sh`, `DOCKER_USER` should be set to `root` and the service principal name in `HIVE_SERVER2_KERBEROS_PRINCIPAL` should be `root`.
-  - Support Ranger 2.0.0 and 2.1.0.
-
-Release 1.1: 2020-7-19
-  - Ranger uses a local directory (emptyDir volume) for logging.
-  - The open file limit for Solr (in Ranger) is not limited to 1024.
-  - HiveServer2 and DAGAppMaster create readiness and liveness probes.
-
-Release 1.0: 2020-2-17
-  - Allow fractions for CPU resources (with `hive.mr3.resource.vcores.divisor`).
+Hive on MR3
+  - Allow fractions for CPU cores (with `hive.mr3.resource.vcores.divisor`).
   - Support rolling updates.
   - Hive on MR3 can access S3 using AWS credentials (with or without Helm).
   - On Amazon EKS, the user can use S3 instead of PersistentVolumes on EFS.
   - Hive on MR3 can use environment variables `AWS_ACCESS_KEY_ID` and `AWS_SECRET_ACCESS_KEY` to access S3 outside Amazon AWS.
 
-Release 0.11: 2019-12-4
+## Release 0.11: 2019-12-4
+
+MR3 
+  - Support autoscaling.
+
+Hive on MR3
+  - Memory and CPU cores for Tasks can be set to zero.
+  - Support autoscaling on Amazon EMR.
   - Support autoscaling on Amazon EKS.
 
-Release 0.10: 2019-10-18
+## Release 0.10: 2019-10-18
+
+MR3 
+  - TaskScheduler supports a new scheduling policy (specified by `mr3.taskattempt.queue.scheme`) which significantly improves the throughput for concurrent queries.
+  - DAGAppMaster recovers from OutOfMemoryErrors due to the exhaustion of threads.
+
+Hive on MR3
+  - Compaction sends DAGs to MR3, instead of MapReduce, when `hive.mr3.compaction.using.mr3` is set to true.
+  - LlapDecider asks MR3 DAGAppMaster for the number of Reducers.
+  - ConvertJoinMapJoin asks MR3 DAGAppMaster for the currrent number of Nodes to estimate the cost of Bucket Map Join.
+  - Support Hive 3.1.2 and 2.3.6.
   - Support Helm charts.
   - Compaction works okay on Kubernetes.
 
-Release 0.9: 2019-07-25
+## Release 0.9: 2019-7-25
+
+MR3 
+  - Each DAG uses its own ClassLoader.
+
+Hive on MR3
   - LLAP I/O works properly on Kubernetes.
   - UDFs work okay on Kubernetes.
 
-Release 0.8: 2019-6-26
-  - Support Apache Ranger.
-  - Support Timeline Server.
+## Release 0.8: 2019-6-22
 
-Release 0.7: 2019-4-26
+MR3 
+  - A new DAGAppMaster properly recovers DAGs that have not been completed in the previous DAGAppMaster.
+  - Fault tolerance after fetch failures works much faster.
+  - On Kubernetes, the shutdown handler of DAGAppMaster deletes all running Pods.
+  - On both Yarn and Kubernetes, MR3Client automatically connects to a new DAGAppMaster after an initial DAGAppMaster is killed.
 
-Release 0.6: 2019-3-21
+Hive on MR3
+  - Hive 3 for MR3 supports high availability on Yarn via ZooKeeper.
+  - On both Yarn and Kubernetes, multiple HiveServer2 instances can share a common MR3 DAGAppMaster (and thus all its ContainerWorkers as well).
+  - Support Apache Ranger on Kubernetes.
+  - Support Timeline Server on Kubernetes.
 
-Release 0.5: 2019-2-18
+## Release 0.7: 2019-4-26
+
+MR3 
+  - Resolve deadlock when Tasks fail or ContainerWorkers are killed.
+  - Support fault tolerance after fetch failures.
+  - Support node blacklisting.
+
+Hive on MR3
+  - Introduce a new configuration key `hive.mr3.am.task.max.failed.attempts`.
+  - Apply HIVE-20618.
+
+## Release 0.6: 2019-3-21
+
+MR3 
+  - DAGAppMaster can run in its own Pod on Kubernetes.
+  - Support elastic execution of RuntimeTasks in ContainerWorkers.
+  - MR3-UI requires only Timeline Server.
+
+Hive on MR3
+  - Support memory monitoring when loading hash tables for Map-side join.
+
+## Release 0.5: 2019-2-18
+
+MR3 
+  - Support Kubernetes.
+  - Support the use of the built-in shuffle handler.
+
+Hive on MR3
+  - Support Hive 3.1.1 and 2.3.5.
   - Initial release for Hive on MR3 on Kubernetes
 
-## Patches applied to Hive 3 on MR3 since Hive 3.1.0
+## Release 0.4: 2018-10-29
 
-HIVE-20648  LLAP: Vector group by operator should use memory per executor
-HIVE-20344  PrivilegeSynchronizer for SBA might hit AccessControlException
-HIVE-5312   Let HiveServer2 run simultaneously in HTTP (over thrift) and Binary (normal thrift transport) mode
-HIVE-22891  Skip PartitionDesc Extraction In CombineHiveRecord For Non-LLAP Execution Mode
-HIVE-21329  Custom Tez runtime unordered output buffer size depending on operator pipeline
-HIVE-18871  hive on tez execution error due to set hive.aux.jars.path to hdfs://
-HIVE-22485  Cross product should set the conf in UnorderedPartitionedKVEdgeConfig
-HIVE-22815  reduce the unnecessary file system object creation in MROutput
-HIVE-20618  During join selection BucketMapJoin might be choosen for non bucketed tables
-HIVE-18786  NPE in Hive windowing functions
-HIVE-20649  LLAP aware memory manager for Orc writers
-HIVE-21171  Skip creating scratch dirs for tez if RPC is on
-HIVE-20187  Incorrect query results in hive when hive.convert.join.bucket.mapjoin.tez is set to true
-HIVE-20213  Upgrade Calcite to 1.17.0
-HIVE-22704  Distribution package incorrectly ships the upgrade.order files from the metastore module
-HIVE-22708  Fix for HttpTransport to replace String.equals
-HIVE-22407  Hive metastore upgrade scripts have incorrect (or outdated) comment syntax
-HIVE-22241  Implement UDF to interpret date/timestamp using its internal representation and Gregorian-Julian hybrid calendar
-HIVE-21508  ClassCastException when initializing HiveMetaStoreClient on JDK10 or newer
-HIVE-19667  Remove distribution management tag from pom.xml
-HIVE-21980  Parsing time can be high in case of deeply nested subqueries
-HIVE-22105  Update ORC to 1.5.6 in branch-3
-HIVE-20057  For ALTER TABLE t SET TBLPROPERTIES ('EXTERNAL'='TRUE'); `TBL_TYPE` attribute change not reflecting for non-CAPS
-HIVE-18874  JDBC: HiveConnection shades log4j interfaces
-HIVE-21821  Backport HIVE-21739 to branch-3.1
-HIVE-21786  Update repo URLs in poms - branch 3.1 version
-HIVE-21755  Backport HIVE-21462 to branch-3. Upgrading SQL server backed metastore when changing data type of a column with constraints
-HIVE-21758  DBInstall tests broken on master and branch-3.1
-HIVE-21291  Restore historical way of handling timestamps in Avro while keeping the new semantics at the same time
-HIVE-21564  Load data into a bucketed table is ignoring partitions specs and loads data into default partition
-HIVE-20593  Load Data for partitioned ACID tables fails with bucketId out of range: -1
-HIVE-21600  GenTezUtils.removeSemiJoinOperator may throw out of bounds exception for TS with multiple children
-HIVE-21613  Queries with join condition having timestamp or timestamp with local time zone literal throw SemanticException
-HIVE-18624  Parsing time is extremely high (~10 min) for queries with complex select expressions
-HIVE-21540  Query with join condition having date literal throws SemanticException
-HIVE-21342  Analyze compute stats for column leave behind staging dir on hdfs
-HIVE-21290  Restore historical way of handling timestamps in Parquet while keeping the new semantics at the same time
-HIVE-20126  OrcInputFormat does not pass conf to orc reader options
-HIVE-21376  Incompatible change in Hive bucket computation
-HIVE-21236  SharedWorkOptimizer should check table properties
-HIVE-21156  SharedWorkOptimizer may preserve filter in TS incorrectly
-HIVE-21039  CURRENT_TIMESTAMP returns value in UTC time zone
-HIVE-20010  Fix create view over literals
-HIVE-20420  Provide a fallback authorizer when no other authorizer is in use
-HIVE-18767  Some alterPartitions invocations throw 'NumberFormatException: null'
-HIVE-18778  Needs to capture input/output entities in explain
-HIVE-20555  HiveServer2: Preauthenticated subject for http transport is not retained for entire duration of http communication in some cases
-HIVE-20227  Exclude glassfish javax.el dependency
-HIVE-19027  Make materializations invalidation cache work with multiple active remote metastores (addendum)
-HIVE-20102  Add a couple of additional tests for query parsing
-HIVE-20123  Fix masking tests after HIVE-19617
-HIVE-20076  ACID: Fix Synthetic ROW__ID generation for vectorized orc readers
-HIVE-20135  Fix incompatible change in TimestampColumnVector to default to UTC
+MR3 
+  - Support auto parallelism for reducers with `ONE_TO_ONE` edges.
+  - Auto parallelism can use input statistics when reassigning partitions to reducers.
+  - Support ByteBuffer sharing among RuntimeTasks.
+
+Hive on MR3
+  - Support Hive 3.1.0.
+  - Hive 1 uses Tez 0.9.1.
+  - Metastore checks the inclusion of `__HIVE_DEFAULT_PARTITION__` when retrieving column statistics.
+  - MR3JobMonitor returns immediately from MR3 DAGAppMaster when the DAG completes.
+
+## Release 0.3: 2018-8-15
+
+MR3 
+  - Extend the runtime to support Hive 3.
+
+Hive on MR3
+  - Support Hive 3.0.0.
+  - Support query re-execution.
+  - Support per-query cache in Hive 2 and 3.
+
+## Release 0.2: 2018-5-18
+
+MR3 
+  - Support asynchronous logging (with `mr3.async.logging` in `mr3-site.xml`).
+  - Delete DAG-local directories after each DAG is finished.
+
+Hive on MR3
+  - Support LLAP I/O for Hive 2.
+  - Support Hive 2.2.0.
+  - Use Hive 2.3.3 instead of Hive 2.3.2.
+
+## Release 0.1: 2018-3-31
+
+MR3 
+  - Initial release
+
+Hive on MR3
+  - Initial release
 

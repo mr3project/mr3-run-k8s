@@ -937,6 +937,10 @@
 <property>
   <name>hive.llap.io.threadpool.size</name>
   <value>10</value>
+  <description> 
+    hive.llap.io.threadpool.size must be >= # of TaskAttempts running in a ContainerWorker (and hive.llap.daemon.num.executors).
+    Cf. HIVE-24626
+  </description>
 </property>
     
 <property>

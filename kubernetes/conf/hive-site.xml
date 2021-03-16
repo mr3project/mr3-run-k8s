@@ -392,7 +392,7 @@
 
 <property>
   <name>hive.metastore.event.listeners</name>
-  <value></value>
+  <value>org.apache.hive.hcatalog.listener.DbNotificationListener</value>
 </property>
 
 <property>
@@ -950,6 +950,10 @@
 <property>
   <name>hive.llap.io.threadpool.size</name>
   <value>10</value>
+  <description> 
+    hive.llap.io.threadpool.size must be >= # of TaskAttempts running in a ContainerWorker (and hive.llap.daemon.num.executors).
+    Cf. HIVE-24626
+  </description>
 </property>
     
 <property>
@@ -1040,7 +1044,7 @@
   <value>true</value>
 </property>
 
-<!-- Hive-on-MR3-on-K8s supports only 'shared session mode' because we cannot create new users on the fly -->
+<!-- to use individual session mode, do not pass MR3_APPLICATION_ID_TIMESTAMP to HiveServer2 -->
 <property>
   <name>hive.server2.mr3.share.session</name>
   <value>true</value>

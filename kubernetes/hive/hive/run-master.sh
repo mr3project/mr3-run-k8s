@@ -27,6 +27,8 @@ function run_master {
     # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
     export HTTP2_DISABLE=true
 
+    export HADOOP_HOME=$HADOOP_BASE_DIR/apache-hadoop
+
     JAVA=$JAVA_HOME/bin/java
     # alternatively these options can be added to mr3.am.launch.cmd-opts
     JAVA_OPTS="-Djavax.security.auth.useSubjectCredsOnly=false \

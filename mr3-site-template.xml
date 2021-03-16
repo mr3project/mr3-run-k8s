@@ -411,6 +411,14 @@
 </property>
 
 <property>
+  <name>mr3.am.task.no.retry.errors</name>
+  <value></value>
+  <description>
+    Comma-separated list of names of Exceptions and Errors that prevent the re-execution of Tasks
+  </description>
+</property>
+
+<property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
   <value>100</value>
   <description>
@@ -728,11 +736,29 @@
 </property>
 
 <property>
+  <name>mr3.container.runtime.auto.start.input</name>
+  <value>false</value>
+  <description>
+    true: automatically start LogicalInputs in RuntimeTasks.
+    false: do not automatically start LogicalInputs.
+  </description>
+</property>
+
+<property>
   <name>mr3.container.use.framework.counters</name>
   <value>false</value>
   <description>
     true: collect framework counters (on garbage collection and process statistics) in ContainerWorkers.
     false: do not collect framework counters.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.localize.python.working.dir.unsafe</name>
+  <value>false</value>
+  <description>
+    true: localize Python scripts in working directories of ContainerWorkers. Localizing Python scripts is an unsafe operation: 1) Python scripts are shared by all DAGs; 2) once localized, Python scripts are not deleted.
+    false: do not localize Python scripts.
   </description>
 </property>
 
@@ -1505,6 +1531,15 @@
   <description>
     true: wait until all running DAGs complete before terminating containers in the event of scale-in.
     false: do not wait and terminate containers immediately.
+  </description>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.num.initial.containers</name>
+  <value>0</value>
+  <description>
+    greater than zero: number of containers to add in the case of scale-out when no containers are running
+    zero or less: not used
   </description>
 </property>
 

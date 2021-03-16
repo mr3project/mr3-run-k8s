@@ -22,6 +22,8 @@ source $BASE_DIR/common-setup.sh
 function run_worker {
     echo -e "\n# Running ContainerWorker: $@ #\n" >&2
 
+    export HADOOP_HOME=$HADOOP_BASE_DIR/apache-hadoop
+
     JAVA=$JAVA_HOME/bin/java
     # alternatively these options can be added to mr3.am.launch.cmd-opts
     JAVA_OPTS="-Djavax.security.auth.useSubjectCredsOnly=false \

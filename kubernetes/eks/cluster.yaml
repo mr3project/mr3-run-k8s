@@ -21,7 +21,6 @@ nodeGroups:
       attachPolicyARNs:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
-        - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
       withAddonPolicies:
         efs: true
     preBootstrapCommands:

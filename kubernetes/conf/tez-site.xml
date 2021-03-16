@@ -50,6 +50,11 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>tez.runtime.shuffle.parallel.copies</name>
+  <value>20</value>
+</property>
+
 <!-- MR3 0.4 -->
 
 <property>
@@ -59,7 +64,7 @@
 
 <property>
   <name>tez.shuffle-vertex-manager.enable.auto-parallel</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>
@@ -147,6 +152,14 @@
   <name>tez.runtime.local.fetch.compare.port</name>
   <value>true</value>
   <!-- irrelevant on Kubernetes because a logical host runs only one ContainerWorker -->
+</property>
+
+<!-- MR3 1.3 -->
+
+<property>
+  <name>tez.grouping.node.local.only</name>
+  <value>true</value>
+  <!-- do not use racks on Kubernetes -->
 </property>
 
 <!-- CartesianProductVertexManager -->

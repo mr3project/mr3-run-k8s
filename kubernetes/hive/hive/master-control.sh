@@ -28,7 +28,7 @@ mr3_setup_update_hadoop_opts $LOCAL_MODE
 
 export CLASSPATH=$BASE_DIR/conf/*:$MR3_CLASSPATH:$TEZ_CLASSPATH:$CLASSPATH
 
-CLASS=com.datamonad.mr3.client.util.MasterControlK8s
+CLASS=com.datamonad.mr3.client.control.MasterControlK8s
 
 exec $JAVA_HOME/bin/java $HADOOP_OPTS $CLASS "$@"
 

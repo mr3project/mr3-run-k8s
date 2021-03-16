@@ -115,6 +115,9 @@ function main {
 
     return_code=0
 
+    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    export HTTP2_DISABLE=true
+
     if [ $START_METASTORE = true ]; then
         echo "Starting Metastore..." >&2
         start_metastore

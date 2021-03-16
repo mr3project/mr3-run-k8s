@@ -68,6 +68,11 @@
 </property>
 
 <property>
+  <name>mr3.am.task.no.retry.errors</name>
+  <value>MapJoinMemoryExhaustionError,OutOfMemoryError</value>
+</property>
+
+<property>
   <name>mr3.am.client.thread-count</name>
   <value>16</value>
 </property>
@@ -484,6 +489,11 @@
 <property>
   <name>mr3.auto.scale.in.wait.dag.finished</name>
   <value>true</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.num.initial.containers</name>
+  <value>4</value>
 </property>
 
 <property>
