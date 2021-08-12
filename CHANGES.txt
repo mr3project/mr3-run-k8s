@@ -1,6 +1,11 @@
-## Release 1.3: 2021-??-??
+## Release 1.3: 2021-8-15
 
 MR3
+  - Separate `mr3.k8s.keytab.secret` and `mr3.k8s.worker.secret`.
+  - Introduce `mr3.container.max.num.workers` to limit the number of ContainerWorkers.
+  - Introduce `mr3.k8s.pod.worker.node.affinity.specs` to specify node affinity for ContainerWorker Pods.
+  - No longer use `mr3.convert.container.address.host.name`.
+  - Support ContainerWorker recycling (which is different from ContainerWorker reuse) with `mr3.container.scheduler.scheme`.
   - Introduce `mr3.am.task.no.retry.errors` to specify the names of errors that prevent the re-execution of Tasks (e.g., `OutOfMemoryError,MapJoinMemoryExhaustionError`).
   - For reporting to MR3-UI, MR3 uses System.currentTimeMillis() instead of MonotonicClock.
   - DAGAppMaster correctly reports to MR3Client the time from DAG submission to DAG execution.
@@ -16,7 +21,9 @@ Hive on MR3
   - Auto parallelism is correctly enabled or disabled according to the result of compiling queries by overriding `tez.shuffle-vertex-manager.enable.auto-parallel`, so `tez.shuffle-vertex-manager.enable.auto-parallel` can be set to false.
   - Support the TRANSFORM clause with Python scripts (with `mr3.container.localize.python.working.dir.unsafe` to true in `mr3-site.xml`).
   - Introduce `hive.mr3.llap.orc.memory.per.thread.mb` to specify the memory allocated to each ORC manager in low-level LLAP I/O threads.
-  - Support Hive 3.1.3.
+
+Spark on MR3
+  - Initial release
 
 ## Release 1.2: 2020-10-26
 

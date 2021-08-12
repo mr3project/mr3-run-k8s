@@ -50,6 +50,12 @@ else
   kubectl create -n $MR3_NAMESPACE secret generic $KEYTAB_SECRET
 fi
 
+if [ $CREATE_WORKER_SECRET = true ]; then
+  kubectl create -n $MR3_NAMESPACE secret generic $WORKER_SECRET --from-file=$WORKER_SECRET_DIR
+else 
+  kubectl create -n $MR3_NAMESPACE secret generic $WORKER_SECRET
+fi
+
 kubectl create -f $YAML_DIR/cluster-role.yaml
 kubectl create -f $YAML_DIR/hive-role.yaml
 kubectl create -f $YAML_DIR/master-role.yaml

@@ -1159,7 +1159,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>95</value>
+  <value>99</value>
 </property>
 
 <!-- Kubernetes -->

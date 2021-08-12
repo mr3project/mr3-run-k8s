@@ -67,8 +67,13 @@
 </property>
 
 <property>
+  <name>mr3.am.task.no.retry.errors</name>
+  <value>MapJoinMemoryExhaustionError,OutOfMemoryError</value>
+</property>
+
+<property>
   <name>mr3.am.client.thread-count</name>
-  <value>16</value>
+  <value>32</value>
 </property>
 
 <property>
@@ -103,7 +108,7 @@
 
 <property>
   <name>mr3.container.stop.cross.dag.reuse</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>
@@ -175,14 +180,16 @@
   <value>kubernetes</value>
 </property>
 
+<!-- should be revised if mr3.master.mode == MR3_MASTER_MODE_KUBERNETES = "kubernetes" -->
 <property>
   <name>mr3.am.launch.env</name>
   <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_REGION</value>
 </property>
 
+<!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env) -->
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_REGION</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_REGION</value>
 </property>
 
 <property>
@@ -234,6 +241,9 @@
   mr3.k8s.conf.dir.configmap
   mr3.k8s.conf.dir.mount.dir
   mr3.k8s.keytab.secret
+  mr3.k8s.worker.secret
+  mr3.k8s.mount.keytab.secret
+  mr3.k8s.mount.worker.secret
   mr3.k8s.keytab.mount.dir
   mr3.k8s.keytab.mount.file
  -->
@@ -284,11 +294,24 @@
 </property>
 
 <property>
+  <name>mr3.container.command.num.waits.in.reserved</name>
+  <value>360</value>
+  <description>
+    Ensure mr3.container.command.num.waits.in.reserved * 1 second > mr3.k8s.pod.creation.timeout.ms. 
+  </description>
+</property>
+
+<property>
   <name>mr3.k8s.pod.creation.timeout.ms</name>
   <value>300000</value>
   <description>
-    The default value of 1 minute is too short on EKS.
+    The default value of 30 seconds is too short on EKS.
   </description>
+</property>
+
+<property>
+  <name>mr3.container.command.num.waits.to.kill</name>
+  <value>60</value>
 </property>
 
 <property>
@@ -329,11 +352,6 @@
 <property>
   <name>mr3.k8s.host.aliases</name>
   <value></value>
-</property>
-
-<property>
-  <name>mr3.convert.container.address.host.name</name>
-  <value>false</value>
 </property>
 
 <!-- no instance storage for master Pod -->
@@ -389,11 +407,6 @@
 <property>
   <name>mr3.k8s.local.dir.persistentvolume.storage</name>
   <value>2Gi</value>
-</property>
-
-<property>
-  <name>mr3.k8s.mount.keytab.secret</name>
-  <value>false</value>
 </property>
 
 <property>
@@ -517,7 +530,7 @@
 
 <property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>95</value>
+  <value>99</value>
 </property>
 
 <!-- Fargate does not support privileged init containers -->

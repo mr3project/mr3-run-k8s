@@ -4,7 +4,7 @@
 
 <property>
   <name>mr3.runtime</name>
-  <value>tez</value>
+  <value>spark</value>
 </property>
 
 <property>
@@ -25,12 +25,17 @@
 <property>
   <!-- add -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf for LocalProcess with Kerberos -->
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
 
 <property>
   <name>mr3.am.staging-dir</name>
-  <value></value>
+  <value>/opt/mr3-run/work-dir</value>
+</property>
+
+<property>
+  <name>mr3.am.acls.enabled</name>
+  <value>false</value>
 </property>
 
 <property>
@@ -64,26 +69,37 @@
 
 <property>
   <name>mr3.am.task.retry.on.fatal.error</name>
-  <value>true</value>
-</property>
-
-<property>
-  <name>mr3.am.task.no.retry.errors</name>
-  <value>MapJoinMemoryExhaustionError,OutOfMemoryError</value>
+  <value>false</value>
+  <description>
+    Should be set to false because Spark terminates the stage when a fatal error occurs.
+  </description>
 </property>
 
 <property>
   <name>mr3.am.client.thread-count</name>
-  <value>32</value>
+  <value>64</value>
 </property>
 
 <property>
   <name>mr3.async.logging</name>
-  <value>true</value>
+  <value>false</value>
+  <description>
+    Should be set to false because we use kubernetes/spark/conf/log4j.properties
+  </description>
 </property>
 
 <property>
   <name>mr3.am.permit.custom.user.class</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.dag.delete.local.dir</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.dag.recovery.enabled</name>
   <value>false</value>
 </property>
 
@@ -98,13 +114,18 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
   <!-- -XX:SoftRefLRUPolicyMSPerMB=25 --> 
 </property>
 
 <property>
   <name>mr3.container.reuse</name>
   <value>true</value>
+</property>
+
+<property>
+  <name>mr3.container.scheduler.scheme</name>
+  <value>fair</value>
 </property>
 
 <property>
@@ -138,13 +159,14 @@
 </property>
 
 <property>
-  <name>mr3.am.maxtaskfailure.percent</name>
-  <value>1</value>
-</property>
-
-<property>
   <name>mr3.container.termination.checker.timeout.ms</name>
   <value>300000</value>
+</property>
+
+<!-- set to false for Spark on MR3 -->
+<property>
+  <name>mr3.container.close.filesystem.ugi</name>
+  <value>false</value>
 </property>
 
 <!-- Kubernetes -->
@@ -162,16 +184,6 @@
 </property>
 
 <property>
-  <name>mr3.am.local.resourcescheduler.max.memory.mb</name>
-  <value>8192</value>
-</property>
-
-<property>
-  <name>mr3.am.local.resourcescheduler.max.cpu.cores</name>
-  <value>8</value>
-</property>
-
-<property>
   <name>mr3.am.worker.mode</name>
   <value>kubernetes</value>
 </property>
@@ -184,13 +196,13 @@
 <!-- should be revised if mr3.master.mode == MR3_MASTER_MODE_KUBERNETES = "kubernetes" -->
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib</value>
 </property>
 
 <!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env), so do not include it -->
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib</value>
 </property>
 
 <property>
@@ -210,10 +222,12 @@
 
 <!-- These variables are all set in mr3/mr3-setup.sh:
   mr3.cluster.additional.classpath 
-  mr3.principal
-  mr3.keytab
-  mr3.token.renewal.hdfs.enabled
-  mr3.token.renewal.hive.enabled
+ -->
+<!-- These variables are not set and their default values are used:
+  mr3.principal = ""
+  mr3.keytab = ""
+  mr3.token.renewal.hdfs.enabled = false
+  mr3.token.renewal.hive.enabled = false
  -->
 
 <property>
@@ -223,7 +237,7 @@
 
 <property>
   <name>mr3.am.token.renewal.paths</name>
-  <value>hdfs://red0:8020/user/hive/</value>
+  <value>hdfs://red0:8020/user/spark/</value>
 </property>
 
 <!-- These variables are all set in mr3/mr3-setup.sh (for Kubernetes):
@@ -242,21 +256,51 @@
   mr3.k8s.conf.dir.configmap
   mr3.k8s.conf.dir.mount.dir
   mr3.k8s.keytab.secret
-  mr3.k8s.worker.secret
-  mr3.k8s.mount.keytab.secret
-  mr3.k8s.mount.worker.secret
   mr3.k8s.keytab.mount.dir
   mr3.k8s.keytab.mount.file
  -->
 
+<!-- 
+  For running MR3Client inside the Kubernetes cluster,
+  comment out the configurations from mr3.k8s.api.server.url to mr3.k8s.am.service.port.
+  For running MR3Client outside the Kubernetes cluster,
+  set the configurations from mr3.k8s.client.config.file to mr3.k8s.am.service.port,
+  and update kubernetes/spark-yaml/mr3-service.yaml.
+ -->
+
+<property>
+  <name>mr3.k8s.api.server.url</name>
+  <value>https://10.1.90.9:6443</value>
+</property>
+
+<property>
+  <name>mr3.k8s.client.config.file</name>
+  <value>~/.kube/config</value>
+</property>
+
+<property>
+  <name>mr3.k8s.service.account.use.token.ca.cert.path</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.k8s.am.service.host</name>
+  <value>10.1.90.10</value>
+</property>
+
+<property>
+  <name>mr3.k8s.am.service.port</name>
+  <value>9862</value>
+</property>
+
 <property>
   <name>mr3.k8s.master.command</name>
-  <value>/opt/mr3-run/hive/run-master.sh</value>
+  <value>/opt/mr3-run/spark/run-master.sh</value>
 </property>
 
 <property>
   <name>mr3.k8s.worker.command</name>
-  <value>/opt/mr3-run/hive/run-worker.sh</value>
+  <value>/opt/mr3-run/spark/run-worker.sh</value>
 </property>
 
 <property>
@@ -277,11 +321,6 @@
 <property>
   <name>mr3.k8s.pod.memory.max.multiplier</name>
   <value>1.0d</value>
-</property>
-
-<property>
-  <name>mr3.k8s.api.server.url</name>
-  <value>https://kubernetes.default.svc</value>
 </property>
 
 <property>
@@ -311,7 +350,7 @@
 
 <property>
   <name>mr3.k8s.master.pod.affinity.match.label</name>
-  <value>hivemr3_app=hiveserver2</value>
+  <value></value>
 </property>
 
 <property>
@@ -389,13 +428,18 @@
 </property>
 
 <property>
+  <name>mr3.k8s.mount.keytab.secret</name>
+  <value>false</value>
+</property>
+
+<property>
   <name>mr3.k8s.readiness.probe.initial.delay.secs</name>
-  <value>10</value>
+  <value>0</value>
 </property>
 
 <property>
   <name>mr3.k8s.readiness.probe.period.secs</name>
-  <value>20</value>
+  <value>0</value>
 </property>
 
 <property>
@@ -507,7 +551,7 @@
 
 <property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>100</value>
 </property>
 
 <property>
@@ -522,25 +566,21 @@
 
 <property>
   <name>mr3.k8s.pod.worker.init.container.image</name>
-  <value>busybox</value>
+  <value>10.1.90.9:5000/busybox</value>
 </property>
 
 <property>
-  <name>mr3.k8s.shufflehandler.process.memory.mb</name>
-  <value>2048</value>
-</property>
-
-<property>
-  <name>mr3.k8s.shuffle.process.ports</name>
-  <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610</value>
-  <!-- <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610,16500,16510,16520,16530,16540,16550,16560,16570</value> -->
+  <!-- setting to 1 prevents the creation of ShuffleHandler processes -->
+  <!-- setting to 0 creates a ShuffleHandler process in each ContainerWorker Pod -->
+  <name>mr3.use.daemon.shufflehandler</name>
+  <value>0</value>
 </property>
 
 <!-- Prometheus -->
 
 <property>
   <name>mr3.prometheus.enable.metrics</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>
@@ -550,7 +590,7 @@
 
 <property>
   <name>mr3.k8s.master.pod.additional.labels</name>
-  <value>hivemr3_aux=prometheus</value>
+  <value>sparkmr3_app=mr3,sparkmr3_aux=prometheus</value>
 </property>
 
 <property>

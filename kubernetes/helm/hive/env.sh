@@ -44,12 +44,19 @@ WORKER_SERVICE_ACCOUNT={{.Values.name.mr3.workerServiceAccount}}
 CONF_DIR_CONFIGMAP={{.Values.name.hive.configMap}}
 
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.
-# It should be set to true if any of the following holds:
+# CREATE_KEYTAB_SECRET should be set to true if any of the following holds:
 #   1) TOKEN_RENEWAL_HDFS_ENABLED=true
 #   2) TOKEN_RENEWAL_HIVE_ENABLED=true
-#   3) mr3.k8s.mount.keytab.secret is set to true in conf/mr3-site.xml
+#   3) SSL is enabled
 CREATE_KEYTAB_SECRET={{.Values.hive.createSecret}}
 KEYTAB_SECRET={{.Values.name.hive.secret}}
+
+# CREATE_WORKER_SECRET specifies whether or not to create a Secret for ContainerWorkers from $WORKER_SECRET_DIR.
+# CREATE_WORKER_SECRET is irrelevant to token renewal, and WORKER_SECRET_DIR is not requird to contain keytab files.
+# CREATE_WORKER_SECRET should be set to true if:
+#   - SSL is enabled
+CREATE_WORKER_SECRET={{.Values.hive.createSecret}}
+WORKER_SECRET={{.Values.name.hive.workerSecret}}
 
 #
 # Step 3. Update YAML files

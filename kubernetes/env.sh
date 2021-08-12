@@ -23,6 +23,7 @@
 REMOTE_BASE_DIR=/opt/mr3-run
 REMOTE_WORK_DIR=$REMOTE_BASE_DIR/hive
 CONF_DIR_MOUNT_DIR=$REMOTE_BASE_DIR/conf
+# for mr3.k8s.keytab.mount.dir
 KEYTAB_MOUNT_DIR=$REMOTE_BASE_DIR/key
 WORK_DIR_PERSISTENT_VOLUME_CLAIM=workdir-pvc
 WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR=/opt/mr3-run/work-dir
@@ -61,17 +62,26 @@ DOCKER_USER=root
 
 MR3_NAMESPACE=hivemr3
 MR3_SERVICE_ACCOUNT=hive-service-account
-MASTER_SERVICE_ACCOUNT=master-service-account
-WORKER_SERVICE_ACCOUNT=worker-service-account
 CONF_DIR_CONFIGMAP=hivemr3-conf-configmap
 
+MASTER_SERVICE_ACCOUNT=master-service-account
+WORKER_SERVICE_ACCOUNT=worker-service-account
+
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.
-# It should be set to true if any of the following holds:
+# CREATE_KEYTAB_SECRET should be set to true if any of the following holds:
 #   1) TOKEN_RENEWAL_HDFS_ENABLED=true
 #   2) TOKEN_RENEWAL_HIVE_ENABLED=true
-#   3) mr3.k8s.mount.keytab.secret is set to true in conf/mr3-site.xml
-CREATE_KEYTAB_SECRET=true
+#   3) SSL is enabled
+CREATE_KEYTAB_SECRET=false
 KEYTAB_SECRET=hivemr3-keytab-secret
+
+# CREATE_WORKER_SECRET specifies whether or not to create a Secret for ContainerWorkers from $WORKER_SECRET_DIR.
+# CREATE_WORKER_SECRET is irrelevant to token renewal, and WORKER_SECRET_DIR is not requird to contain keytab files.
+# CREATE_WORKER_SECRET should be set to true if: 
+#   - SSL is enabled
+CREATE_WORKER_SECRET=false
+WORKER_SECRET_DIR=$BASE_DIR/key/       # can be set to '$BASEDIR/workersecret/'
+WORKER_SECRET=hivemr3-worker-secret
 
 CREATE_RANGER_SECRET=true   # specifies whether or not to create a Secret from ranger-key/*
 CREATE_ATS_SECRET=true      # specifies whether or not to create a Secret from ats-key/*
@@ -154,10 +164,12 @@ export HADOOP_CREDSTORE_PASSWORD=
 # 1) for renewing HDFS/Hive tokens in DAGAppMaster (mr3.keytab in mr3-site.xml)
 # 2) for renewing HDFS/Hive tokens in ContainerWorker (mr3.k8s.keytab.mount.file in mr3-site.xml)
 
-# Kerberos principal for renewing HDFS/Hive tokens (Cf. mr3.principal)
+# Kerberos principal for renewing HDFS/Hive tokens (for mr3.principal)
 USER_PRINCIPAL=hive@RED
-# Kerberos keytab (Cf. mr3.keytab)
+# Kerberos keytab (for mr3.keytab)
 USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
+# for mr3.k8s.keytab.mount.file
+KEYTAB_MOUNT_FILE=hive.service.keytab
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
 TOKEN_RENEWAL_HDFS_ENABLED=true
@@ -211,5 +223,6 @@ HIVE_CLIENT_HEAPSIZE=16384
 ATS_HEAPSIZE=2048
 
 # unset because 'hive' command reads SPARK_HOME and may accidentally expand the classpath with HiveConf.class from Spark. 
+# SPARK_HOME is automatically set by spark-setup.sh if Spark-MR3 is executed
 unset SPARK_HOME
 

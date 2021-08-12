@@ -69,22 +69,22 @@
 
 <property>
   <name>fs.s3a.connection.maximum</name>
-  <value>250</value>
+  <value>4000</value>
 </property>
 
 <property>
   <name>fs.s3.maxConnections</name>
-  <value>250</value>
+  <value>4000</value>
 </property>
 
 <property>
   <name>fs.s3a.threads.max</name>
-  <value>20</value>
+  <value>250</value>
 </property>
 
 <property>
   <name>fs.s3a.threads.core</name>
-  <value>15</value>
+  <value>250</value>
 </property>
 
 <property>

@@ -1056,7 +1056,7 @@
 
 <property>
   <name>hive.mr3.map.task.memory.mb</name>
-  <value>3850</value>
+  <value>3000</value>
 </property>
 
 <property>
@@ -1066,7 +1066,7 @@
 
 <property>
   <name>hive.mr3.reduce.task.memory.mb</name>
-  <value>3850</value>
+  <value>3000</value>
 </property>
 
 <property>
@@ -1076,7 +1076,7 @@
 
 <property>
   <name>hive.mr3.all-in-one.containergroup.memory.mb</name>
-  <value>15400</value>
+  <value>14000</value>
 </property>
 
 <property>
@@ -1086,7 +1086,7 @@
 
 <property>
   <name>hive.mr3.map.containergroup.memory.mb</name>
-  <value>3850</value>
+  <value>3000</value>
 </property>
 
 <property>
@@ -1096,7 +1096,7 @@
 
 <property>
   <name>hive.mr3.reduce.containergroup.memory.mb</name>
-  <value>3850</value>
+  <value>3000</value>
 </property>
 
 <property>
@@ -1138,7 +1138,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>100</value>
+  <value>99</value>
 </property>
 
 <!-- Kubernetes -->

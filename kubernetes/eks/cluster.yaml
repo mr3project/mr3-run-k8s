@@ -4,7 +4,7 @@ kind: ClusterConfig
 metadata:
   name: hive-mr3
   region: ap-northeast-2
-  version: "1.14"
+  version: "1.17"
 
 vpc:
   nat:

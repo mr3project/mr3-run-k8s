@@ -15,11 +15,10 @@
 # echo commands to the terminal output
 set -x
 
-HADOOP_BASE_DIR=$BASE_DIR/hadoop
-TEZ_BASE_DIR=$BASE_DIR/tez
+LOCAL_CONF_DIR_MOUNT_DIR=$BASE_DIR/conf
+
 MR3_BASE_DIR=$BASE_DIR/mr3
-HIVE_BASE_DIR=$BASE_DIR/hive
-RANGER_HIVE_PLUGIN_BASE_DIR=$BASE_DIR/ranger-hive-plugin
+SPARK_BASE_DIR=$BASE_DIR/spark
 
 function common_setup_print_usage_common_options {
     echo " -h/--help                              Print the usage."    
@@ -29,7 +28,7 @@ function common_setup_update_conf_dir {
     conf_dir=$1
 
     # copy only files from $conf_dir and do not copy from subdirectories
-    cp $CONF_DIR_MOUNT_DIR/* $conf_dir 
+    cp $LOCAL_CONF_DIR_MOUNT_DIR/* $conf_dir 
 }
 
 function common_setup_cleanup {
@@ -65,5 +64,13 @@ function common_setup_log_error {
     message=$2
 
     common_setup_log $function_name "ERROR: $message"
+}
+
+# get the current time
+# optionally takes a time in seconds from epoch and returns a formatted time
+function common_setup_get_time {
+    declare epoch_time=$1
+
+    date +"%Y-%m-%d-%H-%M-%S" ${epoch_time:+"-d @$epoch_time"}
 }
 

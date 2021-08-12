@@ -30,6 +30,9 @@ function mr3_setup_update_hadoop_opts {
 -Dmr3.k8s.java.io.tmpdir=$REMOTE_WORK_DIR/tmp \
 -Dmr3.k8s.conf.dir.configmap=$CONF_DIR_CONFIGMAP -Dmr3.k8s.conf.dir.mount.dir=$CONF_DIR_MOUNT_DIR \
 -Dmr3.k8s.keytab.secret=$KEYTAB_SECRET \
+-Dmr3.k8s.worker.secret=$WORKER_SECRET \
+-Dmr3.k8s.mount.keytab.secret=$CREATE_KEYTAB_SECRET \
+-Dmr3.k8s.mount.worker.secret=$CREATE_WORKER_SECRET \
 -Dmr3.k8s.keytab.mount.dir=$KEYTAB_MOUNT_DIR -Dmr3.k8s.keytab.mount.file=$KEYTAB_MOUNT_FILE \
 -Dmr3.k8s.master.persistentvolumeclaim.mounts=$WORK_DIR_PERSISTENT_VOLUME_CLAIM=$WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR \
 -Dmr3.k8s.worker.persistentvolumeclaim.mounts=$WORK_DIR_PERSISTENT_VOLUME_CLAIM=$WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR"
@@ -38,7 +41,7 @@ function mr3_setup_update_hadoop_opts {
     export HADOOP_OPTS="$HADOOP_OPTS -Dmr3.master.mode=$local_mode"
 
     # include mr3jar/lib first because of some classes overriden in Tez (e.g., TezCounters)
-    MR3_ADD_CLASSPATH_OPTS="-Dmr3.cluster.additional.classpath=$REMOTE_BASE_DIR/mr3/mr3jar/*:$REMOTE_BASE_DIR/mr3/mr3lib/*:$REMOTE_BASE_DIR/hive/apache-hive/lib/*:$REMOTE_BASE_DIR/tez/tezjar/*:$REMOTE_BASE_DIR/tez/tezjar/lib/*"
+    MR3_ADD_CLASSPATH_OPTS="-Dmr3.cluster.additional.classpath=$REMOTE_BASE_DIR/mr3/mr3lib/*:$REMOTE_BASE_DIR/hive/apache-hive/lib/*:$REMOTE_BASE_DIR/tez/tezjar/*:$REMOTE_BASE_DIR/tez/tezjar/lib/*"
     export HADOOP_OPTS="$HADOOP_OPTS $MR3_ADD_CLASSPATH_OPTS" 
 
     if [[ $TOKEN_RENEWAL_HDFS_ENABLED = "true" ]] || [[ $TOKEN_RENEWAL_HIVE_ENABLED = "true" ]]; then

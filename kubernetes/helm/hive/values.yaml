@@ -12,6 +12,7 @@ name:
     serviceAccount: hive-service-account
     configMap: hivemr3-conf-configmap
     secret: hivemr3-keytab-secret
+    workerSecret: hivemr3-worker-secret
   mr3:
     masterServiceAccount: master-service-account
     workerServiceAccount: worker-service-account

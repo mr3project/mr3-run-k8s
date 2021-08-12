@@ -62,7 +62,7 @@ MR3_S3_CERTIFICATE=/home/hive/mr3-run/kubernetes/s3-public.cert
 function check_destination_directory {
     dest_dir=$1
 
-    echo -e "\nCreating Hive MR3 SSL certificates..." >&2
+    echo -e "\nCreating MR3 SSL certificates..." >&2
     if [ -z $dest_dir ]; then
       echo -e "\nDestination directory must be nonempty" >&2
       exit 1;
@@ -103,6 +103,20 @@ function create_hivemr3_ssl_certificate {
     dest_keystore=$dest_dir/hivemr3-ssl-certificate.jks
     dest_credential_provider=$dest_dir/hivemr3-ssl-certificate.jceks
     dest_credential_provider_checksum=$dest_dir/.hivemr3-ssl-certificate.jceks.crc
+
+    check_destination_directory $dest_dir
+    cp $MR3_SSL_KEYSTORE $dest_keystore
+    cp $MR3_SSL_CREDENTIAL_PROVIDER $dest_credential_provider
+    cp $MR3_SSL_CREDENTIAL_PROVIDER_CHECKSUM $dest_credential_provider_checksum
+    import_certificates $dest_keystore
+}
+
+function create_sparkmr3_ssl_certificate {
+    dest_dir=$1
+
+    dest_keystore=$dest_dir/sparkmr3-ssl-certificate.jks
+    dest_credential_provider=$dest_dir/sparkmr3-ssl-certificate.jceks
+    dest_credential_provider_checksum=$dest_dir/.sparkmr3-ssl-certificate.jceks.crc
 
     check_destination_directory $dest_dir
     cp $MR3_SSL_KEYSTORE $dest_keystore
