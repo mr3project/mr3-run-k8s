@@ -115,6 +115,16 @@
 </property>
 
 <property>
+  <name>mr3.am.staging.dir.check.ownership.permission</name>
+  <value>true</value>
+  <description>
+    true: check the ownership and directory permission of the staging directory.
+    false: do not check.
+    Set to false if the staging directory reside on S3 which has notion of ownership and directory permission.
+  </description>
+</property>
+
+<property>
   <name>mr3.am.resource.memory.mb</name>
   <value>4096</value>
   <description>
@@ -481,6 +491,15 @@
 </property>
 
 <property>
+  <name>mr3.container.scheduler.remove.empty.kind</name>
+  <value>false</value>
+  <description>
+    true: remove ContainerKind with no ContainerGroups and reserve ContainrWorkers for recycling only if their ContainerKind has multiple ContainerGroups.
+    false: never remove ContainerKind and reserve all ContainrWorkers for recycling.
+  </description>
+</property>
+
+<property>
   <name>mr3.dag.queue.scheme</name>
   <value>common</value>
   <description>
@@ -600,10 +619,10 @@
 
 <property>
   <name>mr3.use.daemon.shufflehandler</name>
-  <value>false</value>
+  <value>0</value>
   <description>
-    true: use the shuffle handler as a DaemonTask. 
-    false: do not use shuffle handler.
+    Number of shuffle handlers in each ContainerWorker.
+    On Kubernetes, a value of 0 causes the creation of processes for shuffle handlers.
   </description>
 </property>
 
@@ -850,11 +869,19 @@
   <name>mr3.container.task.failure.num.sleeps</name>
   <value>0</value>
   <description>
-    Number of times to sleep (60 seconds each) in a ContainerWorker thread after a TaskAttempt fails.
+    Number of times to sleep (15 seconds each by default) in a ContainerWorker thread after a TaskAttempt fails.
     Before and after each sleep, the thread tries to allocate a memory block of 1GB to trigger garbage collection.
     For example, if set to 2, the sequence is:
-    allocate 1GB, sleep 60 seconds, allocate 1GB, sleep 60 seconds, allocate 1GB.
+    allocate 1GB, sleep 15 seconds, allocate 1GB, sleep 15 seconds, allocate 1GB.
     If set to 0, do not sleep and do not try to allocate a memory block.
+  </description>
+</property>
+
+<property>
+  <name>mr3.container.task.failure.sleep.period.secs</name>
+  <value>15</value>
+  <description>
+    Time in seconds to sleep after a TaskAttempt fails
   </description>
 </property>
 

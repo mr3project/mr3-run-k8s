@@ -58,8 +58,23 @@
 </property>
 
 <property>
+  <name>mr3.dag.queue.scheme</name>
+  <value>common</value>
+</property>
+ 
+<property>
   <name>mr3.dag.priority.scheme</name>
   <value>fifo</value>
+</property>
+ 
+<property>
+  <name>mr3.taskattempt.queue.scheme</name>
+  <value>opt</value>
+</property>
+ 
+<property>
+  <name>mr3.vertex.priority.scheme</name>
+  <value>normalize</value>
 </property>
  
 <property>
