@@ -6,6 +6,21 @@
 </property>
 
 <property>
+  <name>yarn.timeline-service.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.version</name>
+  <value>1.0f</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.hostname</name>
+  <value>indigo20</value>
+</property>
+
+<property>
   <name>yarn.http.policy</name>
   <value>HTTP_ONLY</value>
 </property>
