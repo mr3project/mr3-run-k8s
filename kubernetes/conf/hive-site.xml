@@ -338,6 +338,10 @@
 <property>
   <name>hive.merge.nway.joins</name>
   <value>true</value>
+  <description>
+    mapjoin_filter_on_outerjoin.q fails with java.lang.NullPointerException raised from CommonJoinOperator.getFilterTag().
+    Set it to false if necessary. Cf. HIVE-21189
+  </description>
 </property>
 
 <property>
@@ -555,6 +559,11 @@
 <property>
   <name>hive.stats.autogather</name>
   <value>true</value>
+  <description>
+    By default, Hive collects stats when running operations like alter table partition and create table.
+    However, collecting stats requires Metastore to list all files under the table directory, which can be expensive on S3.
+    Cf. HIVE-20246 and tblproperties('DO_NOT_UPDATE_STATS'='TRUE')
+  </description>
 </property>
 
 <property>
@@ -1228,6 +1237,18 @@
   <value>true</value>
 </property>
 
+<!-- Repl -->
+
+<property>
+  <name>hive.distcp.privileged.doAs</name>
+  <value>hive</value>
+</property>
+
+<property>
+  <name>hive.repl.rootdir</name>
+  <value>/opt/mr3-run/work-dir</value>
+</property>
+
 <!-- Hive 4 -->
 
 <property>
@@ -1258,6 +1279,17 @@
 <property>
   <name>hive.mapred.reduce.tasks.speculative.execution</name>
   <value>false</value>
+</property>
+
+<!-- S3 -->
+
+<property>
+  <name>hive.llap.io.use.fileid.path</name>
+  <value>true</value>
+  <description>
+    In practice, we have hive.llap.io.use.fileid.path = "is HDFS".
+    Cf. HIVE-20338 (LLAP: Force synthetic file-id for filesystems which have HDFS protocol impls with POSIX mutation semantics)
+  </description>
 </property>
 
 </configuration>

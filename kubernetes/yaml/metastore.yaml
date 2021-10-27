@@ -8,14 +8,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      hivemr3_hive_source: hivesrc5
+      hivemr3_hive_source: hivesrc3
       hivemr3_app: metastore
   template:
     metadata:
       namespace: hivemr3
       name: hivemr3-metastore
       labels:
-        hivemr3_hive_source: hivesrc5
+        hivemr3_hive_source: hivesrc3
         hivemr3_app: metastore
         mr3-pod-role: master-role
     spec:
