@@ -41,7 +41,7 @@ spec:
         hostnames:
         - "indigo0"
       containers:
-      - image: 10.1.91.17:5000/hive3:latest
+      - image: mr3project/hive3:1.4
         command: ["/opt/mr3-run/hive/metastore-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always
