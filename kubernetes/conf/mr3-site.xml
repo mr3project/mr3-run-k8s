@@ -59,7 +59,7 @@
  
 <property>
   <name>mr3.am.task.max.failed.attempts</name>
-  <value>3</value>
+  <value>5</value>
 </property>
 
 <property>
@@ -115,11 +115,6 @@
 <property>
   <name>mr3.container.idle.timeout.ms</name>
   <value>3600000</value>
-</property>
-
-<property>
-  <name>mr3.container.wait.final.message.sent</name>
-  <value>false</value>
 </property>
 
 <property>
@@ -424,11 +419,6 @@
 </property>
 
 <property>
-  <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>300000</value>
-</property>
-
-<property>
   <name>mr3.container.task.failure.num.sleeps</name>
   <value>0</value>
 </property>
@@ -507,7 +497,12 @@
 
 <property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>98</value>
+</property>
+
+<property>
+  <name>mr3.am.task.concurrent.run.enable.root.vertex</name>
+  <value>true</value>
 </property>
 
 <property>

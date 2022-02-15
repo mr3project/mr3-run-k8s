@@ -1115,12 +1115,15 @@
 
 <property>
   <name>hive.mr3.use.daemon.shufflehandler</name>
-  <value>1</value>
+  <value>3</value>
+  <description>
+    Adjust tez.shuffle.max.threads in tez-site.xml (to a non-zero value) if necessary
+  </description>
 </property>
 
 <property>
   <name>hive.mr3.am.task.max.failed.attempts</name>
-  <value>3</value>
+  <value>5</value>
 </property>
 
 <property>
@@ -1147,7 +1150,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>95</value>
 </property>
 
 <!-- Kubernetes -->

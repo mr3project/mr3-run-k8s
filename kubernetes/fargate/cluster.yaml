@@ -20,7 +20,7 @@ nodeGroups:
       allow: true
     desiredCapacity: 1
     preBootstrapCommands:
-      - "wget http://pl.postech.ac.kr/~gla/mysql-connector-java-8.0.12.jar"
+      - "wget http://your.server.address/mysql-connector-java-8.0.12.jar"
       - "mkdir -p /home/ec2-user/lib"
       - "mv mysql-connector-java-8.0.12.jar /home/ec2-user/lib"
 

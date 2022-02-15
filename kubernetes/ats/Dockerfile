@@ -25,7 +25,17 @@ RUN mkdir -p /opt/mr3-run/ats && \
 # copy files
 
 COPY timeline-service.sh /opt/mr3-run/ats/
+COPY mr3-ui.sh /opt/mr3-run/ats/
+COPY prometheus.sh /opt/mr3-run/ats/
+COPY grafana.sh /opt/mr3-run/ats/
+
 COPY hadoop/apache-hadoop /opt/mr3-run/ats/hadoop/apache-hadoop
+COPY jetty-distribution-9.4.44.v20210927 /opt/mr3-run/ats/jetty
+COPY prometheus-2.32.1.linux-amd64 /opt/mr3-run/ats/prometheus
+COPY grafana-8.3.3 /opt/mr3-run/ats/grafana
+
+RUN mkdir -p /opt/mr3-run/ats/prometheus/data && \
+    mkdir -p /opt/mr3-run/ats/grafana/data
 
 # set environments
 

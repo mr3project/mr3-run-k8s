@@ -100,6 +100,20 @@
 </property>
 
 <property>
+  <name>mr3.application.tags</name>
+  <description>
+    Comma-separated list of application tags for the MR3 job
+  </description>
+</property>
+
+<property>
+  <name>mr3.application.scheduling.properties.map</name>
+  <description>
+    Comma-separated list of scheduling properties for the MR3 job (e.g., `foo1=bar1,foo2=bar2`)
+  </description>
+</property>
+
+<property>
   <name>mr3.credentials.path</name>
   <description>
     Path to the credentials for MR3 
@@ -749,6 +763,15 @@
   </description>
 </property>
 
+<property>
+  <name>mr3.am.task.concurrent.run.enable.root.vertex</name>
+  <value>false</value>
+  <description>
+    true: Speculative execution is effective on root Vertexes with no ancestors.
+    false: Speculative execution is not effective on root Vertexes.
+  </description>
+</property>
+
 <!-- ContainerWorker -->
 
 <property>
@@ -848,10 +871,10 @@
 
 <property>
   <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>120000</value>
+  <value>300000</value>
   <description>
     Time in milliseconds before checking the termination of a TaskAttempt after a termination request. 
-    With the default value, the ContainerWorker checks whether a TaskAttempt has properly terminated 120 seconds after the termination request. 
+    With the default value, the ContainerWorker checks whether a TaskAttempt has properly terminated 300 seconds after the termination request. 
     If the TaskAttempt has not terminated, the whole ContainerWorker is shut down.
   </description>
 </property>

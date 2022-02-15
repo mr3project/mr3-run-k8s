@@ -18,10 +18,10 @@ USER root
 # create directories under /opt/mr3-run/ranger
 
 RUN mkdir -p /opt/mr3-run/ranger && \
-    mkdir -p /opt/mr3-run/ranger/conf && \
     mkdir -p /opt/mr3-run/ranger/key && \
-    mkdir -p /opt/mr3-run/ranger/work-local-dir && \
-    mkdir -p /opt/mr3-run/ranger/work-dir
+    mkdir -p /opt/mr3-run/ranger/conf && \
+    mkdir -p /opt/mr3-run/ranger/work-dir && \
+    mkdir -p /opt/mr3-run/ranger/work-local-dir
 
 # copy files
 
@@ -45,3 +45,6 @@ ARG GID=1000
 RUN groupadd -g $GID $GROUP && \
     useradd --no-log-init -u $UID -g $GID $USER && \
     chown -R $USER:$GROUP /opt/mr3-run/ranger
+
+# run as root because ranger sets up init.d
+

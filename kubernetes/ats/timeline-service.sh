@@ -14,11 +14,15 @@
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 BASE_DIR=$(readlink -f $DIR)
-source $BASE_DIR/env.sh
+source $BASE_DIR/env-secret.sh
 
 function main {
-    cp $BASE_DIR/conf/* $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
-    export YARN_TIMELINESERVER_HEAPSIZE=$ATS_HEAPSIZE
+    cp $BASE_DIR/conf/core-site.xml $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
+    cp $BASE_DIR/conf/log4j.properties $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
+    cp $BASE_DIR/conf/ssl-server.xml $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
+    cp $BASE_DIR/conf/yarn-site.xml $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
+
+    export YARN_TIMELINESERVER_HEAPSIZE=2048
     export YARN_TIMELINESERVER_OPTS="-Djava.security.krb5.conf=$BASE_DIR/conf/krb5.conf"
 
     exec $BASE_DIR/hadoop/apache-hadoop/bin/yarn timelineserver

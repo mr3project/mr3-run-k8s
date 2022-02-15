@@ -154,11 +154,6 @@
 </property>
 
 <property>
-  <name>mr3.container.wait.final.message.sent</name>
-  <value>false</value>
-</property>
-
-<property>
   <name>mr3.heartbeat.task.timeout.ms</name>
   <value>120000</value>
 </property>
@@ -480,11 +475,6 @@
 <property>
   <name>mr3.task.history.logging.enabled</name>
   <value>false</value>
-</property>
-
-<property>
-  <name>mr3.container.termination.checker.timeout.ms</name>
-  <value>300000</value>
 </property>
 
 <property>

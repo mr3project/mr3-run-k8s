@@ -105,6 +105,11 @@ function start_metastore {
 }
 
 function main {
+    pushd /opt/mr3-run/lib
+    wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.28.tar.gz
+    tar --strip-components=1 -zxf mysql-connector-java-8.0.28.tar.gz mysql-connector-java-8.0.28/mysql-connector-java-8.0.28.jar
+    popd
+
     hive_setup_parse_args_common $@    
     parse_args $REMAINING_ARGS
     metastore_service_init

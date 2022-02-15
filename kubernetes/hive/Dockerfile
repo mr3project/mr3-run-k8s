@@ -17,16 +17,19 @@ USER root
 # create directories under /opt/mr3-run
 
 RUN mkdir -p /opt/mr3-run && \
-    mkdir -p /opt/mr3-run/scratch-dir && \
-    mkdir -p /opt/mr3-run/work-dir && \
-    mkdir -p /opt/mr3-run/work-local-dir && \
     mkdir -p /opt/mr3-run/key && \
     mkdir -p /opt/mr3-run/conf && \
-    mkdir -p /opt/mr3-run/hive/tmp && \
+    mkdir -p /opt/mr3-run/work-dir && \
+    mkdir -p /opt/mr3-run/work-local-dir && \
+    mkdir -p /opt/mr3-run/am-local-dir && \
+    mkdir -p /opt/mr3-run/scratch-dir && \
+    mkdir -p /opt/mr3-run/hiveserver2-ranger-policycache && \
     mkdir -p /opt/mr3-run/hive/run-result && \
-    mkdir -p /opt/mr3-run/host-lib
+    mkdir -p /opt/mr3-run/hive/tmp && \
+    mkdir -p /opt/mr3-run/host-lib && \
+    mkdir -p /opt/mr3-run/lib
 
-RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y procps wget && rm -rf /var/lib/apt/lists/*
 
 # copy files 
 
@@ -45,4 +48,16 @@ COPY tez/tezjar /opt/mr3-run/tez/tezjar
 # set environments
 
 WORKDIR /opt/mr3-run/hive
+
+ARG UID=1000
+RUN adduser --no-create-home --disabled-login --gecos "" --uid $UID hive && \
+    chown hive /opt/mr3-run/scratch-dir && \
+    chown hive /opt/mr3-run/work-dir && \
+    chown hive /opt/mr3-run/work-local-dir && \
+    chown hive /opt/mr3-run/hive && \
+    chown hive /opt/mr3-run/hive/tmp && \
+    chown hive /opt/mr3-run/hive/run-result && \
+    chown hive /opt/mr3-run/lib
+
+USER hive
 

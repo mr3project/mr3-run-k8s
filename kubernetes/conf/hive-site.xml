@@ -926,7 +926,7 @@
 
 <property>
   <name>hive.query.results.cache.enabled</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- MR3 LLAP (configurable) -->
@@ -1136,12 +1136,15 @@
 
 <property>
   <name>hive.mr3.use.daemon.shufflehandler</name>
-  <value>1</value>
+  <value>2</value>
+  <description>
+    Adjust tez.shuffle.max.threads in tez-site.xml (to a non-zero value) if necessary
+  </description>
 </property>
 
 <property>
   <name>hive.mr3.am.task.max.failed.attempts</name>
-  <value>3</value>
+  <value>5</value>
 </property>
 
 <property>
@@ -1168,7 +1171,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>95</value>
 </property>
 
 <!-- Kubernetes -->
@@ -1184,6 +1187,9 @@
   For example, if target tables reside on S3, hive.exec.stagingdir should point to a directory on S3.
  -->
 
+<!--
+  It is okay to use /opt/mr3-run/scratch-dir for hive.exec.scratchdir and hive.downloaded.resources.dir.
+ -->
 <property>
   <name>hive.exec.scratchdir</name>
   <value>/opt/mr3-run/work-dir/${user.name}</value>
@@ -1285,7 +1291,7 @@
 
 <property>
   <name>hive.llap.io.use.fileid.path</name>
-  <value>true</value>
+  <value>false</value>
   <description>
     In practice, we have hive.llap.io.use.fileid.path = "is HDFS".
     Cf. HIVE-20338 (LLAP: Force synthetic file-id for filesystems which have HDFS protocol impls with POSIX mutation semantics)

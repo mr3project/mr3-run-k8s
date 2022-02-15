@@ -1,10 +1,16 @@
-## Release 1.4: 2021-11-5
+## Release 1.4: 2022-2-14
 
 MR3
   - Use Deployment instead of ReplicationController on Kubernetes.
+  - HistoryLogger correctly sends Vertex finish times to Timeline Server.
+  - Add more Prometheus metrics.
+  - Introduce `mr3.application.tags` and `mr3.application.scheduling.properties.map`.
+  - The logic for speculative execution uses the average execution time of Tasks (instead of the maximum execution time).
 
 Hive on MR3
   - DistCp jobs are sent to MR3, not to Hadoop. As a result, DistCp runs okay on Kubernetes.
+  - org.apache.tez.common.counters.Limits is initialized in HiveServer2.
+  - Update Log4j2 to 2.17.1 (for CVE-2021-44228).
 
 ## Release 1.3: 2021-8-18
 
@@ -21,7 +27,6 @@ MR3
   - The image pull policy specified in `mr3.k8s.pod.image.pull.policy` applies to init containers as well as ContainerWorker containers.
   - Introduce `mr3.auto.scale.out.num.initial.containers` which specifies the number of new ContainerWorkers to create in a scale-out operation when no ContainerWorkers are running. 
   - Introduce `mr3.container.runtime.auto.start.input` to automatically start LogicalInputs in RuntimeTasks.
-  - On both Hadoop and Kubernetes, there is no limit on the aggregate memory of ContainerWorkers, so MR3 can run in a cluster of any size.
   - Speculative execution works on Vertexes with a single Task.
 
 Hive on MR3 

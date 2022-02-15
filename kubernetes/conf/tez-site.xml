@@ -111,12 +111,20 @@
 
 <property>
   <name>tez.shuffle.max.threads</name>
-  <value>0</value>
+  <value>20</value>
+  <description>
+    Set to 'total number of threads for shuffle handlers / mr3.use.daemon.shufflehandler'
+  </description>
 </property>
 
 <property>
   <name>tez.shuffle.listen.queue.size</name>
   <value>16384</value>
+</property>
+
+<property>
+  <name>tez.shuffle.mapoutput-info.meta.cache.size</name>
+  <value>10000</value>
 </property>
 
 <!-- MR3 0.7 -->

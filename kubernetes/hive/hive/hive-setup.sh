@@ -147,7 +147,7 @@ function hive_setup_config_hive_logs {
     # LogUtils.initHiveLog4j(), e.g., conf.HiveConf.LOG. Without updating HADOOP_OPTS, these LOG objects send 
     # their output to hive.log in a default directory, e.g., /tmp/gitlab-runner/hive.log, and we end up with 
     # two hive.log files.
-    export HADOOP_OPTS="-Dhive.log.dir=$output_dir -Dhive.log.file=$log_filename"
+    export HADOOP_OPTS="$HADOOP_OPTS -Dhive.log.dir=$output_dir -Dhive.log.file=$log_filename"
 }
 
 #

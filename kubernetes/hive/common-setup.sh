@@ -12,8 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# echo commands to the terminal output
-set -x
+# do NOT echo commands to the terminal output because we may print HIVE_SERVER2_SSL_TRUSTSTOREPASS in log
+# e.g., in hive_setup_metastore_update_hadoop_opts in hive-setup.sh:
+#   -Djavax.net.ssl.trustStorePassword=$HIVE_SERVER2_SSL_TRUSTSTOREPASS
+#
+# set -x  
 
 HADOOP_BASE_DIR=$BASE_DIR/hadoop
 TEZ_BASE_DIR=$BASE_DIR/tez

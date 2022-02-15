@@ -41,20 +41,23 @@ CREATE_SERVICE_ACCOUNTS=true
 # Step 1. Building a Docker image
 #
 
-DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.4}
-DOCKER_HIVE_FILE=${DOCKER_HIVE_FILE:-Dockerfile}
+DOCKER_HIVE_IMG={DOCKER_HIVE_IMG:-orange1:5000/hive3:1.4}
+DOCKER_HIVE_FILE={DOCKER_HIVE_FILE:-Dockerfile}
 
-DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-$DOCKER_HIVE_IMG}
-DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
+DOCKER_HIVE_WORKER_IMG={DOCKER_HIVE_WORKER_IMG:-orange1:5000/hive3-worker:1.4}
+DOCKER_HIVE_WORKER_FILE={DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 
-DOCKER_RANGER_IMG=10.1.91.17:5000/ranger:latest
+DOCKER_RANGER_IMG=orange1:5000/ranger:2.1.0
 DOCKER_RANGER_FILE=Dockerfile
 
-DOCKER_ATS_IMG=10.1.91.17:5000/ats-2.7.7:latest
+DOCKER_ATS_IMG=orange1:5000/mr3ui:1.4
 DOCKER_ATS_FILE=Dockerfile
 
+DOCKER_SUPERSET_IMG=orange1:5000/superset:1.3.2
+DOCKER_SUPERSET_FILE=Dockerfile
+
 # do not use a composite name like hive@RED, hive/red0@RED (which results in NPE in ContainerWorker)
-DOCKER_USER=root
+DOCKER_USER=hive
 
 #
 # Step 2. Configuring Pods

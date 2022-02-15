@@ -15,7 +15,7 @@
 DIR="$(cd "$(dirname "$0")" && pwd)"
 BASE_DIR=$(readlink -f $DIR)
 
-source $BASE_DIR/conf/solr.in.sh
+source $BASE_DIR/key/solr.in.sh
 
 function setup_solr() {
     cp /opt/mr3-run/ranger/conf/krb5.conf /etc/krb5.conf
@@ -39,7 +39,7 @@ function setup_solr() {
 }
 
 function start_solr() {
-    SOLR_INCLUDE=$BASE_DIR/conf/solr.in.sh $BASE_DIR/solr/bin/solr start -f -force
+    SOLR_INCLUDE=$BASE_DIR/key/solr.in.sh $BASE_DIR/solr/bin/solr start -f -force
 }
 
 function main {

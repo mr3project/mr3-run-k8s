@@ -48,3 +48,14 @@ COPY tez/tezjar /opt/mr3-run/tez/tezjar
 
 WORKDIR /opt/mr3-run/hive
 
+ARG UID=1000
+RUN adduser --no-create-home --disabled-login --gecos "" --uid $UID hive && \
+    chown hive /opt/mr3-run/scratch-dir && \
+    chown hive /opt/mr3-run/work-dir && \
+    chown hive /opt/mr3-run/work-local-dir && \
+    chown hive /opt/mr3-run/hive && \
+    chown hive /opt/mr3-run/hive/tmp && \
+    chown hive /opt/mr3-run/hive/run-result
+
+USER hive
+
