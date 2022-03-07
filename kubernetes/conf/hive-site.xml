@@ -1207,7 +1207,7 @@
 
 <property>
   <name>hive.query.results.cache.directory</name>
-  <value>/opt/mr3-run/scratch-dir/_resultscache_</value>
+  <value>/opt/mr3-run/work-dir/_resultscache_</value>
 </property>
 
 <property>
