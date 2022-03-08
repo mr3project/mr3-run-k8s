@@ -22,10 +22,6 @@ nodeGroups:
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
       withAddonPolicies:
         efs: true
-    preBootstrapCommands:
-      - "wget http://your.address/mysql-connector-java-8.0.12.jar"
-      - "mkdir -p /home/ec2-user/lib"
-      - "mv mysql-connector-java-8.0.12.jar /home/ec2-user/lib"
   - name: mr3-worker
     instanceType: mixed
     labels: { roles: workers }
