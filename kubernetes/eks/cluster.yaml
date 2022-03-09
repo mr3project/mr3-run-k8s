@@ -9,8 +9,11 @@ vpc:
   nat:
     gateway: Single
 
+availabilityZones: ["ap-northeast-2a", "ap-northeast-2b", "ap-northeast-2c"]
+
 nodeGroups:
   - name: mr3-master
+    availabilityZones: ["ap-northeast-2a"]
     instanceType: m5.xlarge
     labels: { roles: masters }
     ssh:
@@ -20,21 +23,22 @@ nodeGroups:
       attachPolicyARNs:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
+        - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
       withAddonPolicies:
         efs: true
   - name: mr3-worker
+    availabilityZones: ["ap-northeast-2a"]
     instanceType: mixed
     labels: { roles: workers }
     ssh:
       allow: true
     desiredCapacity: 0
     minSize: 0
-    maxSize: 3
+    maxSize: 4
     instancesDistribution:
-      instanceTypes: ["m5d.xlarge", "m5d.2xlarge"] 
+      instanceTypes: ["m5d.xlarge"]
       onDemandBaseCapacity: 0
       onDemandPercentageAboveBaseCapacity: 0
-      spotInstancePools: 1
     iam:
       attachPolicyARNs:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
