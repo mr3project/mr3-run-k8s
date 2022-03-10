@@ -24,6 +24,7 @@ nodeGroups:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
+        - arn:aws:iam::111111111111:policy/MR3AccessS3
       withAddonPolicies:
         efs: true
   - name: mr3-worker
@@ -34,7 +35,7 @@ nodeGroups:
       allow: true
     desiredCapacity: 0
     minSize: 0
-    maxSize: 4
+    maxSize: 3
     instancesDistribution:
       instanceTypes: ["m5d.xlarge"]
       onDemandBaseCapacity: 0
@@ -44,6 +45,7 @@ nodeGroups:
         - arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy
         - arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy
         - arn:aws:iam::111111111111:policy/EKSAutoScalingWorkerPolicy
+        - arn:aws:iam::111111111111:policy/MR3AccessS3
       withAddonPolicies:
         efs: true
     tags:

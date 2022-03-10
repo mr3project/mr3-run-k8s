@@ -91,11 +91,6 @@ spec:
           readOnly: true
         - name: work-dir-volume
           mountPath: /opt/mr3-run/work-dir/
-        # - name: work-dir-volume
-        #   mountPath: /opt/mr3-run/lib
-        #   subPath: lib
-        - name: host-lib-volume
-          mountPath: /opt/mr3-run/host-lib
       volumes:
       - name: env-k8s-volume
         secret:
@@ -109,7 +104,3 @@ spec:
       - name: work-dir-volume
         persistentVolumeClaim:
           claimName: workdir-pvc
-      - name: host-lib-volume
-        hostPath:
-          path: /home/ec2-user/lib
-          type: Directory
