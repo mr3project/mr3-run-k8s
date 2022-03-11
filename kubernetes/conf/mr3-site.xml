@@ -147,6 +147,11 @@
 <!-- mr3.master.mode is set in mr3-setup.sh --> 
 
 <property>
+  <name>mr3.am.acls.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
   <name>mr3.am.resource.memory.mb</name>
   <value>16384</value>
 </property>
