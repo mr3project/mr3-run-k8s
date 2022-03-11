@@ -17,6 +17,9 @@ metadata:
   name: efs-provisioner
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: efs-provisioner
   strategy:
     type: Recreate 
   template:

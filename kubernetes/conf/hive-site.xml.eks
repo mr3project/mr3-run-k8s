@@ -913,7 +913,7 @@
 
 <property>
   <name>hive.query.results.cache.enabled</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- MR3 LLAP (configurable) -->
