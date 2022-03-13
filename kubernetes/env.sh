@@ -117,7 +117,7 @@ HIVE_DATABASE_NAME=hive5mr3
 HIVE_WAREHOUSE_DIR=/opt/mr3-run/work-dir/warehouse/
 
 # Specifies hive.metastore.sasl.enabled 
-METASTORE_SECURE_MODE=true
+METASTORE_SECURE_MODE=false
 
 # For security in Metastore 
 # Kerberos principal for Metastore; cf. 'hive.metastore.kerberos.principal' in hive-site.xml
@@ -144,7 +144,7 @@ HIVE_SERVER2_HEAPSIZE=16384
 # For security in HiveServer2 
 # Beeline should also provide this Kerberos principal.
 # Authentication option: NONE (uses plain SASL), NOSASL, KERBEROS, LDAP, PAM, and CUSTOM; cf. 'hive.server2.authentication' in hive-site.xml 
-HIVE_SERVER2_AUTHENTICATION=KERBEROS
+HIVE_SERVER2_AUTHENTICATION=NONE
 # Kerberos principal for HiveServer2; cf. 'hive.server2.authentication.kerberos.principal' in hive-site.xml 
 HIVE_SERVER2_KERBEROS_PRINCIPAL=hive/red0@RED
 # Kerberos keytab for HiveServer2; cf. 'hive.server2.authentication.kerberos.keytab' in hive-site.xml 
@@ -175,7 +175,7 @@ USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
 KEYTAB_MOUNT_FILE=hive.service.keytab
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
-TOKEN_RENEWAL_HDFS_ENABLED=true
+TOKEN_RENEWAL_HDFS_ENABLED=false
 
 #
 # Step 7. Additional settings
