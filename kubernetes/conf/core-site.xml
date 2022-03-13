@@ -7,7 +7,7 @@
 
 <property>
   <name>hadoop.security.authentication</name>
-  <value>kerberos</value>
+  <value>simple</value>
 </property>
 
 <property>
