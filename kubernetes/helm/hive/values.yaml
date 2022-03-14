@@ -51,8 +51,8 @@ metastore:
 
   warehouseDir: s3a://your-warehouse-dir/warehouse
 
-  initSchema: true
-  mountLib: true
+  initSchema: false
+  mountLib: false
   hostLib: false
   hostLibDir: "/home/ec2-user/lib"
 
@@ -107,7 +107,7 @@ hdfs:
   userPrincipal: hive@RED
   # file name under dir.keytab
   userKeytab: "hive.service.keytab"
-  tokenRenewalEnabled: true
+  tokenRenewalEnabled: false
 
 # if not set, random values will be generated
 amConfig:

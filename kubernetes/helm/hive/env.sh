@@ -20,8 +20,11 @@ REMOTE_BASE_DIR={{.Values.dir.base}}
 REMOTE_WORK_DIR={{.Values.dir.work}}
 CONF_DIR_MOUNT_DIR={{.Values.dir.conf}}
 KEYTAB_MOUNT_DIR={{.Values.dir.keytab}}
-WORK_DIR_PERSISTENT_VOLUME_CLAIM={{.Values.name.persistentVolumeClaim}}
-WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR={{.Values.dir.persistentVolumeClaim}}
+
+# DO NOT REMOVE THIS LINE
+WORK_DIR_PERSISTENT_VOLUME_CLAIM={{if .Values.workDir.create}}{{.Values.name.persistentVolumeClaim}}{{else}}{{end}}
+# DO NOT REMOVE THIS LINE
+WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR={{if .Values.workDir.create}}{{.Values.dir.persistentVolumeClaim}}{{else}}{{end}}
 
 # JAVA_HOME and PATH are already set inside the container.
 
