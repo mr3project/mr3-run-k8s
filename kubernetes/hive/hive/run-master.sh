@@ -24,7 +24,7 @@ function run_master {
 
     common_setup_cleanup 
 
-    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    # HTTP2_DISABLE=false is now okay with fabric8io/kubernetes-client to 4.9.2+
     export HTTP2_DISABLE=true
 
     export HADOOP_HOME=$HADOOP_BASE_DIR/apache-hadoop

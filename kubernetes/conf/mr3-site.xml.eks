@@ -58,7 +58,7 @@
  
 <property>
   <name>mr3.am.task.max.failed.attempts</name>
-  <value>5</value>
+  <value>3</value>
 </property>
 
 <property>
@@ -530,7 +530,7 @@
 
 <property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>98</value>
+  <value>99</value>
 </property>
 
 <property>
@@ -562,7 +562,7 @@
 
 <property>
   <name>mr3.k8s.shuffle.process.ports</name>
-  <value>15500,15510,15520,15530,15540,15550,15560,15570,15580,15590,15600,15610</value>
+  <value>15500,15510,15520,15530,15540,15550,15560,15570</value>
 </property>
 
 <!-- Prometheus -->

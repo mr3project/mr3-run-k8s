@@ -1503,6 +1503,14 @@
 </property>
 
 <property>
+  <name>mr3.k8s.master.pod.cpu.limit.multiplier</name>
+  <value>1.0</value>
+  <description>
+    Multiplier for the CPU resource limit for DAGAppMaster Pod
+  </description>
+</property>
+
+<property>
   <name>mr3.k8s.pod.worker.image</name>
   <value></value>
   <description>

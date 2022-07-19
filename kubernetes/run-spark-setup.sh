@@ -35,12 +35,12 @@ kubectl create namespace $SPARK_MR3_NAMESPACE
 
 # Volumes
 # required if mr3.dag.recovery.enabled=true in mr3-site.xml
-#if [ $RUN_AWS_EKS = true ]; then
-#  echo "assume that PersistentVolumeClaim workdir-pvc has been created"
-#else
-#  kubectl create -f $YAML_DIR/workdir-pv.yaml 
-#  kubectl create -n $SPARK_MR3_NAMESPACE -f $YAML_DIR/workdir-pvc.yaml 
-#fi
+if [ $RUN_AWS_EKS = true ]; then
+  echo "assume that PersistentVolumeClaim workdir-pvc has been created"
+else
+  kubectl create -f $YAML_DIR/workdir-pv.yaml 
+  kubectl create -n $SPARK_MR3_NAMESPACE -f $YAML_DIR/workdir-pvc.yaml 
+fi
 
 # env-secret is used by Spark driver running inside Kubernetes (but not by DAGAppMaster and ContainerWorker)
 kubectl create -n $SPARK_MR3_NAMESPACE secret generic env-secret --from-file=$BASE_DIR/spark/env.sh
@@ -53,6 +53,11 @@ else
   kubectl create -n $SPARK_MR3_NAMESPACE secret generic $SPARK_KEYTAB_SECRET
 fi
 
+if [ $CREATE_WORKER_SECRET = true ]; then
+  kubectl create -n $SPARK_MR3_NAMESPACE secret generic $SPARK_WORKER_SECRET --from-file=$WORKER_SECRET_DIR
+else
+  kubectl create -n $SPARK_MR3_NAMESPACE secret generic $SPARK_WORKER_SECRET
+fi
 kubectl create -f $YAML_DIR/cluster-role.yaml
 kubectl create -f $YAML_DIR/spark-role.yaml
 kubectl create -f $YAML_DIR/master-role.yaml
@@ -66,10 +71,10 @@ fi
 kubectl create clusterrolebinding spark-clusterrole-binding --clusterrole=node-reader --serviceaccount=$SPARK_MR3_NAMESPACE:$SPARK_MR3_SERVICE_ACCOUNT
 kubectl create rolebinding spark-role-binding --role=spark-role --serviceaccount=$SPARK_MR3_NAMESPACE:$SPARK_MR3_SERVICE_ACCOUNT -n $SPARK_MR3_NAMESPACE
 
-kubectl create clusterrolebinding master-clusterrole-binding --clusterrole=node-reader --serviceaccount=$SPARK_MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT
-kubectl create rolebinding master-role-binding --role=master-role --serviceaccount=$SPARK_MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT -n $SPARK_MR3_NAMESPACE
+kubectl create clusterrolebinding spark-master-clusterrole-binding --clusterrole=node-reader --serviceaccount=$SPARK_MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT
+kubectl create rolebinding spark-master-role-binding --role=master-role --serviceaccount=$SPARK_MR3_NAMESPACE:$MASTER_SERVICE_ACCOUNT -n $SPARK_MR3_NAMESPACE
 
-kubectl create rolebinding worker-role-binding --role=worker-role --serviceaccount=$SPARK_MR3_NAMESPACE:$WORKER_SERVICE_ACCOUNT -n $SPARK_MR3_NAMESPACE
+kubectl create rolebinding spark-worker-role-binding --role=worker-role --serviceaccount=$SPARK_MR3_NAMESPACE:$WORKER_SERVICE_ACCOUNT -n $SPARK_MR3_NAMESPACE
 
 # reuse CLIENT_TO_AM_TOKEN_KEY if already defined; use a random UUID otherwise
 RANDOM_CLIENT_TO_AM_TOKEN_KEY=$(cat /proc/sys/kernel/random/uuid)
@@ -86,10 +91,6 @@ echo "export MR3_APPLICATION_ID_TIMESTAMP=$MR3_APPLICATION_ID_TIMESTAMP"
 #ATS_SECRET_KEY=${ATS_SECRET_KEY:-$RANDOM_ATS_SECRET_KEY}
 #echo "ATS_SECRET_KEY=$ATS_SECRET_KEY"
 
-if [ $CREATE_PROMETHEUS_SERVICE = true ]; then
-  kubectl create -f $YAML_DIR/prometheus-service.yaml
-fi
-
 #
 # required for running spark/spark/run-spark-submit.sh inside Kubernetes
 #
@@ -100,13 +101,7 @@ kubectl create -n $SPARK_MR3_NAMESPACE configmap client-am-config \
 #  --from-literal=ats-secret-key=$ATS_SECRET_KEY
 
 #
-# required for running run-spark-submit.sh in a Pod inside Kubernetes
-#
-
-kubectl create -f $YAML_DIR/driver-service.yaml
-
-#
-# required for running spark/spark/run-spark-shell.sh,run-spark-shell.sh outside Kubernetes
+# required for running Spark outside Kubernetes
 #
 
 kubectl create -f $YAML_DIR/mr3-service.yaml

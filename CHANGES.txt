@@ -1,3 +1,22 @@
+## Release 1.5: 2022-7-24
+
+MR3
+  - Use liveness probes on ContainerWorker Pods running separate processes for shuffle handlers.
+  - When a ContainerGroup is removed, all its Prometheus metrics are removed. 
+  - Prometheus metrics are correctly published when two DAGAppMaster Pods for Hive and Spark can run concurrently in the same namespace on Kubernetes.
+  - DAGAppMaster stops if it fails to contact Timeline Server during initialization.
+  - Introduce `mr3.k8s.master.pod.cpu.limit.multiplier` for a multiplier for the CPU resource limit for DAGAppMaster Pods.
+  - Using MasterControl, autoscaling parameters can be updated dynamically.
+  - HistoryLogger correctly sends Vertex start times to Timeline Server.
+
+Hive on MR3
+  - Support Hive 3.1.3.
+
+Spark on MR3
+  - Support Spark 3.2.2.
+  - Reduce the size of Protobuf objects when submitting DAGs to MR3.
+  - Spark executors can run as MR3 ContainerWorkers in local mode.
+
 ## Release 1.4: 2022-2-14
 
 MR3

@@ -22,18 +22,43 @@ source $BASE_DIR/common-setup.sh
 source $MR3_BASE_DIR/mr3-setup.sh
 source $SPARK_BASE_DIR/spark-setup.sh
 
-function run_spark_shell_init {
+function parse_args {
+    START_THRIFTSERVER=false
+    STOP_THRIFTSERVER=false
+    REMAINING_ARGS=""
+    while [[ -n $1 ]]; do
+        case "$1" in
+            start)
+                START_THRIFTSERVER=true
+                shift
+                ;;
+            stop)
+                STOP_THRIFTSERVER=true
+                shift
+                ;;
+            restart)
+                START_THRIFTSERVER=true
+                STOP_THRIFTSERVER=true
+                shift
+                ;;
+            *)
+                REMAINING_ARGS="$REMAINING_ARGS $1"
+                shift
+                ;;
+        esac
+    done
+}
+
+function thriftserver_service_init {
     mr3_setup_init
     spark_setup_init
 
-    BASE_OUT=$SPARK_BASE_DIR/spark-shell-result
+    BASE_OUT=$SPARK_BASE_DIR/thriftserver-service-result
     spark_setup_init_output_dir $BASE_OUT
 }
 
-function run_spark_shell_main {
-    spark_setup_parse_args_common $@
-
-    run_spark_shell_init
+function start_thriftserver {
+    thriftserver_service_init
 
     declare log_dir="$OUT/spark-logs"
     declare out_file="$log_dir/out-spark-shell.txt"
@@ -43,11 +68,18 @@ function run_spark_shell_main {
     spark_setup_init_driver_opts
     spark_setup_extra_opts
 
+    # Spark thirft server writes log file under SPARK_LOG_DIR
+    # cf. sbin/spark-daemon.sh
+    export SPARK_LOG_DIR=$log_dir
+
     # HTTP2_DISABLE=false is now okay with fabric8io/kubernetes-client to 4.9.2+
     export HTTP2_DISABLE=true
 
+    SPARK_DRIVER_OPTS="$SPARK_DRIVER_OPTS -Dhive.server2.thrift.bind.host=$SPARK_THRIFT_SERVER_HOST"
+    SPARK_DRIVER_OPTS="$SPARK_DRIVER_OPTS -Dhive.server2.thrift.port=$SPARK_THRIFT_SERVER_PORT"
+
     # use '--master spark' because '--master mr3' is rejected from Spark 3.0.3
-    $SPARK_HOME/bin/spark-shell \
+    $SPARK_HOME/sbin/start-thriftserver.sh \
         --driver-java-options "$SPARK_DRIVER_OPTS" \
         --master spark \
         --jars "$SPARK_DRIVER_JARS" \
@@ -66,7 +98,27 @@ function run_spark_shell_main {
         --conf spark.hadoop.yarn.resourcemanager.principal=$SPARK_KERBEROS_USER \
         $REMAINING_ARGS \
         2>&1
-    # do not redirect with '| tee $out_file' because CTRL-C causes Spark shell to stop responding
+
+    sleep infinity
 }
 
-run_spark_shell_main $@
+function stop_thriftserver {
+    thriftserver_service_init
+
+    $SPARK_HOME/sbin/stop-thriftserver.sh
+}
+
+function thriftserver_main {
+    spark_setup_parse_args_common $@
+    parse_args $REMAINING_ARGS
+
+    if [ $STOP_THRIFTSERVER = true ]; then
+        stop_thriftserver
+    fi
+    if [ $START_THRIFTSERVER = true ]; then
+        start_thriftserver
+    fi
+}
+
+thriftserver_main $@
+

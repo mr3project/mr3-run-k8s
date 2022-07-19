@@ -41,10 +41,10 @@ CREATE_SERVICE_ACCOUNTS=true
 # Step 1. Building a Docker image
 #
 
-DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.4}
+DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.5}
 DOCKER_HIVE_FILE=${DOCKER_HIVE_FILE:-Dockerfile}
 
-DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3-worker:1.4}
+DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3-worker:1.5}
 DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 
 DOCKER_RANGER_IMG=mr3project/ranger:2.1.0
@@ -55,6 +55,9 @@ DOCKER_ATS_FILE=Dockerfile
 
 DOCKER_SUPERSET_IMG=mr3project/superset:1.3.2
 DOCKER_SUPERSET_FILE=Dockerfile
+
+DOCKER_APACHE_IMG=mr3project/httpd:2.4
+DOCKER_APACHE_FILE=Dockerfile
 
 # do not use a composite name like hive@RED, hive/red0@RED (which results in NPE in ContainerWorker)
 DOCKER_USER=hive
@@ -117,7 +120,7 @@ HIVE_DATABASE_NAME=hive5mr3
 HIVE_WAREHOUSE_DIR=/opt/mr3-run/work-dir/warehouse/
 
 # Specifies hive.metastore.sasl.enabled 
-METASTORE_SECURE_MODE=false
+METASTORE_SECURE_MODE=true
 
 # For security in Metastore 
 # Kerberos principal for Metastore; cf. 'hive.metastore.kerberos.principal' in hive-site.xml
@@ -144,7 +147,7 @@ HIVE_SERVER2_HEAPSIZE=16384
 # For security in HiveServer2 
 # Beeline should also provide this Kerberos principal.
 # Authentication option: NONE (uses plain SASL), NOSASL, KERBEROS, LDAP, PAM, and CUSTOM; cf. 'hive.server2.authentication' in hive-site.xml 
-HIVE_SERVER2_AUTHENTICATION=NONE
+HIVE_SERVER2_AUTHENTICATION=KERBEROS
 # Kerberos principal for HiveServer2; cf. 'hive.server2.authentication.kerberos.principal' in hive-site.xml 
 HIVE_SERVER2_KERBEROS_PRINCIPAL=hive/red0@RED
 # Kerberos keytab for HiveServer2; cf. 'hive.server2.authentication.kerberos.keytab' in hive-site.xml 
@@ -175,7 +178,7 @@ USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
 KEYTAB_MOUNT_FILE=hive.service.keytab
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
-TOKEN_RENEWAL_HDFS_ENABLED=false
+TOKEN_RENEWAL_HDFS_ENABLED=true
 
 #
 # Step 7. Additional settings

@@ -24,7 +24,7 @@ function run_master {
 
     common_setup_cleanup 
 
-    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    # HTTP2_DISABLE=false is now okay with fabric8io/kubernetes-client to 4.9.2+
     export HTTP2_DISABLE=true
 
     # we do not need HADOOP_HOME because it is not used mr3.am.launch.env and mr3.container.launch.env

@@ -7,7 +7,7 @@
 
 <property>
   <name>hadoop.security.authentication</name>
-  <value>simple</value>
+  <value>kerberos</value>
 </property>
 
 <property>
@@ -38,59 +38,5 @@
   <name>ipc.client.connect.max.retries.on.timeouts</name>
   <value>3</value>
 </property>
-
-<!-- S3 -->
-
-<!--
-<property>
-  <name>fs.s3a.aws.credentials.provider</name>
-  <value>com.amazonaws.auth.EnvironmentVariableCredentialsProvider</value>
-</property>
-
-<property>
-  <name>fs.s3a.connection.ssl.enabled</name>
-  <value>false</value>
-</property>
-
-<property>
-  <name>fs.s3a.endpoint</name>
-  <value>http://orange0:9000</value>
-</property>
-
-<property>
-  <name>fs.s3a.path.style.access</name>
-  <value>true</value>
-</property>
-
-<property>
-  <name>fs.s3a.impl</name>
-  <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
-</property>
-
-<property>
-  <name>fs.s3a.connection.maximum</name>
-  <value>4000</value>
-</property>
-
-<property>
-  <name>fs.s3.maxConnections</name>
-  <value>4000</value>
-</property>
-
-<property>
-  <name>fs.s3a.threads.max</name>
-  <value>250</value>
-</property>
-
-<property>
-  <name>fs.s3a.threads.core</name>
-  <value>250</value>
-</property>
-
-<property>
-  <name>fs.s3a.blocking.executor.enabled</name>
-  <value>false</value>
-</property>
--->
 
 </configuration>

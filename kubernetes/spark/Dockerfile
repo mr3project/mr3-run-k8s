@@ -25,7 +25,7 @@ RUN mkdir -p /opt/mr3-run && \
     mkdir -p /opt/mr3-run/spark/spark-submit-result && \
     mkdir -p /opt/mr3-run/spark/spark-shell-result
 
-RUN apt-get update && apt-get install -y procps && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y procps && apt-get install -y krb5-user && apt-get install -y sudo && rm -rf /var/lib/apt/lists/*
 
 # copy files 
 
@@ -36,10 +36,24 @@ COPY spark/*.sh /opt/mr3-run/spark/
 COPY lib /opt/mr3-run/lib
 COPY mr3/mr3lib /opt/mr3-run/mr3/mr3lib
 COPY spark/bin /opt/mr3-run/spark/bin
+COPY spark/sbin /opt/mr3-run/spark/sbin
 COPY spark/jars /opt/mr3-run/spark/jars
 COPY spark/sparkmr3 /opt/mr3-run/spark/sparkmr3
 
 # set environments
 
 WORKDIR /opt/mr3-run/spark
+
+ARG UID=1000
+RUN adduser --no-create-home --disabled-login --gecos "" --uid $UID spark && \
+    echo "spark:spark" | chpasswd && \
+    adduser spark sudo && \
+    chown spark /opt/mr3-run/work-dir && \
+    chown spark /opt/mr3-run/work-local-dir && \
+    chown spark /opt/mr3-run/spark && \
+    chown spark /opt/mr3-run/spark/spark-submit-result && \
+    chown spark /opt/mr3-run/spark/spark-shell-result && \
+    chown spark /opt/mr3-run/lib
+
+USER spark
 

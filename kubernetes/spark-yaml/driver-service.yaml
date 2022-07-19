@@ -2,11 +2,15 @@ apiVersion: v1
 kind: Service
 metadata:
   namespace: sparkmr3
-  name: spark-driver
+  name: spark1
 spec:
   clusterIP: None
   selector:
-    sparkmr3_app: driver
+    sparkmr3_app: spark1
   ports:
   - port: 9850
     targetPort: 9850
+    name: driver
+  - port: 4040
+    targetPort: 4040
+    name: webui

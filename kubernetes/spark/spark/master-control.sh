@@ -24,7 +24,7 @@ LOCAL_MODE="kubernetes"
 spark_setup_init
 mr3_setup_init
 
-mr3_setup_update_hadoop_opts $LOCAL_MODE
+spark_setup_init_run_configs $LOCAL_MODE
 
 # include SPARK_CLASSPATH in order to properly configure Log4j 2
 export CLASSPATH=$BASE_DIR/conf:$MR3_CLASSPATH:$SPARK_CLASSPATH:$CLASSPATH

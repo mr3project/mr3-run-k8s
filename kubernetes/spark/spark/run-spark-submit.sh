@@ -45,7 +45,7 @@ function run_spark_submit_main {
     spark_setup_init_driver_opts
     spark_setup_extra_opts
 
-    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    # HTTP2_DISABLE=false is now okay with fabric8io/kubernetes-client to 4.9.2+
     export HTTP2_DISABLE=true
 
     # use '--master spark' because '--master mr3' is rejected from Spark 3.0.3
@@ -54,8 +54,18 @@ function run_spark_submit_main {
         --master spark \
         --jars "$SPARK_DRIVER_JARS" \
         --driver-class-path "$SPARK_DRIVER_CP" \
+        --conf spark.driver.cores=$SPARK_DRIVER_CORES \
+        --conf spark.driver.memory="${SPARK_DRIVER_MEMORY_MB}m" \
         --conf spark.yarn.populateHadoopClasspath=false \
         --conf spark.hadoop.yarn.timeline-service.enabled=false \
+        --conf spark.driver.port=$SPARK_DRIVER_PORT \
+        --conf spark.ui.port=$SPARK_UI_PORT \
+        --conf spark.ui.proxyBase=${PROXY_BASE}/${DRIVER_NAME} \
+        --conf spark.driver.bindAddress=0.0.0.0 \
+        --conf spark.driver.host=${DRIVER_NAME}.${SPARK_MR3_NAMESPACE}.svc.cluster.local \
+        --conf spark.kerberos.keytab=$SPARK_KERBEROS_KEYTAB \
+        --conf spark.kerberos.principal=$SPARK_KERBEROS_PRINCIPAL \
+        --conf spark.hadoop.yarn.resourcemanager.principal=$SPARK_KERBEROS_USER \
         $REMAINING_ARGS \
         2>&1 | tee $out_file
 }

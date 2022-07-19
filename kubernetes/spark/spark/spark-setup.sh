@@ -91,7 +91,7 @@ function spark_setup_create_output_dir {
 
     SCRIPT_START_TIME=$(date +%s)
     declare time_stamp="$(common_setup_get_time $SCRIPT_START_TIME)"
-    export OUT=$base_dir/spark-mr3-$time_stamp-$(uuidgen | awk -F- '{print $1}')
+    export OUT=$base_dir/spark-mr3-$time_stamp-$(cat /proc/sys/kernel/random/uuid)
     mkdir -p $OUT > /dev/null 2>&1
     echo -e "Output Directory: \n$OUT\n"
 }
@@ -103,9 +103,33 @@ function spark_setup_config_spark_logs {
 }
 
 function spark_setup_init_run_configs {
-    declare local_mode=$1
+  declare local_mode=$1
 
-    mr3_setup_update_hadoop_opts $local_mode
+  mr3_setup_update_hadoop_opts $local_mode
+
+  export HADOOP_OPTS="$HADOOP_OPTS \
+-Dhive.metastore.uris=thrift://${SPARK_METASTORE_HOST}:${SPARK_METASTORE_PORT} \
+-Dhive.metastore.warehouse.dir=$SPARK_METASTORE_WAREHOUSE"
+
+  if [[ $HIVE_METASTORE_SECURE_MODE = "true" ]]; then
+    export HADOOP_OPTS="$HADOOP_OPTS \
+-Dhive.metastore.sasl.enabled=$HIVE_METASTORE_SECURE_MODE \
+-Dhive.metastore.kerberos.keytab.file=$HIVE_METASTORE_KERBEROS_KEYTAB \
+-Dhive.metastore.kerberos.principal=$HIVE_METASTORE_KERBEROS_PRINCIPAL\
+-Djavax.security.auth.useSubjectCredsOnly=false \
+-Djava.security.auth.login.config=$REMOTE_BASE_DIR/conf/jgss.conf \
+-Djava.security.krb5.conf=$REMOTE_BASE_DIR/conf/krb5.conf \
+-Dsun.security.jgss.debug=true \
+-Dhive.security.authorization.enabled=false \
+-Dhive.metastore.execute.setugi=true"
+  fi
+
+  # no need to set javax.net.ssl.trustStorePassword for accessing S3 with SSL
+  if [ -f $SPARK_SSL_TRUSTSTORE ]; then
+    export HADOOP_OPTS="$HADOOP_OPTS \
+-Djavax.net.ssl.trustStore=$SPARK_SSL_TRUSTSTORE \
+-Djavax.net.ssl.trustStoreType=$SPARK_SSL_TRUSTSTORETYPE"
+  fi
 }
 
 # SPARK_DRIVER_CP = jars only for Driver

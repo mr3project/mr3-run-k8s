@@ -12,8 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# echo commands to the terminal output
-set -x
+# do NOT echo commands to the terminal output by commenting out 'set -x'
+# set -x
 
 LOCAL_CONF_DIR_MOUNT_DIR=$BASE_DIR/conf
 

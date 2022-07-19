@@ -129,7 +129,7 @@ function main {
 
     return_code=0
 
-    # workaround until we upgrade fabric8io/kubernetes-client to 4.9.2
+    # HTTP2_DISABLE=false is now okay with fabric8io/kubernetes-client to 4.9.2+
     export HTTP2_DISABLE=true
 
     if [ $START_HIVE_SERVER2 = true ]; then

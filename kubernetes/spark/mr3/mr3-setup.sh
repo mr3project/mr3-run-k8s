@@ -31,12 +31,16 @@ function mr3_setup_update_hadoop_opts {
 -Dmr3.k8s.java.io.tmpdir=$SPARK_REMOTE_WORK_DIR/tmp \
 -Dmr3.k8s.conf.dir.configmap=$SPARK_CONF_DIR_CONFIGMAP -Dmr3.k8s.conf.dir.mount.dir=$CONF_DIR_MOUNT_DIR \
 -Dmr3.k8s.keytab.secret=$SPARK_KEYTAB_SECRET \
+-Dmr3.k8s.worker.secret=$SPARK_WORKER_SECRET \
+-Dmr3.k8s.mount.keytab.secret=$CREATE_KEYTAB_SECRET \
+-Dmr3.k8s.mount.worker.secret=$CREATE_WORKER_SECRET \
 -Dmr3.k8s.keytab.mount.dir=$KEYTAB_MOUNT_DIR -Dmr3.k8s.keytab.mount.file=$KEYTAB_MOUNT_FILE"
 
     if [[ ! -z $WORK_DIR_PERSISTENT_VOLUME_CLAIM ]]; then
+# no need to mount PV in worker Pods
       MR3_KUBERNETES_OPTS="$MR3_KUBERNETES_OPTS \
 -Dmr3.k8s.master.persistentvolumeclaim.mounts=$WORK_DIR_PERSISTENT_VOLUME_CLAIM=$WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR \
--Dmr3.k8s.worker.persistentvolumeclaim.mounts=$WORK_DIR_PERSISTENT_VOLUME_CLAIM=$WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR"
+-Dmr3.k8s.worker.persistentvolumeclaim.mounts="
     fi
 
     export HADOOP_OPTS="$HADOOP_OPTS $MR3_KUBERNETES_OPTS" 

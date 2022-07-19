@@ -2,26 +2,29 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: sparkmr3
-  name: sparkmr3-submit
+  name: spark1
   labels:
     mr3-pod-role: master-role
-    sparkmr3_app: driver
+    sparkmr3_app: spark1
 spec:
   serviceAccountName: spark-service-account
   restartPolicy: Never 
   hostAliases:
-  - ip: "10.1.90.9"
+  - ip: "192.168.10.1"
     hostnames:
-    - "gold0"
+    - "orange1"
+  - ip: "192.168.10.100"
+    hostnames:
+    - "orange0"
   containers:
-  - image: 10.1.90.9:5000/spark3:latest
-    command: ["/opt/mr3-run/spark/run-spark-submit.sh"]
-    args: [
-      "--conf spark.driver.bindAddress=0.0.0.0 --conf spark.driver.host=spark-driver.sparkmr3.svc.cluster.local --conf spark.driver.port=9850",
-      "--class com.datamonad.mr3.spark.tpcds.RunManyQueries /opt/mr3-run/work-dir/lib/spark_mr3_tpcds_2.12-0.1.jar hdfs://gold0:8020/tmp/tpcds-generate/100 /opt/mr3-run/work-dir/sparksql/ 19,42,52,55 1 false"]
+  - image: orange1:5000/spark3:3.2.2
+    command: ["/bin/sleep"]
+    args: [ "infinity" ]
     imagePullPolicy: Always
     name: sparkmr3-submit
     env:
+    - name: DRIVER_NAME
+      value: "spark1"
     - name: CLIENT_TO_AM_TOKEN_KEY
       valueFrom:
         configMapKeyRef:
@@ -32,15 +35,23 @@ spec:
         configMapKeyRef:
           name: client-am-config
           key: timestamp
+    - name: KRB5_CONFIG
+      value: "/opt/mr3-run/conf/krb5.conf"
+    - name: SPARK_DRIVER_CORES
+      value: '2'
+    - name: SPARK_DRIVER_MEMORY_MB
+      value: '13107'
     resources:
       requests:
-        cpu: 6 
-        memory: 24Gi
+        cpu: 2
+        memory: 16Gi
       limits:
-        cpu: 6
-        memory: 24Gi
+        cpu: 2
+        memory: 16Gi
     ports:
     - containerPort: 9850
+      protocol: TCP
+    - containerPort: 4040
       protocol: TCP
     volumeMounts:
     - name: env-k8s-volume
@@ -52,9 +63,8 @@ spec:
     - name: key-k8s-volume
       mountPath: /opt/mr3-run/key/
       readOnly: true
-    # required if mr3.dag.recovery.enabled=true in mr3-site.xml
-    #- name: work-dir-volume
-    #  mountPath: /opt/mr3-run/work-dir
+    - name: work-dir-volume
+      mountPath: /opt/mr3-run/work-dir
     # - name: host-lib-volume
     #   mountPath: /opt/mr3-run/host-lib
   volumes:
@@ -67,10 +77,9 @@ spec:
   - name: key-k8s-volume
     secret:
       secretName: sparkmr3-keytab-secret
-  # required if mr3.dag.recovery.enabled=true in mr3-site.xml
-  #- name: work-dir-volume
-  #  persistentVolumeClaim:
-  #    claimName: workdir-pvc
+  - name: work-dir-volume
+    persistentVolumeClaim:
+      claimName: workdir-pvc
   # - name: host-lib-volume
   #   hostPath:
   #     path: /home/ec2-user/lib

@@ -30,7 +30,7 @@
 
 <property>
   <name>mr3.am.staging-dir</name>
-  <value>/opt/mr3-run/work-dir</value>
+  <value>/opt/mr3-run/work-dir/spark</value>
 </property>
 
 <property>
@@ -115,7 +115,7 @@
 
 <property>
   <name>mr3.dag.recovery.enabled</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- resource scheduler -->
@@ -179,6 +179,11 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>mr3.am.staging.dir.check.ownership.permission</name>
+  <value>true</value>
+</property>
+
 <!-- Kubernetes -->
 
 <!-- mr3.master.mode is set in mr3-setup.sh --> 
@@ -206,13 +211,13 @@
 <!-- should be revised if mr3.master.mode == MR3_MASTER_MODE_KUBERNETES = "kubernetes" -->
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY</value>
 </property>
 
 <!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env), so do not include it -->
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY</value>
 </property>
 
 <property>
@@ -266,6 +271,9 @@
   mr3.k8s.conf.dir.configmap
   mr3.k8s.conf.dir.mount.dir
   mr3.k8s.keytab.secret
+  mr3.k8s.worker.secret
+  mr3.k8s.mount.keytab.secret
+  mr3.k8s.mount.worker.secret
   mr3.k8s.keytab.mount.dir
   mr3.k8s.keytab.mount.file
  -->
@@ -278,6 +286,7 @@
   and update kubernetes/spark-yaml/mr3-service.yaml.
  -->
 
+<!--
 <property>
   <name>mr3.k8s.api.server.url</name>
   <value>https://10.1.90.9:6443</value>
@@ -302,6 +311,7 @@
   <name>mr3.k8s.am.service.port</name>
   <value>9862</value>
 </property>
+-->
 
 <property>
   <name>mr3.k8s.master.command</name>
@@ -385,7 +395,7 @@
 
 <property>
   <name>mr3.k8s.host.aliases</name>
-  <value>gold0=10.1.90.9,red0=10.1.91.4,indigo20=10.1.91.41</value>
+  <value>orange0=192.168.10.100,orange1=192.168.10.1</value>
 </property>
 
 <property>
@@ -407,7 +417,7 @@
 
 <property>
   <name>mr3.k8s.pod.worker.hostpaths</name>
-  <value>/data1/k8s,/data2/k8s,/data3/k8s,/data4/k8s,/data5/k8s,/data6/k8s</value>
+  <value>/data1/k8s</value>
 </property>
 
 <property>
@@ -435,11 +445,6 @@
 <property>
   <name>mr3.k8s.local.dir.persistentvolume.storage</name>
   <value>2Gi</value>
-</property>
-
-<property>
-  <name>mr3.k8s.mount.keytab.secret</name>
-  <value>false</value>
 </property>
 
 <property>
@@ -571,7 +576,7 @@
 
 <property>
   <name>mr3.k8s.pod.worker.init.container.image</name>
-  <value>10.1.90.9:5000/busybox</value>
+  <value>orange1:5000/busybox</value>
 </property>
 
 <property>
@@ -579,6 +584,11 @@
   <!-- setting to 0 creates a ShuffleHandler process in each ContainerWorker Pod -->
   <name>mr3.use.daemon.shufflehandler</name>
   <value>0</value>
+</property>
+
+<property>
+  <name>mr3.k8s.shuffle.process.ports</name>
+  <value>7337</value>
 </property>
 
 <!-- Prometheus -->
@@ -595,7 +605,7 @@
 
 <property>
   <name>mr3.k8s.master.pod.additional.labels</name>
-  <value>sparkmr3_app=mr3,sparkmr3_aux=prometheus</value>
+  <value>sparkmr3_app=mr3</value>
 </property>
 
 <property>
