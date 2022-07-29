@@ -33,7 +33,7 @@ function run_worker {
     if [ "$runShuffleHandlerProcess" = "true" ]; then
       export SPARK_CONF_DIR=$BASE_DIR/conf
       SPARK_SHUFFLE_CLASS=org.apache.spark.deploy.ExternalShuffleService
-      $JAVA -cp "$BASE_DIR/spark/jars/*" -Dscala.usejavacp=true -Xmx1g $SPARK_SHUFFLE_CLASS &
+      $JAVA -cp "$BASE_DIR/spark/jars/*" -Dspark.local.dir=/tmp -Dscala.usejavacp=true -Xmx1g $SPARK_SHUFFLE_CLASS &
     else
       common_setup_cleanup 
 

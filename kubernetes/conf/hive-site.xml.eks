@@ -1280,11 +1280,6 @@
 </property>
 
 <property>
-  <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
-  <value>50</value>
-</property>
-
-<property>
   <name>hive.metastore.fshandler.threads</name>
   <value>50</value>
 </property>

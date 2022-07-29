@@ -139,6 +139,16 @@
 </property>
 
 <property>
+  <name>mr3.container.combine.taskattempts</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.container.mix.taskattempts</name>
+  <value>true</value>
+</property>
+
+<property>
   <name>mr3.container.scheduler.scheme</name>
   <value>fair</value>
 </property>

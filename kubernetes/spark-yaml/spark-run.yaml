@@ -65,6 +65,8 @@ spec:
       readOnly: true
     - name: work-dir-volume
       mountPath: /opt/mr3-run/work-dir
+    - name: spark-hostpath-1
+      mountPath: /data1/k8s
     # - name: host-lib-volume
     #   mountPath: /opt/mr3-run/host-lib
   volumes:
@@ -80,6 +82,10 @@ spec:
   - name: work-dir-volume
     persistentVolumeClaim:
       claimName: workdir-pvc
+  - name: spark-hostpath-1
+    hostPath:
+      path: /data1/k8s
+      type: Directory
   # - name: host-lib-volume
   #   hostPath:
   #     path: /home/ec2-user/lib

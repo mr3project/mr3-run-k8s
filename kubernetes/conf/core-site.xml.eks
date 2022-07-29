@@ -92,4 +92,9 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
+  <value>50</value>
+</property>
+
 </configuration>
