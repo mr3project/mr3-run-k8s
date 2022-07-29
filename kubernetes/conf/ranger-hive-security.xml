@@ -31,8 +31,8 @@
 
   <property>
     <name>ranger.plugin.hive.policy.rest.url</name>
-    <value>http://indigo20:6080</value>
-    <!-- <value>http://indigo20:6182</value> -->
+    <value>http://red0:6080</value>
+    <!-- <value>http://red0:6182</value> -->
     <description>
       URL to Ranger Admin
     </description>

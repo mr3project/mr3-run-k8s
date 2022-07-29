@@ -18,19 +18,13 @@ spec:
     spec:
       restartPolicy: Always
       hostAliases:
-      - ip: "10.1.91.4"
+      - ip: "1.1.1.1"
         hostnames:
         - "red0"
-      - ip: "10.1.91.17"
-        hostnames:
-        - "indigo0"
-      - ip: "10.1.91.41"
-        hostnames:
-        - "indigo20"
       nodeSelector:
         kubernetes.io/hostname: blue1
       containers:
-      - image: 10.1.91.17:5000/ranger
+      - image: mr3project/ranger:2.1.0
         command: ["/opt/mr3-run/ranger/start-solr.sh"]
         imagePullPolicy: Always
         name: solr
@@ -53,7 +47,7 @@ spec:
           readOnly: true
         - name: work-dir-volume
           mountPath: /opt/mr3-run/ranger/work-dir/
-      - image: 10.1.91.17:5000/ranger
+      - image: mr3project/ranger:2.1.0
         command: ["/opt/mr3-run/ranger/start-ranger.sh"]
         imagePullPolicy: Always
         name: ranger

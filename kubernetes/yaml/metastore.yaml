@@ -22,6 +22,14 @@ spec:
       serviceAccountName: hive-service-account
       restartPolicy: Always
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: roles
+                operator: In
+                values:
+                - "masters"
         podAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
           - weight: 100
@@ -31,17 +39,11 @@ spec:
                 matchLabels:
                   hivemr3_app: ranger
       hostAliases:
-      - ip: "10.1.90.9"
-        hostnames:
-        - "gold0"
-      - ip: "10.1.91.4"
+      - ip: "1.1.1.1"
         hostnames:
         - "red0"
-      - ip: "10.1.91.17"
-        hostnames:
-        - "indigo0"
       containers:
-      - image: mr3project/hive3:1.4
+      - image: mr3project/hive3:1.5
         command: ["/opt/mr3-run/hive/metastore-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always

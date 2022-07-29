@@ -17,7 +17,7 @@
 
 <property>
   <name>yarn.timeline-service.hostname</name>
-  <value>indigo20</value>
+  <value>red0</value>
 </property>
 
 <property>
@@ -27,7 +27,7 @@
 
 <property>
   <name>yarn.timeline-service.hostname</name>
-  <value>indigo20</value>
+  <value>red0</value>
 </property>
 
 </configuration>

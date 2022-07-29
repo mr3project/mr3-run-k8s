@@ -791,9 +791,10 @@
   <value>MYSQL</value>
 </property>
 
+<!-- set to com.mysql.jdbc.Driver if necessary -->
 <property>
   <name>javax.jdo.option.ConnectionDriverName</name>
-  <value>com.mysql.jdbc.Driver</value>
+  <value>com.mysql.cj.jdbc.Driver</value>
 </property>
 
 <property>
@@ -941,6 +942,7 @@
   <value>false</value>
 </property>
 
+<!-- use /ephemeral1/llapio on AWS EKS -->
 <property>
   <name>hive.llap.io.allocator.mmap.path</name>
   <value>/data1/llap</value>
@@ -1031,6 +1033,7 @@
   <value></value>
 </property>
 
+<!-- set to false when not using HDFS -->
 <property>
   <name>hive.resource.use.hdfs.location</name>
   <value>true</value>
@@ -1043,7 +1046,7 @@
 
 <property>
   <name>hive.zookeeper.quorum</name>
-  <value>red0:2181</value>
+  <value></value>
 </property>
 
 <!-- MR3 -->
@@ -1171,7 +1174,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>100</value>
 </property>
 
 <!-- Kubernetes -->
@@ -1217,7 +1220,7 @@
 
 <property>
   <name>hive.mr3.dag.additional.credentials.source</name>
-  <value>hdfs://red0:8020/tmp/hivemr3/warehouse/</value>
+  <value></value>
 </property>
 
 <!-- Token renewal -->
@@ -1297,5 +1300,29 @@
     Cf. HIVE-20338 (LLAP: Force synthetic file-id for filesystems which have HDFS protocol impls with POSIX mutation semantics)
   </description>
 </property>
+
+<!-- can be set for performance tuning when using S3 -->
+
+<!--
+<property>
+  <name>hive.exec.input.listing.max.threads</name>
+  <value>50</value>
+</property>
+
+<property>
+  <name>hive.metastore.fshandler.threads</name>
+  <value>50</value>
+</property>
+
+<property>
+  <name>hive.msck.repair.batch.size</name>
+  <value>3000</value>
+</property>
+
+<property>
+  <name>hive.load.dynamic.partitions.thread</name>
+  <value>25</value>
+</property>
+-->
 
 </configuration>

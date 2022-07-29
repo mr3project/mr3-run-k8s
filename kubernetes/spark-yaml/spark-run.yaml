@@ -10,14 +10,11 @@ spec:
   serviceAccountName: spark-service-account
   restartPolicy: Never 
   hostAliases:
-  - ip: "192.168.10.1"
+  - ip: "1.1.1.1"
     hostnames:
-    - "orange1"
-  - ip: "192.168.10.100"
-    hostnames:
-    - "orange0"
+    - "red0"
   containers:
-  - image: orange1:5000/spark3:3.2.2
+  - image: mr3project/spark3:3.2.2
     command: ["/bin/sleep"]
     args: [ "infinity" ]
     imagePullPolicy: Always

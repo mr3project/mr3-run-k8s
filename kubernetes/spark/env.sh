@@ -73,7 +73,7 @@ SPARK_DRIVER_PORT=9850
 SPARK_UI_PORT=4040
 
 # spark.ui.proxyBase is set to ${PROXY_BASE}/${DRIVER_NAME}
-PROXY_BASE=http://orange1:8080
+PROXY_BASE=http://red0:8080
 
 # SparkSQL
 
@@ -84,10 +84,10 @@ SPARK_METASTORE_PORT=9851
 # for connecting to Metastore with Kerberos
 HIVE_METASTORE_SECURE_MODE=true
 HIVE_METASTORE_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive-hiveserver2-internal.hivemr3.svc.cluster.local.keytab
-HIVE_METASTORE_KERBEROS_PRINCIPAL=hive/hiveserver2-internal.hivemr3.svc.cluster.local@PL
+HIVE_METASTORE_KERBEROS_PRINCIPAL=hive/hiveserver2-internal.hivemr3.svc.cluster.local@RED
 
 SPARK_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/spark.keytab
-SPARK_KERBEROS_PRINCIPAL=spark@PL
+SPARK_KERBEROS_PRINCIPAL=spark@RED
 SPARK_KERBEROS_USER=spark
 
 #

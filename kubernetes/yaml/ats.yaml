@@ -30,7 +30,7 @@ spec:
                 matchLabels:
                   hivemr3_app: metastore
       containers:
-      - image: 10.1.91.17:5000/ats-2.7.7
+      - image: mr3project/ats-2.7.7:latest
         command: ["/opt/mr3-run/ats/timeline-service.sh"]
         imagePullPolicy: Always
         name: timelineserver

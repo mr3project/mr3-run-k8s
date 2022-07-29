@@ -21,4 +21,4 @@ spec:
   selector:
     hivemr3_app: ranger
   externalIPs:
-  - 10.1.91.41
+  - 1.1.1.1

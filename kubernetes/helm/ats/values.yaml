@@ -7,7 +7,7 @@ name:
   persistentVolumeClaim: workdir-ats-pvc
 
 docker:
-  image: 10.1.91.17:5000/ats-2.7.7:latest
+  image: mr3project/ats-2.7.7:latest
   user: ats
   imagePullPolicy: Always
   imagePullSecrets: 
@@ -18,7 +18,7 @@ ats:
     
   httpPort: 8188
   httpsPort: 8190
-  externalIp: 10.1.91.41
+  externalIp: 1.1.1.1
 
   createSecret: true
 
@@ -38,7 +38,7 @@ workDir:
   
   isNfs: true
   nfs:
-    server: "10.1.91.17"
+    server: "1.1.1.1"
     path: "/work/nfs/ats"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi

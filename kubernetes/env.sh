@@ -34,7 +34,10 @@ WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR=/opt/mr3-run/work-dir
 # See spec.template.spec.containers.volumeMounts/volumes in yaml/metastore.yaml and helm/hive/templates/metastore.yaml.
 # metastore.mountLib in helm/hive/values.yaml should be set to true to mount the MySQL connector provided by the user.
 METASTORE_USE_PERSISTENT_VOLUME=true
+
+# set to true on AWS EKS
 RUN_AWS_EKS=false
+
 CREATE_SERVICE_ACCOUNTS=true
 
 #
@@ -50,7 +53,7 @@ DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 DOCKER_RANGER_IMG=mr3project/ranger:2.1.0
 DOCKER_RANGER_FILE=Dockerfile
 
-DOCKER_ATS_IMG=mr3project/mr3ui:1.4
+DOCKER_ATS_IMG=mr3project/mr3ui:1.5
 DOCKER_ATS_FILE=Dockerfile
 
 DOCKER_SUPERSET_IMG=mr3project/superset:1.3.2
@@ -106,7 +109,7 @@ CREATE_ATS_SECRET=true      # specifies whether or not to create a Secret from a
 # HIVE_DATABASE_NAME = database name in Hive Metastore 
 # HIVE_WAREHOUSE_DIR = directory for the Hive warehouse 
 
-HIVE_DATABASE_HOST=indigo0
+HIVE_DATABASE_HOST=1.1.1.1
 
 # if an existing Metastore is used 
 # HIVE_METASTORE_HOST=red0
@@ -114,19 +117,22 @@ HIVE_DATABASE_HOST=indigo0
 HIVE_METASTORE_HOST=hivemr3-metastore-0.metastore.hivemr3.svc.cluster.local
 
 HIVE_METASTORE_PORT=9850
-HIVE_DATABASE_NAME=hive5mr3
+HIVE_DATABASE_NAME=hive3mr3
 
-# path to the data warehouse, e.g., hdfs://red0:8020/user/hive/warehouse, s3a://mr3-bucket/warehouse
+# path to the data warehouse, e.g.,
+#   hdfs://foo:8020/user/hive/warehouse
+#   s3a://mr3-bucket/warehouse
+#   /opt/mr3-run/work-dir/warehouse/
 HIVE_WAREHOUSE_DIR=/opt/mr3-run/work-dir/warehouse/
 
 # Specifies hive.metastore.sasl.enabled 
-METASTORE_SECURE_MODE=true
+METASTORE_SECURE_MODE=false
 
 # For security in Metastore 
 # Kerberos principal for Metastore; cf. 'hive.metastore.kerberos.principal' in hive-site.xml
 HIVE_METASTORE_KERBEROS_PRINCIPAL=hive/red0@RED
 # Kerberos keytab for Metastore; cf. 'hive.metastore.kerberos.keytab.file' in hive-site.xml
-HIVE_METASTORE_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
+HIVE_METASTORE_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive-admin.keytab
 
 #
 # Step 5. Configuring HiveServer2 - connecting to HiveServer2
@@ -147,11 +153,11 @@ HIVE_SERVER2_HEAPSIZE=16384
 # For security in HiveServer2 
 # Beeline should also provide this Kerberos principal.
 # Authentication option: NONE (uses plain SASL), NOSASL, KERBEROS, LDAP, PAM, and CUSTOM; cf. 'hive.server2.authentication' in hive-site.xml 
-HIVE_SERVER2_AUTHENTICATION=KERBEROS
+HIVE_SERVER2_AUTHENTICATION=NONE
 # Kerberos principal for HiveServer2; cf. 'hive.server2.authentication.kerberos.principal' in hive-site.xml 
 HIVE_SERVER2_KERBEROS_PRINCIPAL=hive/red0@RED
 # Kerberos keytab for HiveServer2; cf. 'hive.server2.authentication.kerberos.keytab' in hive-site.xml 
-HIVE_SERVER2_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
+HIVE_SERVER2_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive-admin.keytab
 
 # Specifies whether Hive token renewal is enabled inside DAGAppMaster and ContainerWorkers 
 TOKEN_RENEWAL_HIVE_ENABLED=false
@@ -178,7 +184,7 @@ USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
 KEYTAB_MOUNT_FILE=hive.service.keytab
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
-TOKEN_RENEWAL_HDFS_ENABLED=true
+TOKEN_RENEWAL_HDFS_ENABLED=false
 
 #
 # Step 7. Additional settings

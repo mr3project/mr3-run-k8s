@@ -6,7 +6,7 @@ name:
   persistentVolumeClaim: workdir-ranger-pvc
 
 docker:
-  image: 10.1.91.17:5000/ranger:latest
+  image: mr3project/ranger:2.1.0
   user: ranger
   imagePullPolicy: Always
   imagePullSecrets: 
@@ -15,7 +15,7 @@ ranger:
   httpPort: 6080
   httpsPort: 6182
   solrPort: 6083
-  externalIp: 10.1.91.41
+  externalIp: 1.1.1.1
 
   createSecret: true
 
@@ -41,7 +41,7 @@ workDir:
 
   isNfs: true
   nfs:
-    server: "10.1.91.17"
+    server: "1.1.1.1"
     path: "/work/nfs/ranger"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi
@@ -55,13 +55,7 @@ workDir:
 logLevel: INFO
 
 hostAliases:
-- ip: "10.1.91.4"
+- ip: "1.1.1.1"
   hostnames:
   - "red0"
-- ip: "10.1.91.17"
-  hostnames:
-  - "indigo0"
-- ip: "10.1.91.41"
-  hostnames:
-  - "indigo20"
 

@@ -21,15 +21,9 @@ spec:
       serviceAccountName: hive-service-account
       restartPolicy: Always
       hostAliases:
-      - ip: "10.1.90.9"
-        hostnames:
-        - "gold0"
-      - ip: "10.1.91.4"
+      - ip: "1.1.1.1"
         hostnames:
         - "red0"
-      - ip: "10.1.91.41"
-        hostnames:
-        - "indigo20"
       affinity:
         podAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
@@ -40,7 +34,7 @@ spec:
                 matchLabels:
                   hivemr3_app: metastore
       containers:
-      - image: mr3project/hive3:1.4
+      - image: mr3project/hive3:1.5
         command: ["/opt/mr3-run/hive/hiveserver2-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always

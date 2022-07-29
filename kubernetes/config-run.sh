@@ -36,12 +36,12 @@ MR3_SSL_CREDENTIAL_PROVIDER=/home/hive/mr3-run/kubernetes/mr3-ssl.jceks
 MR3_SSL_CREDENTIAL_PROVIDER_CHECKSUM=/home/hive/mr3-run/kubernetes/.mr3-ssl.jceks.crc
 
 # Host names for HiveServer2 Service, Ranger Service, Timeline Server Service, and MySQL
-HIVE_SERVER2_HOST=indigo20
-ATS_HOST=indigo20
-RANGER_HOST=indigo20
+HIVE_SERVER2_HOST=red0
+ATS_HOST=red0
+RANGER_HOST=red0
 HIVE_METASTORE_HOST=hivemr3-metastore-0.metastore.hivemr3.svc.cluster.local
 KMS_HOST=red0
-MYSQL_HOST=indigo0
+MYSQL_HOST=red0
 
 # Set to the password after executing generate-hivemr3-ssl.sh
 MR3_SSL_KEYSTORE_PASSWORD=80d4163f-9798-4786-938a-50dadf7c86af

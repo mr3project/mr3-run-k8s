@@ -40,7 +40,7 @@
 
 <property>
   <name>yarn.timeline-service.http-authentication.kerberos.principal</name>
-  <value>HTTP/indigo20@RED</value>
+  <value>HTTP/red0@RED</value>
 </property>
 
 <property>

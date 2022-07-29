@@ -20,7 +20,7 @@
     ],
     "user-role": {
       "hive/red0@RED": "updater",
-      "rangeradmin/indigo20@RED": "reader",
+      "rangeradmin/red0@RED": "reader",
     }
   }
 }

@@ -40,7 +40,7 @@
 
   <property>
     <name>xasecure.audit.jaas.Client.option.principal</name>
-    <value>rangeradmin/orange1@PL</value>
+    <value>rangeradmin/red0@RED</value>
   </property>
 
 </configuration>

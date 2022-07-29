@@ -25,8 +25,8 @@ name:
   persistentVolumeClaim: workdir-pvc
 
 docker:
-  image: mr3project/hive3:1.4
-  containerWorkerImage: mr3project/hive3:1.4
+  image: mr3project/hive3:1.5
+  containerWorkerImage: mr3project/hive3:1.5
   # do not use a composite name like hive@RED, hive/red0@RED
   user: hive
   imagePullPolicy: IfNotPresent
@@ -73,7 +73,7 @@ metastore:
 hive:
   port: 9852
   httpport: 10001
-  externalIp: 12.34.56.78
+  externalIp: 1.1.1.1
   replicas: 1
   # amMode options: kubernetes, localthread, and localprocess
   amMode: kubernetes
@@ -123,7 +123,7 @@ workDir:
 
   isNfs: false
   nfs:
-    server: "10.1.91.17"
+    server: "1.1.1.1"
     path: "/work/nfs/hive"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi
@@ -137,18 +137,12 @@ workDir:
 prometheus:
   create: false
   port: 9890
-  externalIp: 12.34.56.78
+  externalIp: 1.1.1.1
 
 logLevel: INFO
 
 hostAliases:
-- ip: "10.1.90.9"
-  hostnames:
-  - "gold0"
-- ip: "10.1.91.4"
+- ip: "1.1.1.1"
   hostnames:
   - "red0"
-- ip: "10.1.91.41"
-  hostnames:
-  - "indigo20"
 

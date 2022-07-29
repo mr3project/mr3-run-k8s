@@ -7,27 +7,39 @@
 
 <property>
   <name>hadoop.security.authentication</name>
-  <value>kerberos</value>
+  <value>simple</value>
 </property>
 
 <property>
+
+<!-- S3 -->
+
+<!-- set when using S3 or on AWS EKS -->
+<!-- options:
+     com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+     com.amazonaws.auth.InstanceProfileCredentialsProvider
+     com.amazonaws.auth.WebIdentityTokenCredentialsProvider -->
+<property>
   <name>fs.s3a.aws.credentials.provider</name>
-  <value>com.amazonaws.auth.EnvironmentVariableCredentialsProvider</value>
+  <value></value>
 </property>
 
 <property>
   <name>fs.s3a.connection.ssl.enabled</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
+<!-- set when using S3 -->
+<!-- do not set on AWS EKS -->
 <property>
   <name>fs.s3a.endpoint</name>
-  <value>https://orange0:9000</value>
+  <value></value>
 </property>
 
+<!-- set to true when using S3 or on AWS EKS -->
 <property>
   <name>fs.s3a.path.style.access</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>
@@ -37,12 +49,12 @@
 
 <property>
   <name>fs.s3a.connection.maximum</name>
-  <value>5000</value>
+  <value>4000</value>
 </property>
 
 <property>
   <name>fs.s3.maxConnections</name>
-  <value>5000</value>
+  <value>4000</value>
 </property>
 
 <property>

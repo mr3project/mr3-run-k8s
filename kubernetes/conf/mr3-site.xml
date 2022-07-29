@@ -22,8 +22,13 @@
   <value></value>
 </property>
 
+<!-- add for LocalProcess with Kerberos
+     -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf -->
+<!-- additional options:
+     -Djavax.security.auth.useSubjectCredsOnly=false
+     -Djava.security.auth.login.config=/opt/mr3-run/conf/jgss.conf
+     -Dsun.security.jgss.debug=true -->
 <property>
-  <!-- add -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf for LocalProcess with Kerberos -->
   <name>mr3.am.launch.cmd-opts</name>
   <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
@@ -96,10 +101,11 @@
 
 <!-- container -->
 
+<!-- for using soft references:
+     -XX:SoftRefLRUPolicyMSPerMB=25 --> 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
   <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
-  <!-- -XX:SoftRefLRUPolicyMSPerMB=25 --> 
 </property>
 
 <property>
@@ -158,7 +164,7 @@
 
 <property>
   <name>mr3.am.resource.cpu.cores</name>
-  <value>2</value>
+  <value>4</value>
 </property>
 
 <property>
@@ -181,16 +187,17 @@
   <value>kubernetes</value>
 </property>
 
-<!-- should be revised if mr3.master.mode == MR3_MASTER_MODE_KUBERNETES = "kubernetes" -->
+<!-- AWS_REGION for running on AWS EKS -->
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/</value>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
 </property>
 
 <!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env), so do not include it -->
+<!-- AWS_REGION for running on AWS EKS -->
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
 </property>
 
 <property>
@@ -223,7 +230,7 @@
 
 <property>
   <name>mr3.am.token.renewal.paths</name>
-  <value>hdfs://red0:8020/user/hive/</value>
+  <value></value>
 </property>
 
 <!-- These variables are all set in mr3/mr3-setup.sh (for Kubernetes):
@@ -295,8 +302,19 @@
 </property>
 
 <property>
+  <name>mr3.container.command.num.waits.in.reserved</name>
+  <value>360</value>
+  <description>
+    Ensure mr3.container.command.num.waits.in.reserved * 1 second > mr3.k8s.pod.creation.timeout.ms. 
+  </description>
+</property>
+
+<property>
   <name>mr3.k8s.pod.creation.timeout.ms</name>
-  <value>30000</value>
+  <value>300000</value>
+  <description>
+    The default value of 30 seconds is too short on EKS.
+  </description>
 </property>
 
 <property>
@@ -336,7 +354,7 @@
 
 <property>
   <name>mr3.k8s.host.aliases</name>
-  <value>gold0=10.1.90.9,red0=10.1.91.4,indigo20=10.1.91.41</value>
+  <value>red0=1.1.1.1</value>
 </property>
 
 <property>
@@ -356,6 +374,7 @@
 </property>
  -->
 
+<!-- set to /ephemeral1 with instance storage mounted on /ephemeral1 for worker Pod on AWS EKS -->
 <property>
   <name>mr3.k8s.pod.worker.hostpaths</name>
   <value>/data1/k8s,/data2/k8s,/data3/k8s,/data4/k8s,/data5/k8s,/data6/k8s</value>
@@ -390,22 +409,22 @@
 
 <property>
   <name>mr3.k8s.readiness.probe.initial.delay.secs</name>
-  <value>10</value>
+  <value>15</value>
 </property>
 
 <property>
   <name>mr3.k8s.readiness.probe.period.secs</name>
-  <value>20</value>
+  <value>15</value>
 </property>
 
 <property>
   <name>mr3.k8s.liveness.probe.initial.delay.secs</name>
-  <value>20</value>
+  <value>30</value>
 </property>
 
 <property>
   <name>mr3.k8s.liveness.probe.period.secs</name>
-  <value>40</value>
+  <value>30</value>
 </property>
 
 <property>
@@ -430,6 +449,7 @@
 
 <!-- auto-scaling -->
 
+<!-- set to true on AWS EKS -->
 <property>
   <name>mr3.enable.auto.scaling</name>
   <value>false</value>
@@ -467,12 +487,12 @@
 
 <property>
   <name>mr3.auto.scale.in.delay.after.scale.out.secs</name>
-  <value>60</value>
+  <value>300</value>
 </property>
 
 <property>
   <name>mr3.auto.scale.in.grace.period.secs</name>
-  <value>300</value>
+  <value>90</value>
 </property>
 
 <property>
@@ -500,9 +520,15 @@
   <value>1</value>
 </property>
 
+<!-- set to false when using S3 instead of PersistentVolume on AWS EKS -->
+<property>
+  <name>mr3.am.staging.dir.check.ownership.permission</name>
+  <value>true</value>
+</property>
+
 <property>
   <name>mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>99</value>
+  <value>100</value>
 </property>
 
 <property>
@@ -510,11 +536,13 @@
   <value>true</value>
 </property>
 
+<!-- Fargate does not support privileged init containers -->
 <property>
   <name>mr3.k8s.pod.worker.security.context.sysctls</name>
   <value>net.core.somaxconn=16384</value>
 </property>
 
+<!-- Fargate does not support privileged init containers -->
 <property>
   <name>mr3.k8s.pod.worker.init.container.command</name>
   <value></value>
@@ -539,12 +567,12 @@
 
 <property>
   <name>mr3.prometheus.enable.metrics</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>
   <name>mr3.prometheus.enable.jvm.metrics</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>

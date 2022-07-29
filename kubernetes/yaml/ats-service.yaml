@@ -17,4 +17,4 @@ spec:
   selector:
     hivemr3_app: ats
   externalIPs:
-  - 10.1.91.41
+  - 1.1.1.1
