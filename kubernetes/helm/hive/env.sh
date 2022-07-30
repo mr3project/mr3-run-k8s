@@ -19,6 +19,7 @@
 REMOTE_BASE_DIR={{.Values.dir.base}}
 REMOTE_WORK_DIR={{.Values.dir.work}}
 CONF_DIR_MOUNT_DIR={{.Values.dir.conf}}
+# for mr3.k8s.keytab.mount.dir
 KEYTAB_MOUNT_DIR={{.Values.dir.keytab}}
 WORK_DIR_PERSISTENT_VOLUME_CLAIM={{.Values.name.persistentVolumeClaim}}
 WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR={{.Values.dir.persistentVolumeClaim}}
@@ -31,6 +32,7 @@ WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR={{.Values.dir.persistentVolumeClaim}}
 
 DOCKER_HIVE_IMG={{.Values.docker.image}}
 DOCKER_HIVE_WORKER_IMG={{.Values.docker.containerWorkerImage}}
+
 DOCKER_USER={{.Values.docker.user}}
 
 #
@@ -39,9 +41,10 @@ DOCKER_USER={{.Values.docker.user}}
 
 MR3_NAMESPACE={{.Release.Namespace}}
 MR3_SERVICE_ACCOUNT={{.Values.name.hive.serviceAccount}}
+CONF_DIR_CONFIGMAP={{.Values.name.hive.configMap}}
+
 MASTER_SERVICE_ACCOUNT={{.Values.name.mr3.masterServiceAccount}}
 WORKER_SERVICE_ACCOUNT={{.Values.name.mr3.workerServiceAccount}}
-CONF_DIR_CONFIGMAP={{.Values.name.hive.configMap}}
 
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.
 # CREATE_KEYTAB_SECRET should be set to true if any of the following holds:
@@ -71,6 +74,7 @@ WORKER_SECRET={{.Values.name.hive.workerSecret}}
 # HIVE_METASTORE_PORT = port for Hive Metastore 
 # HIVE_DATABASE_NAME = database name in Hive Metastore 
 # HIVE_WAREHOUSE_DIR = directory for the Hive warehouse 
+
 HIVE_DATABASE_HOST={{.Values.metastore.databaseHost}}
 
 # if an existing Metastore is used 
@@ -81,7 +85,10 @@ HIVE_METASTORE_HOST={{if .Values.create.metastore}}hivemr3-metastore-0.metastore
 HIVE_METASTORE_PORT={{.Values.metastore.port}}
 HIVE_DATABASE_NAME={{.Values.metastore.databaseName}}
 
-# path to the data warehouse, e.g., hdfs://red0:8020/user/hive/warehouse
+# path to the data warehouse, e.g.,
+#   hdfs://foo:8020/user/hive/warehouse
+#   s3a://mr3-bucket/warehouse
+#   /opt/mr3-run/work-dir/warehouse/
 HIVE_WAREHOUSE_DIR={{.Values.metastore.warehouseDir}}
 
 # Specifies hive.metastore.sasl.enabled 
@@ -134,8 +141,10 @@ HIVE_SERVER2_SSL_TRUSTSTORETYPE={{.Values.hive.sslTruststoreType}}
 
 # Kerberos principal for renewing HDFS/Hive tokens (Cf. mr3.principal)
 USER_PRINCIPAL={{.Values.hdfs.userPrincipal}}
-# Kerberos keytab (Cf. mr3.keytab)
+# Kerberos keytab (for mr3.keytab)
 USER_KEYTAB=$KEYTAB_MOUNT_DIR/{{.Values.hdfs.userKeytab}}
+# for mr3.k8s.keytab.mount.file
+KEYTAB_MOUNT_FILE={{.Values.hdfs.userKeytab}}
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
 TOKEN_RENEWAL_HDFS_ENABLED={{.Values.hdfs.tokenRenewalEnabled}}
@@ -171,5 +180,6 @@ HIVE_CLIENT_HEAPSIZE=16384
 #   mr3.am.launch.cmd-opts and mr3.container.launch.cmd-opts in mr3-site.xml 
 
 # unset because 'hive' command reads SPARK_HOME and may accidentally expand the classpath with HiveConf.class from Spark. 
+
 unset SPARK_HOME
 

@@ -106,8 +106,8 @@ hive:
 hdfs:
   userPrincipal: hive@RED
   # file name under dir.keytab
-  userKeytab: "hive.service.keytab"
-  tokenRenewalEnabled: true
+  userKeytab: "hive.keytab"
+  tokenRenewalEnabled: false
 
 # if not set, random values will be generated
 amConfig:
@@ -132,7 +132,7 @@ workDir:
   # volumeStr should be indented properly with a double space (or multiple double spaces) after '\n'.
   #   ex. okay  -> volumeStr: "hostPath:\n  path: /work/nfs/mr3-run-work-dir"
   #   ex. wrong -> volumeStr: "hostPath:\n path: /work/nfs/mr3-run-work-dir"
-  volumeStr: "hostPath:\n  path: /data1/gla/workdir"
+  volumeStr: "hostPath:\n  path: /data1/hive/workdir"
 
 prometheus:
   create: false

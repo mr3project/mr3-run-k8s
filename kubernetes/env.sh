@@ -86,7 +86,7 @@ KEYTAB_SECRET=hivemr3-keytab-secret
 
 # CREATE_WORKER_SECRET specifies whether or not to create a Secret for ContainerWorkers from $WORKER_SECRET_DIR.
 # CREATE_WORKER_SECRET is irrelevant to token renewal, and WORKER_SECRET_DIR is not requird to contain keytab files.
-# CREATE_WORKER_SECRET should be set to true if: 
+# CREATE_WORKER_SECRET should be set to true if:
 #   - SSL is enabled
 CREATE_WORKER_SECRET=false
 WORKER_SECRET_DIR=$BASE_DIR/key/       # can be set to '$BASEDIR/workersecret/'
@@ -179,9 +179,9 @@ export HADOOP_CREDSTORE_PASSWORD=
 # Kerberos principal for renewing HDFS/Hive tokens (for mr3.principal)
 USER_PRINCIPAL=hive@RED
 # Kerberos keytab (for mr3.keytab)
-USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.service.keytab
+USER_KEYTAB=$KEYTAB_MOUNT_DIR/hive.keytab
 # for mr3.k8s.keytab.mount.file
-KEYTAB_MOUNT_FILE=hive.service.keytab
+KEYTAB_MOUNT_FILE=hive.keytab
 
 # Specifies whether HDFS token renewal is enabled inside DAGAppMaster and ContainerWorkers 
 TOKEN_RENEWAL_HDFS_ENABLED=false
