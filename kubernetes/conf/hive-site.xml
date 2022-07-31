@@ -1303,26 +1303,26 @@
 
 <!-- can be set for performance tuning when using S3 -->
 
-<!--
+<!-- S3 input listing (Cf. mapreduce.input.fileinputformat.list-status.num-threads) -->
 <property>
   <name>hive.exec.input.listing.max.threads</name>
   <value>50</value>
 </property>
 
+<!-- MSCK (Metastore Check) on S3 -->
 <property>
   <name>hive.metastore.fshandler.threads</name>
-  <value>50</value>
+  <value>30</value>
 </property>
-
 <property>
   <name>hive.msck.repair.batch.size</name>
   <value>3000</value>
 </property>
 
+<!-- dynamic partition query on S3 -->
 <property>
   <name>hive.load.dynamic.partitions.thread</name>
   <value>25</value>
 </property>
--->
 
 </configuration>

@@ -61,7 +61,7 @@
   <value></value>
 </property>
 
-<!-- set to true when using S3 or on AWS EKS -->
+<!-- set to true when using path-style access to S3-compliant storage -->
 <property>
   <name>fs.s3a.path.style.access</name>
   <value>false</value>
@@ -92,11 +92,24 @@
   <value>250</value>
 </property>
 
+<!-- S3 write performance -->
+
+<property>
+  <name>hive.mv.files.thread</name>
+  <value>15</value>
+</property>
+
+<property>
+  <name>fs.s3a.max.total.tasks</name>
+  <value>5</value>
+</property>
+
 <property>
   <name>fs.s3a.blocking.executor.enabled</name>
   <value>false</value>
 </property>
 
+<!-- S3 input listing (Cf. hive.exec.input.listing.max.threads) -->
 <property>
   <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
   <value>50</value>
