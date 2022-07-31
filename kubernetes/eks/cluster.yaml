@@ -51,6 +51,7 @@ nodeGroups:
     tags:
       k8s.io/cluster-autoscaler/enabled: "true"
       k8s.io/cluster-autoscaler/hive-mr3: "owned"
+      k8s.io/cluster-autoscaler/node-template/label/roles: "workers"
     preBootstrapCommands:
       - "mkfs -t ext4 /dev/nvme1n1"
       - "mkdir -p /ephemeral1"
