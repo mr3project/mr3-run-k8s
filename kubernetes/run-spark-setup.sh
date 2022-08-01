@@ -92,7 +92,7 @@ echo "export MR3_APPLICATION_ID_TIMESTAMP=$MR3_APPLICATION_ID_TIMESTAMP"
 #echo "ATS_SECRET_KEY=$ATS_SECRET_KEY"
 
 #
-# required for running spark/spark/run-spark-submit.sh inside Kubernetes
+# required for running Spark inside Kubernetes
 #
 
 kubectl create -n $SPARK_MR3_NAMESPACE configmap client-am-config \

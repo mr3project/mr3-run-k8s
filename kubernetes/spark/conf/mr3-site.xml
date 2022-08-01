@@ -31,7 +31,7 @@
 
 <property>
   <name>mr3.am.staging-dir</name>
-  <value>/opt/mr3-run/work-dir/spark</value>
+  <value>/opt/mr3-run/work-dir</value>
 </property>
 
 <property>
