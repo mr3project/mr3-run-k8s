@@ -30,12 +30,12 @@ CONF_DIR_MOUNT_DIR=$REMOTE_BASE_DIR/conf
 # for mr3.k8s.keytab.mount.dir
 KEYTAB_MOUNT_DIR=$REMOTE_BASE_DIR/key
 
-# required if mr3.dag.recovery.enabled=true in mr3-site.xml
-WORK_DIR_PERSISTENT_VOLUME_CLAIM=workdir-pvc
-WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR=/opt/mr3-run/work-dir
-
-RUN_AWS_EKS=false
+CREATE_PERSISTENT_VOLUME=false
 CREATE_SERVICE_ACCOUNTS=true
+
+# required if mr3.dag.recovery.enabled=true in mr3-site.xml
+WORK_DIR_PERSISTENT_VOLUME_CLAIM=
+WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR=
 
 #
 # Step 1. Building a Docker image
@@ -58,21 +58,21 @@ SPARK_CONF_DIR_CONFIGMAP=sparkmr3-conf-configmap
 
 # CREATE_KEYTAB_SECRET specifies whether or not to create a Secret from key/*.
 # set to true when running the Spark driver with Kerberos inside Kubernetes 
-CREATE_KEYTAB_SECRET=true
+CREATE_KEYTAB_SECRET=false
 SPARK_KEYTAB_SECRET=sparkmr3-keytab-secret
 
 # CREATE_WORKER_SECRET specifies whether or not to create a Secret for ContainerWorkers from $WORKER_SECRET_DIR.
 # CREATE_WORKER_SECRET is irrelevant to token renewal, and WORKER_SECRET_DIR is not requird to contain keytab files.
 # CREATE_WORKER_SECRET should be set to true if:
 #   - SSL is enabled
-CREATE_WORKER_SECRET=true
+CREATE_WORKER_SECRET=false
 SPARK_WORKER_SECRET=sparkmr3-worker-secret
 WORKER_SECRET_DIR=$BASE_DIR/spark/key/
 
 SPARK_DRIVER_PORT=9850
 SPARK_UI_PORT=4040
 
-# spark.ui.proxyBase is set to ${PROXY_BASE}/${DRIVER_NAME}
+# by default, spark.ui.proxyBase is set to ${PROXY_BASE}/${DRIVER_NAME}
 PROXY_BASE=http://red0:8080
 
 # SparkSQL
@@ -82,7 +82,7 @@ SPARK_METASTORE_HOST=metastore.hivemr3.svc.cluster.local
 SPARK_METASTORE_PORT=9851
 
 # for connecting to Metastore with Kerberos
-HIVE_METASTORE_SECURE_MODE=true
+HIVE_METASTORE_SECURE_MODE=false
 HIVE_METASTORE_KERBEROS_KEYTAB=$KEYTAB_MOUNT_DIR/hive-hiveserver2-internal.hivemr3.svc.cluster.local.keytab
 HIVE_METASTORE_KERBEROS_PRINCIPAL=hive/hiveserver2-internal.hivemr3.svc.cluster.local@RED
 
@@ -112,8 +112,8 @@ SPARK_SSL_TRUSTSTORETYPE=jks
 #   export FOO=bar
 #
 
-export AWS_ACCESS_KEY_ID=accesskey
-export AWS_SECRET_ACCESS_KEY=awesomesecret
+export AWS_ACCESS_KEY_ID=_your_aws_access_key_id_
+export AWS_SECRET_ACCESS_KEY=_your_aws_secret_secret_key_
 
 # SPARK_HOME is automatically set by spark-setup.sh if Spark-MR3 is executed
 unset SPARK_HOME

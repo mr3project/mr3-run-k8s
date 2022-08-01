@@ -33,10 +33,10 @@ fi
 
 kubectl create namespace $SPARK_MR3_NAMESPACE
 
-# Volumes
+# PersistentVolume
 # required if mr3.dag.recovery.enabled=true in mr3-site.xml
-if [ $RUN_AWS_EKS = true ]; then
-  echo "assume that PersistentVolumeClaim workdir-pvc has been created"
+if [ $CREATE_PERSISTENT_VOLUME = false ]; then
+  echo "do not use PersistentVolume"
 else
   kubectl create -f $YAML_DIR/workdir-pv.yaml 
   kubectl create -n $SPARK_MR3_NAMESPACE -f $YAML_DIR/workdir-pvc.yaml 

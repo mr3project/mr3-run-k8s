@@ -11,6 +11,31 @@
 </property>
 
 <property>
+  <name>dfs.encryption.key.provider.uri</name>
+  <value></value>
+</property>
+
+<property>
+  <name>ipc.client.fallback-to-simple-auth-allowed</name>
+  <value>true</value>
+</property>
+
+<!-- Cf. tez.runtime.shuffle.ssl.enable for secure shuffle in tez-site.xml -->
+<property>
+  <name>hadoop.security.credential.provider.path</name>
+  <value>localjceks://file/opt/mr3-run/key/hivemr3-ssl-certificate.jceks</value>
+</property>
+
+<!--
+  Upon the deletion of DAGAppMasterPod, HiveServer2 tries to connect to DAGAppMaster Pod at least twice
+  and up to three times (acknowledgeDagFinished(), getEstimateNumTasksOrNodes(), getApplicationReport().
+  Each wait takes 20 seconds, so HiveServer2 may wait 3 * ipc.client.connect.max.retries.on.timeouts * 20 seconds
+  before creating a new DAGAppMaster Pod.
+ -->
+<property>
+  <name>ipc.client.connect.max.retries.on.timeouts</name>
+  <value>3</value>
+</property>
 
 <!-- S3 -->
 
@@ -36,7 +61,7 @@
   <value></value>
 </property>
 
-<!-- set to true when using S3 or on AWS EKS -->
+<!-- set to true when using path-style access to S3-compliant storage -->
 <property>
   <name>fs.s3a.path.style.access</name>
   <value>false</value>

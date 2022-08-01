@@ -116,7 +116,7 @@
 
 <property>
   <name>mr3.dag.recovery.enabled</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <!-- resource scheduler -->

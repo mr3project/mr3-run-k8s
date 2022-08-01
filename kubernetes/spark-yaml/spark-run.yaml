@@ -60,8 +60,8 @@ spec:
     - name: key-k8s-volume
       mountPath: /opt/mr3-run/key/
       readOnly: true
-    - name: work-dir-volume
-      mountPath: /opt/mr3-run/work-dir
+    # - name: work-dir-volume
+    #   mountPath: /opt/mr3-run/work-dir
     - name: spark-hostpath-1
       mountPath: /data1/k8s
     # - name: host-lib-volume
@@ -76,9 +76,9 @@ spec:
   - name: key-k8s-volume
     secret:
       secretName: sparkmr3-keytab-secret
-  - name: work-dir-volume
-    persistentVolumeClaim:
-      claimName: workdir-pvc
+  # - name: work-dir-volume
+  #   persistentVolumeClaim:
+  #     claimName: workdir-pvc
   - name: spark-hostpath-1
     hostPath:
       path: /data1/k8s
