@@ -1,0 +1,22 @@
+<configuration>
+  <property>
+    <name>xasecure.audit.is.enabled</name>
+    <value>true</value>
+  </property>	
+
+  <property>
+    <name>xasecure.audit.destination.solr</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.destination.solr.urls</name>
+    <value>${env.ranger.auditUrl}/solr/ranger_audits</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.destination.solr.batch.filespool.dir</name>
+    <value>${env.consts.dir.rangerPolicyCache}/hive_audit_solr_spool</value>
+  </property>
+
+</configuration>

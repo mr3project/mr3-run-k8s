@@ -1,0 +1,27 @@
+{
+  "authentication": {
+    "class": "org.apache.solr.security.KerberosPlugin"
+  },
+  "authorization": {
+    "class": "solr.RuleBasedAuthorizationPlugin",
+    "permissions": [
+      {
+        "name": "update",
+        "role": "updater"
+      },
+      {
+        "name": "read",
+        "role": "reader"
+      },
+      {
+        "name": "*",
+        "role": "admin"
+      }
+    ],
+    "user-role": {
+      "${env.ranger.enableKerberos && env.secret.kerberosSecret !== undefined ? env.secret.kerberosSecret.server.principal : "solr@SOLR"}": "updater",
+      "${env.ranger.enableKerberos && env.secret.kerberosSecret !== undefined ? env.secret.kerberosSecret.server.principalInternal : "solr@SOLR"}": "updater",
+      "${env.ranger.enableKerberos && env.secret.kerberosSecret !== undefined && env.secret.kerberosSecret.ranger !== undefined ? env.secret.kerberosSecret.ranger.admin.principal : "solr@SOLR"}": "reader"
+    }
+  }
+}

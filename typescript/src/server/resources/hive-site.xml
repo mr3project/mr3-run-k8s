@@ -1,0 +1,653 @@
+<configuration>
+
+<property>
+  <name>dfs.client.mmap.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>dfs.short.circuit.shared.memory.watcher.interrupt.check.ms</name>
+  <value>0</value>
+</property>
+
+<property>
+  <name>hive.auto.convert.sortmerge.join.to.mapjoin</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.compactor.initiator.on</name>
+  <value>${env.config.metastore['hive.compactor.initiator.on']}</value>
+</property>
+
+<property>
+  <name>hive.compactor.worker.threads</name>
+  <value>${env.config.metastore['hive.compactor.worker.threads']}</value>
+</property>
+
+<property>
+  <name>hive.default.fileformat.managed</name>
+  <value>TextFile</value>
+</property>
+
+<property>
+  <name>hive.driver.parallel.compilation</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.enforce.sortmergebucketmapjoin</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.exec.dynamic.partition.mode</name>
+  <value>nonstrict</value>
+</property>
+
+<property>
+  <name>hive.exec.max.dynamic.partitions</name>
+  <value>${env.config.hive['hive.exec.max.dynamic.partitions']}</value>
+</property>
+
+<property>
+  <name>hive.exec.max.dynamic.partitions.pernode</name>
+  <value>${env.config.hive['hive.exec.max.dynamic.partitions.pernode']}</value>
+</property>
+
+<property>
+  <name>hive.exec.reducers.bytes.per.reducer</name>
+  <value>${env.config.hive['hive.exec.reducers.bytes.per.reducer']}</value>
+</property>
+
+<property>
+  <name>hive.exec.reducers.max</name>
+  <value>${env.worker.maxReducers}</value>
+</property>
+
+<property>
+  <name>hive.limit.optimize.enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.limit.pushdown.memory.usage</name>
+  <value>0.04</value>
+</property>
+
+<property>
+  <name>hive.map.aggr.hash.min.reduction</name>
+  <value>0.99</value>
+</property>
+
+<property>
+  <name>hive.mapjoin.bucket.cache.size</name>
+  <value>10000</value>
+</property>
+
+<property>
+  <name>hive.mapjoin.hybridgrace.hashtable</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.merge.nway.joins</name>
+  <value>${env.config.hive['hive.merge.nway.joins']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.cache.pinobjtypes</name>
+  <value>Table,Database,Type,FieldSchema,Order</value>
+</property>
+
+<property>
+  <name>hive.metastore.client.connect.retry.delay</name>
+  <value>5s</value>
+</property>
+
+<property>
+  <name>hive.metastore.connect.retries</name>
+  <value>24</value>
+</property>
+
+<property>
+  <name>hive.metastore.event.listeners</name>
+  <value>org.apache.hive.hcatalog.listener.DbNotificationListener</value>
+</property>
+
+<property>
+  <name>hive.metastore.pre.event.listeners</name>
+  <value>${env.config.metastore['hive.metastore.pre.event.listeners']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.server.max.threads</name>
+  <value>100000</value>
+</property>
+
+<property>
+  <name>hive.optimize.bucketmapjoin</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.optimize.bucketmapjoin.sortedmerge</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.optimize.index.filter</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.optimize.metadataonly</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.server2.max.start.attempts</name>
+  <value>5</value>
+</property>
+
+<property>
+  <name>hive.server2.transport.mode</name>
+  <value>all</value>
+</property>
+
+<property>
+  <name>hive.server2.use.SSL</name>
+  <value>${env.hive.enableSsl}</value>
+</property>
+
+<property>
+  <name>hive.server2.keystore.path</name>
+  <value>${env.secret.truststorePath}</value>
+</property>
+
+<property>
+  <name>hive.server2.keystore.password</name>
+  <value>_</value>
+</property>
+
+<property>
+  <name>hive.metastore.use.SSL</name>
+  <value>${env.hive.enableSslInternal}</value>
+</property>
+
+<property>
+  <name>hive.metastore.keystore.path</name>
+  <value>${env.secret.truststorePath}</value>
+</property>
+
+<property>
+  <name>hive.metastore.truststore.path</name>
+  <value>${env.secret.truststorePath}</value>
+</property>
+
+<property>
+  <name>hive.server2.webui.port</name>
+  <value>${env.config.hive['hive.server2.webui.port']}</value>
+</property>
+
+<property>
+  <name>hive.stats.autogather</name>
+  <value>${env.config.hive['hive.stats.autogather']}</value>
+</property>
+
+<property>
+  <name>hive.stats.fetch.column.stats</name>
+  <value>${env.config.hive['hive.stats.fetch.column.stats']}</value>
+</property>
+
+<property>
+  <name>hive.support.concurrency</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.tez.auto.reducer.parallelism</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.tez.bucket.pruning</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.txn.manager</name>
+  <value>org.apache.hadoop.hive.ql.lockmgr.DbTxnManager</value>
+</property>
+
+<property>
+  <name>hive.user.install.directory</name>
+  <value>${env.consts.dir.work}</value>
+</property>
+
+<property>
+  <name>hive.vectorized.execution.mapjoin.minmax.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.vectorized.execution.mapjoin.native.fast.hashtable.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.vectorized.groupby.checkinterval</name>
+  <value>4096</value>
+</property>
+
+<property>
+  <name>hive.vectorized.groupby.maxentries</name>
+  <value>1000000</value>
+</property>
+
+<property>
+  <name>hive.exec.orc.split.strategy</name>
+  <value>${env.config.hive['hive.exec.orc.split.strategy']}</value>
+</property>
+
+<property>
+  <name>hive.orc.compute.splits.num.threads</name>
+  <value>${env.config.hive['hive.orc.compute.splits.num.threads']}</value>
+</property>
+
+<property>
+  <name>hive.orc.splits.include.file.footer</name>
+  <value>${env.config.hive['hive.orc.splits.include.file.footer']}</value>
+</property>
+
+<property>
+  <name>hive.security.authorization.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.security.authenticator.manager</name>
+  <value>${env.hive.authenticatorConf}</value>
+</property>
+
+<property>
+  <name>hive.security.authorization.manager</name>
+  <value>${env.hive.authorizationConf}</value>
+</property>
+
+<property>
+  <name>hive.privilege.synchronizer</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.security.metastore.authenticator.manager</name>
+  <value>org.apache.hadoop.hive.ql.security.HadoopDefaultMetastoreAuthenticator</value>
+</property>
+
+<property>
+  <name>hive.security.metastore.authorization.auth.reads</name>
+  <value>${env.config.metastore['hive.security.metastore.authorization.auth.reads']}</value>
+</property>
+
+<property>
+  <name>hive.security.metastore.authorization.manager</name>
+  <value>${env.config.metastore['hive.security.metastore.authorization.manager']}</value>
+</property>
+
+<property>
+  <name>hive.server2.enable.doAs</name>
+  <value>${env.config.hive['hive.server2.enable.doAs']}</value>
+</property>
+
+<property> 
+  <name>hive.security.authorization.sqlstd.confwhitelist.append</name>
+  <value>hive\.querylog\.location.*|hive\.mr3\.map\.task.*|hive\.mr3\.reduce\.task.*</value>
+</property>
+
+<property>
+  <name>hive.metastore.db.type</name>
+  <value>${env.metastore.dbType}</value>
+</property>
+
+<property>
+  <name>javax.jdo.option.ConnectionDriverName</name>
+  <value>${env.metastore.connectionDriver}</value>
+</property>
+
+<property>
+  <name>javax.jdo.option.ConnectionURL</name>
+  <value>${env.metastore.connectionUrl}</value>
+</property>
+
+<property>
+  <name>javax.jdo.option.ConnectionUserName</name>
+  <value>${env.metastore.connectionUserName}</value>
+</property>
+
+<property>
+  <name>javax.jdo.option.ConnectionPassword</name>
+  <value>${env.metastore.connectionPassword}</value>
+</property>
+
+<property>
+  <name>hive.metastore.kerberos.keytab.file</name>
+  <value>${env.config.copy['hive.metastore.keytab.file']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.kerberos.principal</name>
+  <value>${env.config.copy['hive.metastore.principal']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.sasl.enabled</name>
+  <value>${env.config.copy['hive.metastore.secure.mode']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.uris</name>
+  <value>thrift://${env.config.copy['hive.metastore.host']}:${env.config.copy['hive.metastore.port']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.warehouse.dir</name>
+  <value>${env.config.copy['hive.warehouse.dir']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.event.db.notification.api.auth</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.users.in.admin.role</name>
+  <value>root,hive</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication</name>
+  <value>${env.config.copy['hive.server2.authentication.mode']}</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.keytab</name>
+  <value>${env.config.copy['hive.server2.keytab.file']}</value>
+</property>
+
+<property>
+  <name>hive.server2.authentication.kerberos.principal</name>
+  <value>${env.config.copy['hive.server2.principal']}</value>
+</property>
+
+<property>
+  <name>hive.server2.thrift.http.port</name>
+  <value>${env.config.copy['hive.server2.http.port']}</value>
+</property>
+
+<property>
+  <name>hive.server2.thrift.bind.host</name>
+  <value>${env.config.copy['hive.server2.host']}</value>
+</property>
+
+<property>
+  <name>hive.server2.thrift.port</name>
+  <value>${env.config.copy['hive.server2.port']}</value>
+</property>
+
+<property>
+  <name>hive.server2.thrift.sasl.qop</name>
+  <value>auth-conf</value>
+</property>
+
+<property>
+  <name>hive.auto.convert.join.noconditionaltask.size</name>
+  <value>${env.worker.noConditionalTaskSize}</value>
+</property>
+    
+<property>
+  <name>hive.optimize.dynamic.partition.hashjoin</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.query.results.cache.enabled</name>
+  <value>${env.config.hive['hive.query.results.cache.enabled']}</value>
+</property>
+
+<property>
+  <name>hive.llap.io.enabled</name>
+  <value>${env.worker.llapIoEnabled}</value>
+</property>
+
+<property>
+  <name>hive.llap.io.memory.size</name>
+  <value>${env.worker.llapIoEnabled ? env.worker.llapIo.memoryInGb + 'Gb' : '0Gb'}</value>
+</property>
+
+<property>
+  <name>hive.mr3.llap.headroom.mb</name>
+  <value>0</value>
+</property>
+
+<property>
+  <name>hive.llap.io.allocator.mmap</name>
+  <value>${env.worker.llapIoEnabled ? env.worker.llapIo.memoryMapped : false}</value>
+</property>
+
+<property>
+  <name>hive.llap.io.allocator.mmap.path</name>
+  <value>${env.worker.memoryMappedPath}</value>
+</property>
+
+<property>
+  <name>hive.llap.io.threadpool.size</name>
+  <value>${env.worker.numTasksInWorker}</value>
+</property>
+    
+<property>
+  <name>hive.llap.daemon.num.executors</name>
+  <value>${env.worker.numTasksInWorker}</value>
+</property>
+
+<property>
+  <name>hive.execution.mode</name>
+  <value>llap</value>
+</property>
+
+<property>
+  <name>hive.llap.hs2.coordinator.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.llap.daemon.service.hosts</name>
+  <value></value>
+</property>
+
+<property>
+  <name>hive.strict.checks.cartesian.product</name>
+  <value>${env.config.hive['hive.strict.checks.cartesian.product']}</value>
+</property>
+
+<property>
+  <name>hive.server2.support.dynamic.service.discovery</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.tez.llap.min.reducer.per.executor</name>
+  <value>${env.config.hive['hive.tez.llap.min.reducer.per.executor']}</value>
+</property>
+
+<property>
+  <name>hive.llap.execution.mode</name>
+  <value>all</value>
+</property>
+    
+<property>
+  <name>hive.resource.use.hdfs.location</name>
+  <value>false</value>
+</property>
+    
+<property>
+  <name>hive.mr3.exec.print.summary</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.server2.mr3.share.session</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.mr3.container.max.java.heap.fraction</name>
+  <value>${env.worker.javaHeapFraction}</value>
+</property>
+
+<property>
+  <name>hive.mr3.resource.vcores.divisor</name>
+  <value>${env.worker.coresDivisor}</value>
+</property>
+
+<property>
+  <name>hive.mr3.map.task.memory.mb</name>
+  <value>${env.worker.taskMemoryMb}</value>
+</property>
+
+<property>
+  <name>hive.mr3.map.task.vcores</name>
+  <value>${env.worker.taskCores}</value>
+</property>
+
+<property>
+  <name>hive.mr3.reduce.task.memory.mb</name>
+  <value>${env.worker.taskMemoryMb}</value>
+</property>
+
+<property>
+  <name>hive.mr3.reduce.task.vcores</name>
+  <value>${env.worker.taskCores}</value>
+</property>
+
+<property>
+  <name>hive.mr3.all-in-one.containergroup.memory.mb</name>
+  <value>${env.worker.workerMemoryInMb}</value>
+</property>
+
+<property>
+  <name>hive.mr3.all-in-one.containergroup.vcores</name>
+  <value>${env.worker.workerCores * env.worker.coresDivisor}</value>
+</property>
+
+<property>
+  <name>hive.mr3.use.daemon.shufflehandler</name>
+  <value>${env.worker.useDaemonShuffleHandler}</value>
+</property>
+
+<property>
+  <name>hive.mr3.am.task.max.failed.attempts</name>
+  <value>${env.master.numTaskAttempts}</value>
+</property>
+
+<property>
+  <name>hive.mr3.delete.vertex.local.directory</name>
+  <value>${env.config.hive['hive.mr3.delete.vertex.local.directory']}</value>
+</property>
+
+<property>
+  <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
+  <value>${env.master.speculativeThresholdPercent}</value>
+</property>
+
+<property>
+  <name>hive.mr3.localize.session.jars</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hive.exec.scratchdir</name>
+  <value>${env.basics.execScratchDir}</value>
+</property>
+
+<property>
+  <name>hive.query.results.cache.directory</name>
+  <value>${env.basics.execScratchDir}/_resultscache_</value>
+</property>
+
+<property>
+  <name>hive.downloaded.resources.dir</name>
+  <value>${env.consts.dir.scratch}/${env.config.copy['hive.session.id']}_resources</value>
+</property>
+
+<property>
+  <name>hive.exec.local.scratchdir</name>
+  <value>${env.consts.dir.scratch}</value>
+</property>
+
+<property>
+  <name>hive.server2.logging.operation.log.location</name>
+  <value>${env.consts.dir.scratch}/operation_logs</value>
+</property>
+
+<property>
+  <name>hive.mr3.dag.additional.credentials.source</name>
+  <value>${env.basics.credentialsSource}</value>
+</property>
+
+<property>
+  <name>dfs.namenode.delegation.token.renew-interval</name>
+  <value>86400000</value>
+</property>
+
+<property>
+  <name>hive.cluster.delegation.token.renew-interval</name>
+  <value>${env.config.hive['hive.cluster.delegation.token.renew-interval']}</value>
+</property>
+
+<property>
+  <name>hive.mr3.compaction.using.mr3</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.distcp.privileged.doAs</name>
+  <value>${env.config.hive['hive.distcp.privileged.doAs']}</value>
+</property>
+
+<property>
+  <name>hive.repl.rootdir</name>
+  <value>${env.basics.execScratchDir}</value>
+</property>
+
+<property>
+  <name>hive.metastore.warehouse.external.dir</name>
+  <value>${env.config.copy['hive.warehouse.dir']}</value>
+</property>
+
+<property>
+  <name>hive.llap.io.use.fileid.path</name>
+  <value>${env.basics.useFileIdPath}</value>
+</property>
+
+<property>
+  <name>hive.exec.input.listing.max.threads</name>
+  <value>${env.config.hive['hive.exec.input.listing.max.threads']}</value>
+</property>
+
+<property>
+  <name>hive.metastore.fshandler.threads</name>
+  <value>30</value>
+</property>
+
+<property>
+  <name>hive.msck.repair.batch.size</name>
+  <value>3000</value>
+</property>
+
+<property>
+  <name>hive.load.dynamic.partitions.thread</name>
+  <value>25</value>
+</property>
+
+</configuration>

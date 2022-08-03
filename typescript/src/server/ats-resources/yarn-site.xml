@@ -1,0 +1,73 @@
+<configuration>
+
+<property>
+  <name>yarn.timeline-service.leveldb-timeline-store.path</name>
+  <value>${env.consts.dir.timelineWork + "/ats"}</value>
+</property>
+
+<property>
+  <name>yarn.http.policy</name>
+  <value>${env.timeline.httpPolicy}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.webapp.address</name>
+  <value>${env.config.copy['yarn.timeline-service.hostname']}:${env.consts.timeline.httpPort}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.webapp.https.address</name>
+  <value>${env.config.copy['yarn.timeline-service.hostname']}:${env.consts.timeline.httpsPort}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-cross-origin.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.principal</name>
+  <value>${env.secret.kerberosSecret !== undefined ? env.secret.kerberosSecret.server.principal : ''}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.keytab</name>
+  <value>${env.secret.kerberosSecret !== undefined ? env.consts.dir.timelineKeytab + '/' + env.secret.kerberosSecret.server.keytab : ''}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.type</name>
+  <value>${env.timeline.enableKerberos && env.secret.kerberosSecret !== undefined ? 'kerberos' : 'simple'}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.kerberos.principal</name>
+  <value>${env.secret.kerberosSecret !== undefined ? env.secret.kerberosSecret.server.principal : ''}</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.http-authentication.kerberos.keytab</name>
+  <value>${env.secret.kerberosSecret !== undefined ? env.consts.dir.timelineKeytab + '/' + env.secret.kerberosSecret.server.keytab : ''}</value>
+</property>
+
+<property>
+  <name>yarn.acl.enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.admin.acl</name>
+  <value> </value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.ttl-enable</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.ttl-ms</name>
+  <value>604800000</value>
+</property>
+
+</configuration>

@@ -1,0 +1,46 @@
+  <property>
+    <name>ranger.keystore.alias</name>
+    <value>keyStoreAlias</value>
+  </property>
+
+  <property>
+    <name>ranger.service.https.attrib.keystore.credential.alias</name>
+    <value>keyStoreAlias</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.loginModuleName</name>
+    <value>com.sun.security.auth.module.Krb5LoginModule</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.loginModuleControlFlag</name>
+    <value>required</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.option.useTicketCache</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.option.useKeyTab</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.option.keyTab</name>
+    <value>${env.ranger.enableKerberos && env.secret.kerberosSecret !== undefined && env.secret.kerberosSecret.ranger !== undefined ? env.consts.dir.rangerKeytab + "/" + env.secret.kerberosSecret.ranger.admin.keytab : ""}</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.option.storeKey</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>xasecure.audit.jaas.Client.option.principal</name>
+    <value>${env.ranger.enableKerberos && env.secret.kerberosSecret !== undefined && env.secret.kerberosSecret.ranger !== undefined ? env.secret.kerberosSecret.ranger.admin.principal : ""}</value>
+  </property>
+
+</configuration>

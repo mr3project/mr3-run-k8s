@@ -1,0 +1,683 @@
+=== src/server/api/basics.T
+
+- namespace
+  Kubernetes namespace
+  Hive on MR3 requires a unique namespace.
+  All Pods created by Hive on MR3 belong to the same namespace.
+
+- warehouseDir
+  Path to the data warehouse
+  The data warehouse usually resides on a distributed file system such as S3 or HDFS.
+  Example: s3a://hive-warehouse/mr3
+  Example: hdfs://hive-warehouse/mr3
+  As a special case, if a PersistentVolume is used, the path may be a subdirectory of /opt/mr3-run/work-dir/ (which is the mount point of the PersistentVolume).
+
+- persistentVolume: "do_not_use" | "use_existing" | "create_new"
+  Whether or not to use/create a PersistentVolume
+  A PersistentVolume can store transient data for Hive in the work directory, as well as permanent data for Ranger, Prometheus (accessed by Grafana), Timeline server (accessed by MR3-UI), and Superset.
+  If no PersistentVolume is provided, a path to the work directory should be specified separately.
+  If no PersistentVolume is provided, emptyDir volumes are created to store permanent data.
+  In production, using a PersistentVolume is recommended for stability." 
+
+- createPersistentVolume.storageInGb
+  Storage size of the PersistentVolume in GB
+  This input is a parameter to the field spec.capacity.storage in the PersistentVolume specification.
+
+- createPersistentVolume.reclaimPolicy
+  Reclaim policy of the PersistentVolume
+  This input is a parameter to the field spec.persistentVolumeReclaimPolicy in the PersistentVolume specification.
+
+- createPersistentVolume.storageClass
+  StorageClass name of the PersistentVolume
+  This input is a parameter to the field spec.storageClassName in the PersistentVolume specification.
+
+- createPersistentVolume.pvType
+  PersistentVolume type and specification
+  A PersistentVolume based on a hostPath volume should be used only for a single-node cluster (such as MiniKube).
+
+- persistentVolumeClaim.annotations
+  PersistentVolumeClaim annotation
+  This input is a parameter to the field metadata.annotations in the PersistentVolumeClaim specification.
+
+- persistentVolumeClaim.storageInGb
+  Storage size of the PersistentVolumeClaim in GB
+  This input is a parameter to the field spec.resources.requests.storage in the PersistentVolumeClaim specification.
+
+- persistentVolumeClaim.volumeName
+  Name of the PersistentVolume
+  This input is a parameter to the field spec.volumeName in the PersistentVolumeClaim specification.
+
+- persistentVolumeClaim.storageClass
+  StorageClass name of the PersistentVolume to use
+  This input is a parameter to the field spec.storageClassName in the PersistentVolumeClaim specification.
+  An empty string is allowed.
+
+- persistentVolumeClaim.matchLabels
+  Match label for the selector of the PersistentVolumeClaim
+  This input is a parameter to the field spec.selector.matchLabels in the PersistentVolumeClaim specification.
+
+- workDir
+  Path to the work directory when no PersistentVolume is provided
+  The work directory is the scratch directory for Hive queries.
+  It also creates a sub-directory '_resultscache_' for storing the results of running Hive queries.
+  The work directory should reside on the same file system as the data warehouse.
+
+- s3aEndpoint
+  S3 endpoint to connect to
+  Example: http://my.s3.server:9000
+  Example: https://my.s3.server:9000
+  This input corresponds to the configuration key fs.s3a.endpoint in core-site.xml.
+  Inside Amazon AWS, this input can be set to empty because the default value is s3.amazonaws.com.
+
+- s3aEnableSsl
+  Whether or not to use SSL encryption for accessing S3
+  The certificate is to be provided in the Secret page.
+
+- s3aCredentialProvider
+  S3 credential provider
+  This input corresponds to the configuration key fs.s3a.aws.credentials.provider in core-site.xml.
+  EnvironmentVariable: com.amazonaws.auth.EnvironmentVariableCredentialsProvider
+  InstanceProfile: com.amazonaws.auth.InstanceProfileCredentialsProvider
+  WebIdentityToken: com.amazonaws.auth.WebIdentityTokenCredentialsProvider
+
+- hostPaths
+  Comma-separated list of local directories to be mounted as hostPath volumes in MR3 worker Pods
+  Example: /disk1/hive,/disk2/hive,/disk3/hive
+  For each local directory, a corresponding hostPath volume is created and mounted in every worker Pod.
+  To create the same set of hostPath volumes for every worker Pod, these local directories should be ready on every worker node.
+  The hostPath volumes hold intermediate data to be shuffled between worker Pods.
+  In production, using hostPath volumes is recommended for performance.
+
+- externalIp
+  External IP address for accessing Ranger, Grafana, MR3-UI, and Superset
+  If specified, LoadBalancer is created for accessing Ranger, Grafana, MR3-UI, and Superset.
+  If not specified, Ingress is created for accessing Ranger, Grafana, MR3-UI, and Superset.
+
+- externalIpHostname
+  Host name for accessing Ranger, Grafana, MR3-UI, and Superset
+  Use a host name assigned to Load Balancer or Ingress for Apache server.
+
+- hiveserver2Ip
+  External IP address for HiveServer2
+  Use the IP address assigned to Load Balancer for HiveServer2.
+
+- hiveserver2IpHostname
+  Alias for the host name for HiveServer2
+  The alias is used only internally for Kerberos domain and SSL encryption.
+  Hence it does not have to be a host name assigned to Load Balancer for HiveServer2.
+
+- kerberos.realm, kerberos.adminServer, kerberos.kdc
+  Specification of a Kerberos server
+  In order to use Kerberos for authentication in Hive, Ranger, and MR3-UI, a common Kerberos server should be specified here.
+  Kerberos keytabs are to be provided in the Secret page.
+
+- hdfsKeyProvider
+  HDFS KeyProvider URI for interacting with encryption keys
+  Example: kms://http@my.server:9292/kms
+  This input is unnecessary if HDFS is not used or no encryption is used in HDFS.
+  This input corresponds to the configuration key dfs.encryption.key.provider.uri in core-site.xml.
+
+- masterNodeSelector
+  Kubernetes nodeSelector for master Pods
+  Master Pods can execute Metastore, HiveServer2, MR3 master, Ranger, Grafana/MR3-UI, and Superset.
+  This input is a parameter to the field spec.template.spec.nodeSelector in the specification of Deployments and StatefulSets.
+  The nodeSelector can be useful for placing master Pods on on-demand instances on Amazon AWS.
+
+- workerNodeSelector
+  Kubernetes nodeSelector for MR3 worker Pods
+  MR3 workers execute tasks created by Hive.
+  This input is a parameter to the field spec.nodeSelector in the specification of Pods.
+  The nodeSelector can be useful for placing worker Pods on spot instances on Amazon AWS.
+
+- hostAliases
+  Aliases for hosts that are not found in the default DNS
+  For an IP address, a comma-separated list of host aliases should be specified.
+  This input is a parameter to the field spec.template.spec.hostAliases in the specification of Deployments and StatefulSets.
+
+- useHttpsService
+  Whether or not Load Balancer or Ingress for Apache server uses HTTPS
+
+=== src/server/api/metastore.T
+
+- kind
+  Whether or not use an external Metastore
+  If an external Metastore is selected, no new Metastore Pod is created.
+
+- host, port
+  External Metastore address
+
+- dbType
+  Metastore database type
+  In production, Apache Derby is not recommended.
+
+- databaseHost
+  Metastore database address
+
+- databasePortRaw
+  Metastore database port
+  If the port field is empty, the default value specific to each database type is used.
+
+- databaseName
+  Name of the database for Hive (inside the Metastore database)
+  This input corresponds to the configuration key hive.database.name in hive-site.xml.
+
+- userName, password
+  Metastore database account
+  The password field can be set to _ if it is included in the Keystore to be provided in the Secret page.
+  This input corresponds to the configuration keys javax.jdo.option.ConnectionUserName and javax.jdo.option.ConnectionPassword in hive-site.xml.
+
+- initSchema
+  Whether or not to initialize the database schema when starting Metastore
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for Metastore
+  In production, a minimum of 4096MB (4GB) of memory is recommended.
+
+- enableDatabaseSsl
+  Whether or not to use SSL encryption for accessing the Metastore database
+  If SSL encryption is used, the Metastore database should use an extended certificate file so that it can trust connection requests from Metastore.
+
+=== src/server/api/hive.T
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for HiveServer2
+  In production, a minimum of 6144MB (6GB) of memory is recommended.
+
+- numInstances
+  Number of HiveServer2 instances
+  If multiple HiveServer2 instances are created, connection requests are equally distributed by the Service for HiveServer2 (which is of LoadBalancer type).
+  In production, the user can allow more concurrent connections by increasing either the number of HiveServer2 instances or the Pod resource for HiveServer2 Pod, or both.
+
+- authentication
+  HiveServer2 authentication type
+
+- ldap.baseDN, ldap.url
+  LDAP server specification
+
+- authenticator
+  HiveServer2 authenticator type
+  This input corresponds to the configuration key hive.security.authenticator.manager in hive-site.xml.
+
+- authorization
+  HiveServer2 authorizer type
+  This input corresponds to the configuration key hive.security.authorization.manager in hive-site.xml.
+
+- enableSsl
+  Whether or not to use SSL encryption for accessing HiveServer2
+  The Keystore and Truststore files are to be provided in the Secret page.
+
+- serviceAccountAnnotations.key, serviceAccountAnnotations.value
+  Annotation in the ServiceAccount for HiveServer2
+  On Amazon AWS, the IAM role can be associated with the ServiceAccount for HiveServer2 with an annotation.
+  Example: eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/IAM_ROLE_NAME
+  This input is a parameter to the field metadata.annotations in the specification of the ServiceAccount for HiveServer2.
+
+=== src/server/api/master.T
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for MR3 master
+  This input is a parameter to the field spec.template.spec.containers.requests in the specification of the Deployment for MR3 master.
+  In production, a minimum of 6144MB (6GB) of memory is recommended.
+
+- mr3MasterCpuLimitMultiplier
+  Multiplier for the CPU resource limit for DAGAppMaster Pod
+  The field spec.template.spec.containers.limits.cpu is set to the field spec.template.spec.containers.requests.cpu multiplied by this parameter.
+  A value betwen 1.0 and 2.0 is allowed.
+
+- concurrencyLevel
+  Max number of DAGs that can run concurrently
+
+- dagQueueScheme
+  Scheduling policy for DAGs
+  Common: MR3 uses a common task queue for all DAGs.
+  Fair: MR3 creates a task queue for each individual DAG to allocate the same amount of resources to all active DAGs. Since a new DAG is instantly allocated its fair share of resources while an old DAG is not penalized for its long duration, the execution time of a DAG is predictable in concurrent environments.
+  Common usually achieves higher throughput and shorter turnaround time than Fair.
+
+- dagPriorityScheme
+  Priority policy for DAGs
+  FIFO: MR3 assign DAG priorities sequentially. That is, the first DAG is assigned DAG priority 0, the second DAG is assigned DAG priority 1, and so on.
+  Concurrent: MR3 assigns the same DAG priority to all DAGs.
+  This input may be ignored if the scheduling policy for DAGs is set to Fair.
+  FIFO is recommended if all Hive queries are of similar characteristics.
+  Concurrent is recommended if Hive queries of different characteristics are mixed (e.g., interactive jobs and ETL jobs).
+
+- numTaskAttempts
+  Max number of attempts for executing a task
+  For fault tolerance and speculative execution, MR3 can make multiple attempts to execute a task.
+  In production, a value of 3 or higher is recommended.
+
+- speculativeThresholdPercent
+  Percentage of tasks of a vertex that should complete before starting speculative execution
+   The threshold can be set to an integer between 1 and 100.
+   Setting it to 100 disables speculative execution.
+   In conjunction with using multiple shuffle handlers, enabling speculative execution is important for preventing fetch delays. 
+   In production, enabling speculative execution is recommended.
+
+- workerIdleTimeoutInMinutes
+  Timeout period for idle workers
+  A worker may stay idle without executing tasks.
+  After the timeout period specified here, such a worker is automatically destroyed.
+  The timeout period is effective independently of autoscaling.
+
+- autoscalingEnabled
+  Whether or not to enable autoscaling
+  Autoscaling uses the aggregate utilization based on the percentage of memory consumed by tasks over a certain period of time.
+  By default, MR3 calculates the aggregate utilization over 600 seconds.
+
+- scaleOutThreshold
+  Minimum percentage of memory usage to trigger scale-out
+
+- scaleInThreshold
+  Maximum percentage of memory usage to trigger scale-in
+
+- scaleOutInitialContainers
+  Number of workers to request for scale-out when no workers are running
+  This parameter is necessary for fast scale-out, e.g., creating fresh workers before executing the first DAG.
+
+- scaleOutIncrement
+  Number of workers to request for scale-out
+  In the event of scale-out, MR3 tries to create new workers, sending requests to Kubernetes if necessary.
+  In public clouds, Kubernetes may respond by provisioning additional nodes where new workers can start.
+
+- scaleInDecrementHosts
+  Number of nodes to empty for scale-in
+  In the event of scale-in, MR3 removes all workers from those nodes selected for reclamation.
+  In public clouds, Kubernetes may respond by decommissioning emptied nodes.
+
+- scaleInMinHosts
+  Minimum number of nodes that should remain when performing scale-in
+  This parameter is necessary for fast restart, e.g., executing DAGs after a long idle period.
+
+=== src/server/api/worker.T
+
+- workerMemoryInMb
+  Memory resource for an MR3 worker Pod without LLAP/IO
+  The memory resource specified here is shared by all concurrent tasks running in a worker.
+  The memory resource specified here does not include the memory to be reserved for LLAP/IO.
+  In production, a minimum of 8192MB (8GB) of memory is recommended.
+  This input is a parameter to the field spec.containers.limits.memory in the specification of MR3 worker Pods.
+
+- workerCores
+  CPU resource for an MR3 worker Pod
+  MR3 workers execute tasks created by Hive, and a worker can execute multiple tasks concurrently.
+  The CPU resource specified here is shared by all concurrent tasks.
+  Example for a cluster where each worker node has 8 cores and uses 0.2 cores for Kubernetes: 7.8
+  This input is a parameter to the field spec.containers.limits.cpu in the specification of MR3 worker Pods.
+
+- numTasksInWorker
+  Max number of concurrent tasks in a worker
+  The max number of concurrent tasks determines the size of memory to be allocated to individual tasks.
+  In production, set the number of concurrent tasks so that at least 4096MB (4GB) of memory can be allocated to each task.
+  Example when the memory resource for an MR3 worker Pod is 40960MB (40GB): 10
+
+- numMaxWorkers
+  Max number of MR3 worker Pods
+
+- llapIoEnabled
+  Whether or not to enable LLAP I/O
+  This input corresponds to the configuration key hive.llap.io.enabled in hive-site.xml.
+
+- llapIo.memoryInGb
+  Size of memory for caching data
+  The memory for caching data is added to the total memory resource for MR3 worker Pods.
+  This input corresponds to the configuration key hive.llap.io.memory.size in hive-site.xml.
+
+- llapIo.memoryMapped
+  Whether or not to use memory-mapped files for caching data
+  LLAP I/O can use fast devices (such as NVMe disks) instead of memory.
+  This input corresponds to the configuration key hive.llap.io.allocator.mmap in hive-site.xml.
+
+- llapIo.memoryMappedPath
+  Path to a local directory on worker node for caching data
+  Internally hostPath volumes are mounted in the same directory inside MR3 worker Pods.
+  This input corresponds to the configuration key hive.llap.io.allocator.mmap.path in hive-site.xml.
+
+- useSoftReference
+  Whether or not to use soft references in workers
+  PipelinedSorter can create soft references for ByteBuffers. These soft references are reused across tasks running in the same worker.
+  Using soft references can make a noticeable difference in performance by relieving pressure on the garbage collector.
+  Using soft references is recommended if the size of memory to be allocated to a single task is over 8192MB (8GB).
+
+- tezIoSortMb
+  tez.runtime.io.sort.mb in tez-site.xml
+  This parameter should be adjusted according to the the size of memory to be allocated to a single task.
+
+- tezUnorderedOutputBufferSizeInMb
+  tez.runtime.unordered.output.buffer.size-mb in tez-site.xml
+  This parameter should be adjusted according to the the size of memory to be allocated to a single task.
+
+- noConditionalTaskSize
+  hive.auto.convert.join.noconditionaltask.size in hive-site.xml
+  This parameter should be adjusted according to the the size of memory to be allocated to a single task.
+
+- maxReducers
+  Max number of reducers to create for a reduce vertex
+  A prime number is recommended.
+
+- javaHeapFraction
+  Fraction of task memory to be used as Java heap
+  The operating system maintains page cache for each worker Pod, but by consuming the memory allocated to the worker Pod itself.
+  Since separate worker Pods do not read common files very often, we can think of each worker Pod as managing its own page cache.
+  Hence this parameter should be adjusted so as to guarantee sufficiently large page cache for each worker Pod.
+  A value larger than 0.8 is NOT recommended.
+
+- numShuffleHandlersPerWorker
+  Number of shuffle handlers in a worker
+  A worker can create multiple shuffle handlers in order to prevent fetch delays.
+
+- useShuffleHandlerProcess
+  Whether or not to run shuffle handlers in a separate process
+  If disabled, shuffle handlers run as threads of a worker.
+  If enabled, shuffle handlers run in a separate process.
+  In production, running shuffle handlers in a separate process is recommended.
+
+- numThreadsPerShuffleHandler
+  Number of shuffle threads to create in each shuffle handler
+  A shuffle handler can create multiple shuffle threads for serving shuffle requests.
+  The number of shuffle threads should not be too large in order to limit the total number of shuffle threads in all shuffle handlers (i.e., # of Shuffle Handlers per Worker * # of Threads per Shuffle Handler).
+  For example, with # of Shuffle Handlers per Worker = 16 and # of Threads per Shuffle Handler = 20, a worker creates a total of 16 * 20 = 320 shuffle threads, which may negatively affect the performance.
+  A value of 0 sets the number of shuffle threads to 2 * the number of cores.
+
+- enableShuffleSsl
+  Whether or not to use SSL encryption for shuffling
+  The Keystore and Truststore files are to be provided in the Secret page.
+
+=== src/server/api/ranger.T
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for Ranger
+  In production, a minimum of 2048MB (2GB) of memory is recommended.
+
+- service
+  Service for Hive in the Ranger Service Manager
+  The user should create and configure the service manually.
+  This input corresponds to the configuration key ranger.plugin.hive.service.name in ranger-hive-security.xml.
+
+- dbFlavor
+  Ranger database type
+
+- dbRootUser, dbRootPassword
+  Ranger database account
+  The password is written in a Kubernetes secret (install.properties).
+
+- dbHost
+  Ranger database address
+  The default port specific to each database type is used.
+
+- dbPassword
+  Password for the user 'rangeradmin' (inside the Ranger database)
+  This password is used only internally by Ranger.
+
+- enableDatabaseSsl
+  Whether or not to use SSL encryption for accessing the Ranger database
+  If SSL encryption is used, the Ranger database should use an extended certificate file so that it can trust connection requests from Ranger.
+
+- adminPassword
+  Initial password for the user 'admin' on the Ranger Admin UI
+
+=== src/server/api/timeline.T
+
+- timelineEnabled
+  Whether or not to enable Grafana and MR3-UI
+  Grafana automatically starts Prometheus and contains a dashboard reporting the status of MR3 master.
+  MR3-UI automatically starts Timeline server and reports the history of executing DAGs.
+  Grafana, Prometheus, MR3-UI, and Timeline server run in the same Pod.
+
+- apacheResources.cpu, apacheResources.memoryInMb
+  Pod resource for Apache server
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for Grafana and MR3-UI
+  The Pod resource is split among Grafana, Prometheus, MR3-UI, and Timeline server.
+  In production, a minimum of 8192MB (8GB) of memory is recommended.
+
+- enableTaskView
+  Whether or not to display details of tasks in MR3-UI
+  MR3-UI displays details of DAGs and vertexes by default.
+  Displaying details of tasks in MR3-UI can be useful for debugging Hive queries, but it incurs substantial overhead in Timeline server as well as MR3 master.
+  In production, displaying details of tasks is NOT recommended.
+
+=== src/server/api/superset.T
+
+- supersetEnabled
+  Whether or not to enable Superset
+  Caveat: Currently Superset cannot access HiveServer2 if SSL encryption is used.
+  The user should manually register a database source using a Hive URI.
+  Example: hive://<your external IP address>:9852/default?auth=KERBEROS&kerberos_service_name=hive
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for Superset
+  In production, a minimum of 8192MB (8GB) of memory is recommended.
+
+=== src/server/api/driver.T
+
+- name
+  Name of the Spark driver to create
+  Spark driver names should not contain upper-case letters.
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for the Spark driver
+  This input is a parameter to the field spec.containers.resources in the specification of the Pod for the Spark driver.
+
+=== src/server/api/spark.T
+
+- driverNames
+  Comma-separated list of names of Spark drivers
+  Spark driver names should not contain upper-case letters.
+
+- serviceAccountAnnotations.key, serviceAccountAnnotations.value
+  Annotation in the ServiceAccount for Spark
+  On Amazon AWS, the IAM role can be associated with the ServiceAccount for Spark with an annotation.
+  Example: eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/IAM_ROLE_NAME
+}
+
+=== src/server/api/sparkmr3.T
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for MR3 master
+  This input is a parameter to the field spec.template.spec.containers.requests in the specification of the Deployment for MR3 master.
+  In production, a minimum of 6144MB (6GB) of memory is recommended.
+
+- mr3MasterCpuLimitMultiplier
+  Multiplier for the CPU resource limit for DAGAppMaster Pod
+  The field spec.template.spec.containers.limits.cpu is set to the field spec.template.spec.containers.requests.cpu multiplied by this parameter.
+  A value betwen 1.0 and 2.0 is allowed.
+
+- workerMemoryInMb
+  Memory resource for a Spark executor
+  The memory resource specified here is shared by all concurrent tasks running in a Spark executor.
+  This input specifies the configuration key spark.executor.memory in spark-defaults.conf.
+
+- workerMemoryOverheadInMb
+  Memory overhead for a Spark executor
+  This input specifies the configuration key spark.executor.memoryOverhead in spark-defaults.conf.
+
+- workerCores
+  CPU resource for a Spark executor
+  A Spark executor can execute multiple tasks concurrently.
+  The CPU resource specified here is shared by all concurrent tasks.
+  This input specifies the configuration key spark.executor.cores in spark-defaults.conf.
+
+- numTasksInWorker
+  Max number of concurrent tasks in a Spark executor
+  The max number of concurrent tasks determines the size of memory to be allocated to individual tasks.
+  In production, set the number of concurrent tasks so that at least 4096MB (4GB) of memory can be allocated to each task.
+
+- numMaxWorkers
+  Max number of Spark executors
+
+- useShuffleHandlerProcess
+  Whether or not to run shuffle handlers in a separate process
+  If disabled, shuffle handlers run as threads of a Spark executor.
+  If enabled, shuffle handlers run in a separate process.
+
+- concurrencyLevel
+  Max number of DAGs that can run concurrently
+
+- containerSchedulerScheme
+  Recyling policy for MR3 workers
+  None: MR3 does not recycle workers.
+  FIFO: A worker stops for recycling only voluntarily when it has no more tasks to execute and no more intermediate data to transmit.
+  Fair: MR3 tries to maintain the same number of workers for every Spark driver.
+
+- dagQueueScheme
+  Scheduling policy for DAGs
+  Common: MR3 uses a common task queue for all DAGs.
+  Fair: MR3 creates a task queue for each individual DAG to allocate the same amount of resources to all active DAGs. Since a new DAG is instantly allocated its fair share of resources while an old DAG is not penalized for its long duration, the execution time of a DAG is predictable in concurrent environments.
+  Common usually achieves higher throughput and shorter turnaround time than Fair.
+
+- dagPriorityScheme
+  Priority policy for DAGs
+  FIFO: MR3 assign DAG priorities sequentially. That is, the first DAG is assigned DAG priority 0, the second DAG is assigned DAG priority 1, and so on.
+  Concurrent: MR3 assigns the same DAG priority to all DAGs.
+  This input may be ignored if the scheduling policy for DAGs is set to Fair.
+  FIFO is recommended if all Hive queries are of similar characteristics.
+  Concurrent is recommended if Hive queries of different characteristics are mixed (e.g., interactive jobs and ETL jobs).
+
+- numTaskAttempts
+  Max number of attempts for executing a task
+  For fault tolerance and speculative execution, MR3 can make multiple attempts to execute a task.
+  In production, a value of 3 or higher is recommended.
+
+- speculativeThresholdPercent
+  Percentage of tasks of a vertex that should complete before starting speculative execution
+   The threshold can be set to an integer between 1 and 100.
+   Setting it to 100 disables speculative execution.
+   In conjunction with using multiple shuffle handlers, enabling speculative execution is important for preventing fetch delays. 
+   In production, enabling speculative execution is recommended.
+
+- workerIdleTimeoutInMinutes
+  Timeout period for idle Spark executors
+  A Spark executor may stay idle without executing tasks.
+  After the timeout period specified here, such a Spark executor is automatically destroyed.
+  The timeout period is effective independently of autoscaling.
+
+- autoscalingEnabled
+  Whether or not to enable autoscaling
+  Autoscaling uses the aggregate utilization based on the percentage of memory consumed by tasks over a certain period of time.
+  By default, MR3 calculates the aggregate utilization over 600 seconds.
+
+- scaleOutThreshold
+  Minimum percentage of memory usage to trigger scale-out
+
+- scaleInThreshold
+  Maximum percentage of memory usage to trigger scale-in
+
+- scaleOutInitialContainers
+  Number of workers to request for scale-out when no workers are running
+  This parameter is necessary for fast scale-out, e.g., creating fresh workers before executing the first DAG.
+
+- scaleOutIncrement
+  Number of workers to request for scale-out
+  In the event of scale-out, MR3 tries to create new workers, sending requests to Kubernetes if necessary.
+  In public clouds, Kubernetes may respond by provisioning additional nodes where new workers can start.
+
+- scaleInDecrementHosts
+  Number of nodes to empty for scale-in
+  In the event of scale-in, MR3 removes all workers from those nodes selected for reclamation.
+  In public clouds, Kubernetes may respond by decommissioning emptied nodes.
+
+- scaleInMinHosts
+  Minimum number of nodes that should remain when performing scale-in
+  This parameter is necessary for fast restart, e.g., executing DAGs after a long idle period.
+
+=== src/server/api/docker.T
+
+- docker.image
+  Docker image for Hive, Metastore, and MR3 master
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.containerWorkerImage
+  Docker image for MR3 workers
+  It is okay to reuse the Docker image for MR3 master because it includes all dependencies of MR3 workers.
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.rangerImage
+  Docker image for Ranger
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.atsImage
+  Docker image for Grafana and MR3-UI
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.supersetImage
+  Docker image for Superset
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.apacheImage
+  Docker image for Apache server
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.user
+  Docker user in the Docker image for Hive, Metastore, MR3 master, and MR3 workers
+
+- docker.imagePullPolicy
+  Image pull policy for all Docker images
+
+- docker.imagePullSecrets
+  Secret for pulling Docker images from a private Docker Registry
+
+- docker.sparkImage
+  Docker image for Spark on MR3
+  It is okay to use a copy of the Docker image stored on a private Docker Registery.
+
+- docker.sparkUser
+  Docker user in the Docker image for Spark
+}
+
+=== src/server/api/secret.T
+
+- kerberosSecret.server.keytab, kerberosSecret.server.principal
+  Service keytab for public HiveServer2
+  This service keytab is used to run public HiveServer2 in a secure mode.
+  If Ranger is used, the policy.download.auth.users field in Config Properties panel should be set to the primary in the service principal.
+
+- kerberosSecret.server.keytabInternal, kerberosSecret.server.principalInternal
+  Service keytab for internal HiveServer2
+  This service keytab is used to run internal HiveServer2 in a secure mode.
+
+- kerberosSecret.user.keytab, kerberosSecret.user.principal
+  Keytab for renewing HDFS tokens in MR3 master and workers
+  This keytab is unnecessary if HDFS is not used or not Kerberized.
+
+- kerberosSecret.ranger.spnego.keytab, kerberosSecret.ranger.spnego.principal
+  Spnego service keytab for Ranger
+  This service keytab is used only internally by Ranger.
+
+- kerberosSecret.ranger.admin.keytab, kerberosSecret.ranger.admin.principal
+  Admin service keytab for Ranger
+  This service keytab is used only internally by Ranger.
+
+- kerberosSecret.ranger.lookup.keytab, kerberosSecret.ranger.lookup.principal
+  Lookup keytab for Ranger
+  This service keytab is used only internally by Ranger.
+
+- spark.keytab, spark.principal
+  Keytab for Spark
+
+- ssl.keystore
+  Keystore for HiveServer2, Metastore, Ranger, MR3-UI, and S3
+  This Keystore can include the certificate for accessing the Metastore database with SSL encryption.
+  This Keystore can include the certificate for accessing the Ranger database with SSL encryption.
+  This Keystore can include the certificate for accessing S3 with SSL encryption.
+  Cf. https://github.com/mr3project/hive-mr3-ssl
+
+- ssl.truststore
+  Truststore for HiveServer2, Metastore, Ranger, and MR3-UI
+  Cf. https://github.com/mr3project/hive-mr3-ssl
+
+- ssl.password
+  Password for Keystore and Truststore
+  The environment variable HADOOP_CREDSTORE_PASSWORD is also set to this password.
+
+- shuffleSsl.keystore
+  Keystore for shuffle handlers with SSL encryption
+  Cf. https://github.com/mr3project/hive-mr3-ssl
+
+- shuffleSsl.truststore
+  Truststore for shuffle handlers with SSL encryption
+  Cf. https://github.com/mr3project/hive-mr3-ssl
+
+- secretEnvVars
+  Environment variables for accessing S3 with EnvironmentVariableCredentialsProvider
+

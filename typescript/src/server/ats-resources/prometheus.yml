@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 10s
+  evaluation_interval: 10s
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+
+rule_files:
+
+scrape_configs:
+  - job_name: "MR3"
+
+    static_configs:
+      - targets: [${'"' + "service-master-" + env.randoms.amConfig.MR3_APPLICATION_ID_TIMESTAMP + "-0." + env.basics.namespace + ".svc.cluster.local:" + env.consts.prometheus.port + '"'}, ${'"' + "service-master-" + env.randoms.amConfigSpark.MR3_APPLICATION_ID_TIMESTAMP + "-0." + env.basics.namespace + ".svc.cluster.local:" + env.consts.prometheus.port + '"'}]

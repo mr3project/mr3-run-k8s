@@ -1,0 +1,398 @@
+<configuration>
+
+<property>
+  <name>mr3.am.launch.cmd-opts</name>
+  <value>-XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.masterLaunchCmdOpts}</value>
+</property>
+
+<property>
+  <name>mr3.am.staging-dir</name>
+  <value></value>
+</property>
+
+<property>
+  <name>mr3.am.staging.dir.check.ownership.permission</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.am.max.num.concurrent.dags</name>
+  <value>${env.master.concurrencyLevel}</value>
+</property>
+
+<property>
+  <name>mr3.dag.queue.scheme</name>
+  <value>${env.master.dagQueueScheme}</value>
+</property>
+ 
+<property>
+  <name>mr3.dag.priority.scheme</name>
+  <value>${env.master.dagPriorityScheme}</value>
+</property>
+ 
+<property>
+  <name>mr3.am.task.retry.on.fatal.error</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.am.task.no.retry.errors</name>
+  <value>MapJoinMemoryExhaustionError,OutOfMemoryError</value>
+</property>
+
+<property>
+  <name>mr3.am.client.thread-count</name>
+  <value>${env.config.mr3['mr3.am.client.thread-count']}</value>
+</property>
+
+<property>
+  <name>mr3.am.permit.custom.user.class</name>
+  <value>${env.config.mr3['mr3.am.permit.custom.user.class']}</value>
+</property>
+
+<property>
+  <name>mr3.am.resourcescheduler.max.requests.per.taskscheduler</name>
+  <value>1000</value>
+</property>
+
+<property>
+  <name>mr3.container.launch.cmd-opts</name>
+  <value>-XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -XX:+AlwaysPreTouch -Xss512k -XX:TLABSize=8m -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -XX:NewRatio=8 -server -Djava.net.preferIPv4Stack=true -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.containerLaunchCmdOpts}</value>
+</property>
+
+<property>
+  <name>mr3.container.reuse</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.container.stop.cross.dag.reuse</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.container.idle.timeout.ms</name>
+  <value>${env.master.workerIdleTimeoutInMinutes * 60 * 1000}</value>
+</property>
+
+<property>
+  <name>mr3.heartbeat.container.timeout.ms</name>
+  <value>300000</value>
+</property>
+
+<property>
+  <name>mr3.container.termination.checker.timeout.ms</name>
+  <value>300000</value>
+</property>
+
+<property>
+  <name>mr3.am.resource.memory.mb</name>
+  <value>${Math.floor(env.master.resources.memoryInMb)}</value>
+</property>
+
+<property>
+  <name>mr3.am.resource.cpu.cores</name>
+  <value>${Math.floor(env.master.resources.cpu)}</value>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.max.memory.mb</name>
+  <value>${Math.floor(env.master.resources.memoryInMb / 2)}</value>
+</property>
+
+<property>
+  <name>mr3.am.local.resourcescheduler.max.cpu.cores</name>
+  <value>${Math.floor(env.master.resources.cpu / 2)}</value>
+</property>
+
+<property>
+  <name>mr3.am.worker.mode</name>
+  <value>kubernetes</value>
+</property>
+
+<property>
+  <name>mr3.container.resourcescheduler.type</name>
+  <value>kubernetes</value>
+</property>
+
+<property>
+  <name>mr3.am.launch.env</name>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,${env.secret.envVarSeq}</value>
+</property>
+
+<property>
+  <name>mr3.container.launch.env</name>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,${env.secret.envVarSeq}</value>
+</property>
+
+<property>
+  <name>mr3.am.delete.local.working-dir</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mr3.am.local.working-dir</name>
+  <value>${env.consts.dir.amLocal}/am-local-working-dir</value>
+</property>
+
+<property>
+  <name>mr3.am.local.log-dir</name>
+  <value>${env.consts.dir.amLocal}/am-local-log-dir</value>
+</property>
+
+<property>
+  <name>mr3.am.token.renewal.paths</name>
+  <value>${env.basics.credentialsSource}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.master.command</name>
+  <value>${env.consts.dir.hive}/run-master.sh</value>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.command</name>
+  <value>${env.consts.dir.hive}/run-worker.sh</value>
+</property>
+
+<property>
+  <name>mr3.container.command.num.waits.in.reserved</name>
+  <value>360</value>
+</property>
+
+<property>
+  <name>mr3.container.command.num.waits.to.kill</name>
+  <value>${env.config.mr3['mr3.container.command.num.waits.to.kill']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.creation.timeout.ms</name>
+  <value>${env.config.mr3['mr3.k8s.pod.creation.timeout.ms']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.node.selector</name>
+  <value>${env.basics.mr3MasterNodeSelector}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.toleration.specs</name>
+  <value>${env.config.mr3['mr3.k8s.pod.master.toleration.specs']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.master.pod.affinity.match.label</name>
+  <value>hivemr3_app=hiveserver2</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.node.selector</name>
+  <value>${env.basics.mr3WorkerNodeSelector}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.toleration.specs</name>
+  <value>${env.config.mr3['mr3.k8s.pod.worker.toleration.specs']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.image.pull.policy</name>
+  <value>${env.docker.docker.imagePullPolicy}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.image.pull.secrets</name>
+  <value>${env.docker.yamlImagePullSecrets}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.host.aliases</name>
+  <value>${env.basics.mr3HostAliases}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.emptydirs</name>
+  <value>${env.consts.dir.workLocal}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.master.hostpaths</name>
+  <value></value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.emptydirs</name>
+  <value>${env.basics.mr3WorkerEmptyDirs}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.hostpaths</name>
+  <value>${env.basics.mr3WorkerHostPaths}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.additional.hostpaths</name>
+  <value>${env.worker.memoryMappedPath}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.initial.delay.secs</name>
+  <value>${env.config.mr3['mr3.k8s.readiness.probe.initial.delay.secs']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.readiness.probe.period.secs</name>
+  <value>${env.config.mr3['mr3.k8s.readiness.probe.period.secs']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.initial.delay.secs</name>
+  <value>${env.config.mr3['mr3.k8s.liveness.probe.initial.delay.secs']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.liveness.probe.period.secs</name>
+  <value>${env.config.mr3['mr3.k8s.liveness.probe.period.secs']}</value>
+</property>
+
+<property>
+  <name>mr3.app.history.logging.enabled</name>
+  <value>${env.timeline.timelineEnabled}</value>
+</property>
+
+<property>
+  <name>mr3.dag.history.logging.enabled</name>
+  <value>${env.timeline.timelineEnabled}</value>
+</property>
+
+<property>
+  <name>mr3.task.history.logging.enabled</name>
+  <value>${env.timeline.enableTaskView}</value>
+</property>
+
+<property>
+  <name>mr3.container.task.failure.num.sleeps</name>
+  <value>${env.config.mr3['mr3.container.task.failure.num.sleeps']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.total.max.memory.gb</name>
+  <value>${env.worker.maxWorkerMemoryGb}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.worker.total.max.cpu.cores</name>
+  <value>${env.worker.maxWorkerCores}</value>
+</property>
+
+<property>
+  <name>mr3.enable.auto.scaling</name>
+  <value>${env.master.autoscalingEnabled}</value>
+</property>
+
+<property>
+  <name>mr3.memory.usage.check.scheme</name>
+  <value>average</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.threshold.percent</name>
+  <value>${env.master.scaleOutThreshold}</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.threshold.percent</name>
+  <value>${env.master.scaleInThreshold}</value>
+</property>
+
+<property>
+  <name>mr3.am.task.concurrent.run.enable.root.vertex</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>mr3.memory.usage.check.window.length.secs</name>
+  <value>600</value>
+</property>
+
+<property>
+  <name>mr3.check.memory.usage.event.interval.secs</name>
+  <value>10</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.grace.period.secs</name>
+  <value>300</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.delay.after.scale.out.secs</name>
+  <value>300</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.grace.period.secs</name>
+  <value>90</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.num.initial.containers</name>
+  <value>${env.master.scaleOutInitialContainers}</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.out.num.increment.containers</name>
+  <value>${env.master.scaleOutIncrement}</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.num.decrement.hosts</name>
+  <value>${env.master.scaleInDecrementHosts}</value>
+</property>
+
+<property>
+  <name>mr3.auto.scale.in.min.hosts</name>
+  <value>${env.master.scaleInMinHosts}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.security.context.sysctls</name>
+  <value>${env.config.mr3['mr3.k8s.pod.worker.security.context.sysctls']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.pod.worker.init.container.image</name>
+  <value>${env.config.mr3['mr3.k8s.pod.worker.init.container.image']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.shufflehandler.process.memory.mb</name>
+  <value>${env.config.mr3['mr3.k8s.shufflehandler.process.memory.mb']}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.shuffle.process.ports</name>
+  <value>${env.worker.shuffleProcessPorts}</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.enable.metrics</name>
+  <value>${env.timeline.timelineEnabled}</value>
+</property>
+
+<property>
+  <name>mr3.k8s.master.pod.additional.labels</name>
+  <value>hivemr3_aux=prometheus</value>
+</property>
+
+<property>
+  <name>mr3.k8s.master.pod.cpu.limit.multiplier</name>
+  <value>${env.master.mr3MasterCpuLimitMultiplier}</value>
+</property>
+
+<property>
+  <name>mr3.prometheus.worker.httpserver.port</name>
+  <value>${env.consts.prometheus.port}</value>
+</property>
+
+</configuration>

@@ -1,0 +1,26 @@
+<configuration>
+  <property>
+    <name>xasecure.policymgr.clientssl.keystore</name>
+    <value>${env.secret.truststorePath}</value>
+  </property>
+  <property>
+    <name>xasecure.policymgr.clientssl.keystore.type</name>
+    <value>jks</value>
+  </property>
+  <property>
+    <name>xasecure.policymgr.clientssl.keystore.credential.file</name>
+    <value>jceks://file${env.secret.keystorePath}</value>
+  </property>
+  <property>
+    <name>xasecure.policymgr.clientssl.truststore</name>
+    <value>${env.secret.truststorePath}</value>
+  </property>
+  <property>
+    <name>xasecure.policymgr.clientssl.truststore.type</name>
+    <value>jks</value>
+  </property>
+  <property>
+    <name>xasecure.policymgr.clientssl.truststore.credential.file</name>
+    <value>jceks://file${env.secret.keystorePath}</value>
+  </property>
+</configuration>

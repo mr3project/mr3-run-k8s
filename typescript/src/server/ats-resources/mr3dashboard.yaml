@@ -1,0 +1,17 @@
+apiVersion: 1
+
+providers:
+ - name: 'Hive'
+   orgId: 1
+   folder: ''
+   folderUid: ''
+   type: file
+   options:
+     path: /opt/mr3-run/ats/grafana/conf/provisioning/dashboards/mr3.json
+ - name: 'Spark'
+   orgId: 1
+   folder: ''
+   folderUid: ''
+   type: file
+   options:
+     path: /opt/mr3-run/ats/grafana/conf/provisioning/dashboards/mr3spark.json

@@ -1,0 +1,173 @@
+<configuration>
+
+<property>
+  <name>tez.counters.max</name>
+  <value>${env.config.tez['tez.counters.max']}</value>
+</property>
+
+<property>
+  <name>tez.counters.max.groups</name>
+  <value>${env.config.tez['tez.counters.max.groups']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.io.sort.mb</name>
+  <value>${env.worker.tezIoSortMb}</value>
+</property>
+
+<property>
+  <name>tez.runtime.pipelined.sorter.sort.threads</name>
+  <value>${env.config.tez['tez.runtime.pipelined.sorter.sort.threads']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.unordered.output.buffer.size-mb</name>
+  <value>${env.worker.tezUnorderedOutputBufferSizeInMb}</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.max-src-fraction</name>
+  <value>${env.config.tez['tez.shuffle-vertex-manager.max-src-fraction']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.min-src-fraction</name>
+  <value>${env.config.tez['tez.shuffle-vertex-manager.min-src-fraction']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.pipelined.sorter.lazy-allocate.memory</name>
+  <value>${env.config.tez['tez.runtime.pipelined.sorter.lazy-allocate.memory']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.parallel.copies</name>
+  <value>${env.config.tez['tez.runtime.shuffle.parallel.copies']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.pipelined.sorter.use.soft.reference</name>
+  <value>${env.config.mr3.useSoftReference}</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.enable.auto-parallel</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.auto-parallel.min.num.tasks</name>
+  <value>${env.config.tez['tez.shuffle-vertex-manager.auto-parallel.min.num.tasks']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage</name>
+  <value>${env.config.tez['tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle-vertex-manager.use-stats-auto-parallelism</name>
+  <value>${env.config.tez['tez.shuffle-vertex-manager.use-stats-auto-parallelism']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle.vertex.manager.auto.parallelism.min.percent</name>
+  <value>${env.config.tez['tez.shuffle.vertex.manager.auto.parallelism.min.percent']}</value>
+</property>
+
+<property>
+  <name>tez.am.shuffle.auxiliary-service.id</name>
+  <value>tez_shuffle</value>
+</property>
+
+<property>
+  <name>tez.shuffle.port</name>
+  <value>${env.consts.mr3.shufflePort}</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.keep-alive.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.shuffle.connection-keep-alive.enable</name>
+  <value>${env.config.tez['tez.shuffle.connection-keep-alive.enable']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle.max.threads</name>
+  <value>${env.worker.numThreadsPerShuffleHandler}</value>
+</property>
+
+<property>
+  <name>tez.shuffle.listen.queue.size</name>
+  <value>${env.config.tez['tez.shuffle.listen.queue.size']}</value>
+</property>
+
+<property>
+  <name>tez.shuffle.mapoutput-info.meta.cache.size</name>
+  <value>${env.config.tez['tez.shuffle.mapoutput-info.meta.cache.size']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.src-attempt.abort.limit</name>
+  <value>${env.config.tez['tez.runtime.shuffle.src-attempt.abort.limit']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.connect.timeout</name>
+  <value>${env.config.tez['tez.runtime.shuffle.connect.timeout']}</value>
+</property>
+
+<property>
+  <name>tez.grouping.node.local.only</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.grouping.max-size</name>
+  <value>${env.config.tez['tez.grouping.max-size']}</value>
+</property>
+
+<property>
+  <name>tez.grouping.min-size</name>
+  <value>${env.config.tez['tez.grouping.min-size']}</value>
+</property>
+
+<property>
+  <name>tez.grouping.split-waves</name>
+  <value>${env.config.tez['tez.grouping.split-waves']}</value>
+</property>
+
+<property>
+  <name>tez.cartesian-product.grouping-fraction</name>
+  <value>0.75</value>
+</property>
+
+<property>
+  <name>tez.cartesian-product.min-ops-per-worker</name>
+  <value>1000000</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.ssl.enable</name>
+  <value>${env.worker.enableShuffleSsl}</value>
+</property>
+
+<property>
+  <name>ssl.server.truststore.location</name>
+  <value>${env.secret.shuffleTruststorePath}</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.location</name>
+  <value>${env.secret.shuffleKeystorePath}</value>
+</property>
+
+<property>
+  <name>ssl.client.truststore.location</name>
+  <value>${env.secret.shuffleTruststorePath}</value>
+</property>
+
+</configuration>

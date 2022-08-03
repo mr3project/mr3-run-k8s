@@ -1,0 +1,22 @@
+import * as state from '../state';
+
+export function build(s: state.T) {
+  const env = s.env;
+  return {
+    apiVersion: "rbac.authorization.k8s.io/v1beta1",
+    kind: "ClusterRoleBinding",
+    metadata: {
+      name: "master-clusterrole-binding"
+    }, 
+    roleRef: {
+      kind: "ClusterRole",
+      name: "node-reader",
+      apiGroup: "rbac.authorization.k8s.io"
+    },
+    subjects: [ 
+      { kind: "ServiceAccount",
+        name: env.consts.name.mr3.masterServiceAccount,
+        namespace: env.basics.namespace } 
+    ]
+  };
+}

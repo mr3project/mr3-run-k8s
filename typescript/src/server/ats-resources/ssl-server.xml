@@ -1,0 +1,23 @@
+<configuration>
+
+<property>
+  <name>ssl.server.keystore.location</name>
+  <value>${env.secret.timelineTruststorePath}</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.password</name>
+  <value>_</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.keypassword</name>
+  <value>_</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.type</name>
+  <value>jks</value>
+</property>
+
+</configuration>

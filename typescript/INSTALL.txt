@@ -1,0 +1,20 @@
+TypeScript code for generating YAML files
+
+Requirements:
+  npm
+  node
+  ts-node
+
+Install dependencies:
+  npm install --save uuid
+  npm install --save js-yaml
+  npm install --save typescript
+  npm install --save @types/node
+  npm install --save @tsconfig/node12
+  npm install --save @types/js-yaml
+  npm install --save @types/uuid
+
+Execute:
+  cd src/general/run/
+  ts-node run.ts
+

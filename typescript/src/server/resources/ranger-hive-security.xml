@@ -1,0 +1,46 @@
+<configuration>
+  <property>
+    <name>ranger.plugin.hive.service.name</name>
+    <value>${env.ranger.service}</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.source.impl</name>
+    <value>org.apache.ranger.admin.client.RangerAdminRESTClient</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.rest.url</name>
+    <value>${env.ranger.adminUrl}</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.rest.ssl.config.file</name>
+    <value>${env.consts.dir.conf}/ranger-policymgr-ssl.xml</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.pollIntervalMs</name>
+    <value>30000</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.cache.dir</name>
+    <value>${env.consts.dir.rangerPolicyCache}</value>
+  </property>
+
+  <property>
+    <name>xasecure.hive.update.xapolicies.on.grant.revoke</name>
+    <value>true</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.rest.client.connection.timeoutMs</name>
+    <value>120000</value>
+  </property>
+
+  <property>
+    <name>ranger.plugin.hive.policy.rest.client.read.timeoutMs</name>
+    <value>30000</value>
+  </property>
+</configuration>

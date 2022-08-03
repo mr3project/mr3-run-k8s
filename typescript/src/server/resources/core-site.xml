@@ -1,0 +1,98 @@
+<configuration>
+
+<property>
+  <name>fs.defaultFS</name>
+  <value>file:///</value>
+</property>
+
+<property>
+  <name>hadoop.security.authentication</name>
+  <value>${env.hive.secureMode ? 'kerberos' : 'simple'}</value>
+</property>
+
+<property>
+  <name>dfs.encryption.key.provider.uri</name>
+  <value>${env.basics.hdfsKeyProvider !== undefined ? env.basics.hdfsKeyProvider : ''}</value>
+</property>
+
+<property>
+  <name>ipc.client.fallback-to-simple-auth-allowed</name>
+  <value>${env.hive.secureMode}</value> 
+</property>
+
+<property>
+  <name>hadoop.security.credential.provider.path</name>
+  <value>${env.secret.keystorePathFull}</value>
+</property>
+
+<property>
+  <name>ipc.client.connect.max.retries.on.timeouts</name>
+  <value>3</value>
+</property>
+
+<property>
+  <name>fs.s3a.aws.credentials.provider</name>
+  <value>${env.basics.s3aCredentialProviderClass}</value>
+</property>
+
+<property>
+  <name>fs.s3a.connection.ssl.enabled</name>
+  <value>${env.basics.s3aEnableSsl === undefined ? false : env.basics.s3aEnableSsl}</value>
+</property>
+
+<property>
+  <name>fs.s3a.endpoint</name>
+  <value>${env.basics.s3aEndpoint === undefined ? '' : env.basics.s3aEndpoint}</value>
+</property>
+
+<property>
+  <name>fs.s3a.path.style.access</name>
+  <value>${env.basics.s3aEndpoint === undefined ? false : true}</value>
+</property>
+
+<property>
+  <name>fs.s3a.impl</name>
+  <value>org.apache.hadoop.fs.s3a.S3AFileSystem</value>
+</property>
+
+<property>
+  <name>fs.s3a.connection.maximum</name>
+  <value>${env.config.s3['fs.s3a.connection.maximum']}</value>
+</property>
+
+<property>
+  <name>fs.s3.maxConnections</name>
+  <value>${env.config.s3['fs.s3.maxConnections']}</value>
+</property>
+
+<property>
+  <name>fs.s3a.threads.max</name>
+  <value>${env.config.s3['fs.s3a.threads.max']}</value>
+</property>
+
+<property>
+  <name>fs.s3a.threads.core</name>
+  <value>${env.config.s3['fs.s3a.threads.core']}</value>
+</property>
+
+<property>
+  <name>hive.mv.files.thread</name>
+  <value>15</value>
+</property>
+
+<property>
+  <name>fs.s3a.max.total.tasks</name>
+  <value>5</value>
+</property>
+
+<property>
+  <name>fs.s3a.blocking.executor.enabled</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
+  <value>${env.config.hive['hive.exec.input.listing.max.threads']}</value>
+</property>
+
+</configuration>
