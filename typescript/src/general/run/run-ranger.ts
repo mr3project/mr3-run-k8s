@@ -90,7 +90,7 @@ const hiveEnv: hive.T = {
   numInstances: 1,
   authentication: "NONE",
   authenticator: "SessionStateUserAuthenticator",
-  authorization: "SQLStdConfOnlyAuthorizerFactory",
+  authorization: "RangerHiveAuthorizerFactory",
   enableSsl: false,
   enableSslInternal: false
 };
@@ -141,20 +141,20 @@ const workerEnv: worker.T = {
 const rangerEnv: ranger.T = {
   kind: "internal",
   resources: {
-    cpu: 0,
-    memoryInMb: 0 * 1024
+    cpu: 2,
+    memoryInMb: 6 * 1024
   },
-  service: "",
+  service: "ORANGE_hive",
   dbFlavor: "MYSQL",
     // 5.5.5-10.1.48-MariaDB-0ubuntu0.18.04.1 --> okay
     // mysql:5.6, 5.6.51 --> okay
     // 5.7.37-0ubuntu0.18.04.1 --> does not work
-  dbRootUser: "",
-  dbRootPassword: "",
-  dbHost: "",
-  dbPassword: "",
+  dbRootUser: "root",
+  dbRootPassword: "passwd",
+  dbHost: "192.168.10.100",
+  dbPassword: "password",
   enableRangerDatabaseSsl: false,
-  adminPassword: "",
+  adminPassword: "rangeradmin1",
   authentication: "NONE"
 };
 

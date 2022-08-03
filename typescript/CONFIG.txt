@@ -449,16 +449,6 @@
   Pod resource for Superset
   In production, a minimum of 8192MB (8GB) of memory is recommended.
 
-=== src/server/api/driver.T
-
-- name
-  Name of the Spark driver to create
-  Spark driver names should not contain upper-case letters.
-
-- resources.cpu, resources.memoryInMb
-  Pod resource for the Spark driver
-  This input is a parameter to the field spec.containers.resources in the specification of the Pod for the Spark driver.
-
 === src/server/api/spark.T
 
 - driverNames
@@ -680,4 +670,14 @@
 
 - secretEnvVars
   Environment variables for accessing S3 with EnvironmentVariableCredentialsProvider
+
+=== src/server/api/driver.T
+
+- name
+  Name of the Spark driver to create
+  Spark driver names should not contain upper-case letters.
+
+- resources.cpu, resources.memoryInMb
+  Pod resource for the Spark driver
+  This input is a parameter to the field spec.containers.resources in the specification of the Pod for the Spark driver.
 

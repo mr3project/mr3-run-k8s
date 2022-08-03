@@ -9,6 +9,7 @@ Install dependencies:
   npm install --save uuid
   npm install --save js-yaml
   npm install --save typescript
+  npm install --save es6-template-strings
   npm install --save @types/node
   npm install --save @tsconfig/node12
   npm install --save @types/js-yaml
@@ -16,5 +17,8 @@ Install dependencies:
 
 Execute:
   cd src/general/run/
+  ln -s ../../server server
   ts-node run.ts
+  kubectl create -f run.yaml
+  kubectl create -f spark1.yaml
 

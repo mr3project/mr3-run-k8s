@@ -38,8 +38,8 @@ const basicsEnv: basics.T = {
     storageInGb: 100,
     storageClass: "",
   },
-  s3aEndpoint: "http://orange0:9000",
-  s3aEnableSsl: false,
+  s3aEndpoint: "https://orange0:9000",
+  s3aEnableSsl: true,
   s3aCredentialProvider: "EnvironmentVariable",
   hostPaths: "/data1/k8s",
 
@@ -54,6 +54,11 @@ const basicsEnv: basics.T = {
 
   hiveserver2Ip: "192.168.10.1",
   hiveserver2IpHostname: "orange1",
+  kerberos: {
+    realm: "PL",
+    adminServer: "1.1.1.1",
+    kdc: "1.1.1.1"
+  },
 
   masterNodeSelector: { key: "roles", value: "masters" },
   workerNodeSelector: { key: "roles", value: "workers" },
@@ -73,7 +78,7 @@ const metastoreEnv: metastore.T = {
   databaseHost: "192.168.10.1",
   databaseName: "hive3mr3",
   userName: "root",
-  password: "passwd",
+  password: "_",
   initSchema: false,
   resources: {
     cpu: 2,
@@ -88,10 +93,10 @@ const hiveEnv: hive.T = {
     memoryInMb: 6 * 1024
   },
   numInstances: 1,
-  authentication: "NONE",
+  authentication: "KERBEROS",
   authenticator: "SessionStateUserAuthenticator",
-  authorization: "SQLStdConfOnlyAuthorizerFactory",
-  enableSsl: false,
+  authorization: "RangerHiveAuthorizerFactory",
+  enableSsl: true,
   enableSslInternal: false
 };
 
@@ -141,20 +146,20 @@ const workerEnv: worker.T = {
 const rangerEnv: ranger.T = {
   kind: "internal",
   resources: {
-    cpu: 0,
-    memoryInMb: 0 * 1024
+    cpu: 2,
+    memoryInMb: 6 * 1024
   },
-  service: "",
+  service: "ORANGE_hive",
   dbFlavor: "MYSQL",
     // 5.5.5-10.1.48-MariaDB-0ubuntu0.18.04.1 --> okay
     // mysql:5.6, 5.6.51 --> okay
     // 5.7.37-0ubuntu0.18.04.1 --> does not work
-  dbRootUser: "",
-  dbRootPassword: "",
-  dbHost: "",
-  dbPassword: "",
+  dbRootUser: "root",
+  dbRootPassword: "passwd",
+  dbHost: "192.168.10.100",
+  dbPassword: "password",
   enableRangerDatabaseSsl: false,
-  adminPassword: "",
+  adminPassword: "rangeradmin1",
   authentication: "NONE"
 };
 
@@ -229,6 +234,45 @@ const dockerEnv: docker.T = {
 };
 
 const secretEnv: secret.T = {
+  kerberosSecret: {
+    server: {
+      keytab: "hive-orange1.keytab",
+      principal: "hive/orange1@PL",
+      data: fs.readFileSync("hive-orange1.keytab").toString("base64"),
+      keytabInternal: "hive-hiveserver2-internal.hivemr3.svc.cluster.local.keytab",
+      principalInternal: "hive/hiveserver2-internal.hivemr3.svc.cluster.local@PL",
+      dataInternal: fs.readFileSync("hive-hiveserver2-internal.hivemr3.svc.cluster.local.keytab").toString("base64")
+    },
+    ranger: {
+      spnego: {
+        keytab: "HTTP-ranger.hivemr3.svc.cluster.local.keytab",
+        principal: "HTTP/ranger.hivemr3.svc.cluster.local@PL",
+        data: fs.readFileSync("HTTP-ranger.hivemr3.svc.cluster.local.keytab").toString("base64")
+      },
+      admin: {
+        keytab: "rangeradmin-ranger.hivemr3.svc.cluster.local.keytab",
+        principal: "rangeradmin/ranger.hivemr3.svc.cluster.local@PL",
+        data: fs.readFileSync("rangeradmin-ranger.hivemr3.svc.cluster.local.keytab").toString("base64")
+      },
+      lookup: {
+        keytab: "rangerlookup.keytab",
+        principal: "rangerlookup@PL",
+        data: fs.readFileSync("rangerlookup.keytab").toString("base64")
+      }
+    }
+  },
+  spark: {
+    keytab: "spark.keytab",
+    principal: "spark@PL",
+    data: fs.readFileSync("spark.keytab").toString("base64")
+  },
+  ssl: {
+    keystore: "hivemr3-ssl-certificate.jceks",
+    truststore: "hivemr3-ssl-certificate.jks",
+    password: "MySslPassword123",
+    keystoreData: fs.readFileSync("hivemr3-ssl-certificate.jceks").toString("base64"),
+    truststoreData: fs.readFileSync("hivemr3-ssl-certificate.jks").toString("base64")
+  },
   secretEnvVars: [
     { name: "AWS_ACCESS_KEY_ID", value: "accesskey" },
     { name: "AWS_SECRET_ACCESS_KEY", value:"awesomesecret" }
