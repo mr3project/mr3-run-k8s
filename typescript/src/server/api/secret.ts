@@ -61,20 +61,20 @@ export interface T {
   //
   createSecret?: boolean;
   truststoreType?: string;
-  keystorePath?: string,
-  keystorePathFull?: string,
-  truststorePath?: string,
-  rangerKeystorePath?: string,
-  rangerTruststorePath?: string,
-  timelineKeystorePath?: string,
-  timelineTruststorePath?: string,
-  sslPassword?: string,
-  shuffleKeystorePath?: string,
-  shuffleTruststorePath?: string,
-  envVarSeq?: string,
-  envVarDefs?: string,
-  masterLaunchCmdOpts?: string
-  containerLaunchCmdOpts?: string
+  keystorePath?: string;
+  keystorePathFull?: string;
+  truststorePath?: string;
+  rangerKeystorePath?: string;
+  rangerTruststorePath?: string;
+  timelineKeystorePath?: string;
+  timelineTruststorePath?: string;
+  sslPassword?: string;
+  shuffleKeystorePath?: string;
+  shuffleTruststorePath?: string;
+  envVarSeq?: string;
+  envVarDefs?: string;
+  masterLaunchCmdOpts?: string;
+  containerLaunchCmdOpts?: string;
   solrAuthenticationOption?: string;
   sparkUser?: string;
   //

@@ -36,5 +36,5 @@ export interface T {
   sparkTaskCpus?: number ;            // spark.task.cpus
   maxWorkerMemoryGb?: number;         // mr3.k8s.worker.total.max.memory.gb
   maxWorkerCores?: number;            // mr3.k8s.worker.total.max.cpu.cores
-  useDaemonShuffleHandler?: number    // mr3.use.daemon.shufflehandler (0 if useShuffleHandlerProcess == true)
+  useDaemonShuffleHandler?: number;   // mr3.use.daemon.shufflehandler (0 if useShuffleHandlerProcess == true)
 }

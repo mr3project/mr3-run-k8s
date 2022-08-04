@@ -1,9 +1,9 @@
-=== src/server/api/basics.T
+src/server/api/basics.ts
 
 - namespace
   Kubernetes namespace
-  Hive on MR3 requires a unique namespace.
-  All Pods created by Hive on MR3 belong to the same namespace.
+  Hive/Spark on MR3 requires a unique namespace.
+  All Pods created by Hive/Spark on MR3 belong to the same namespace.
 
 - warehouseDir
   Path to the data warehouse
@@ -71,7 +71,7 @@
 
 - s3aEnableSsl
   Whether or not to use SSL encryption for accessing S3
-  The certificate is to be provided in the Secret page.
+  The certificate is to be provided in src/server/api/secret.T.
 
 - s3aCredentialProvider
   S3 credential provider
@@ -108,8 +108,8 @@
 
 - kerberos.realm, kerberos.adminServer, kerberos.kdc
   Specification of a Kerberos server
-  In order to use Kerberos for authentication in Hive, Ranger, and MR3-UI, a common Kerberos server should be specified here.
-  Kerberos keytabs are to be provided in the Secret page.
+  In order to use Kerberos for authentication in Hive, a common Kerberos server should be specified here.
+  Kerberos keytabs are to be provided in src/server/api/secret.T.
 
 - hdfsKeyProvider
   HDFS KeyProvider URI for interacting with encryption keys
@@ -119,15 +119,15 @@
 
 - masterNodeSelector
   Kubernetes nodeSelector for master Pods
-  Master Pods can execute Metastore, HiveServer2, MR3 master, Ranger, Grafana/MR3-UI, and Superset.
+  Master Pods can execute Metastore, HiveServer2, MR3 master, Ranger, Grafana/MR3-UI, Superset, Apache server, and Spark drivers.
   This input is a parameter to the field spec.template.spec.nodeSelector in the specification of Deployments and StatefulSets.
   The nodeSelector can be useful for placing master Pods on on-demand instances on Amazon AWS.
 
 - workerNodeSelector
   Kubernetes nodeSelector for MR3 worker Pods
-  MR3 workers execute tasks created by Hive.
+  MR3 workers execute tasks created by Hive and Spark.
   This input is a parameter to the field spec.nodeSelector in the specification of Pods.
-  The nodeSelector can be useful for placing worker Pods on spot instances on Amazon AWS.
+  The nodeSelector can be useful for placing worker/executor Pods on spot instances on Amazon AWS.
 
 - hostAliases
   Aliases for hosts that are not found in the default DNS
@@ -137,7 +137,7 @@
 - useHttpsService
   Whether or not Load Balancer or Ingress for Apache server uses HTTPS
 
-=== src/server/api/metastore.T
+src/server/api/metastore.ts
 
 - kind
   Whether or not use an external Metastore
@@ -163,7 +163,7 @@
 
 - userName, password
   Metastore database account
-  The password field can be set to _ if it is included in the Keystore to be provided in the Secret page.
+  The password field can be set to _ if it is included in the Keystore to be provided in src/server/api/secret.T.
   This input corresponds to the configuration keys javax.jdo.option.ConnectionUserName and javax.jdo.option.ConnectionPassword in hive-site.xml.
 
 - initSchema
@@ -177,7 +177,7 @@
   Whether or not to use SSL encryption for accessing the Metastore database
   If SSL encryption is used, the Metastore database should use an extended certificate file so that it can trust connection requests from Metastore.
 
-=== src/server/api/hive.T
+src/server/api/hive.ts
 
 - resources.cpu, resources.memoryInMb
   Pod resource for HiveServer2
@@ -204,7 +204,7 @@
 
 - enableSsl
   Whether or not to use SSL encryption for accessing HiveServer2
-  The Keystore and Truststore files are to be provided in the Secret page.
+  The Keystore and Truststore files are to be provided in src/server/api/secret.T.
 
 - serviceAccountAnnotations.key, serviceAccountAnnotations.value
   Annotation in the ServiceAccount for HiveServer2
@@ -212,7 +212,7 @@
   Example: eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/IAM_ROLE_NAME
   This input is a parameter to the field metadata.annotations in the specification of the ServiceAccount for HiveServer2.
 
-=== src/server/api/master.T
+src/server/api/master.ts
 
 - resources.cpu, resources.memoryInMb
   Pod resource for MR3 master
@@ -288,7 +288,7 @@
   Minimum number of nodes that should remain when performing scale-in
   This parameter is necessary for fast restart, e.g., executing DAGs after a long idle period.
 
-=== src/server/api/worker.T
+src/server/api/worker.ts
 
 - workerMemoryInMb
   Memory resource for an MR3 worker Pod without LLAP/IO
@@ -380,9 +380,9 @@
 
 - enableShuffleSsl
   Whether or not to use SSL encryption for shuffling
-  The Keystore and Truststore files are to be provided in the Secret page.
+  The Keystore and Truststore files are to be provided in src/server/api/secret.T.
 
-=== src/server/api/ranger.T
+src/server/api/ranger.ts
 
 - resources.cpu, resources.memoryInMb
   Pod resource for Ranger
@@ -415,7 +415,7 @@
 - adminPassword
   Initial password for the user 'admin' on the Ranger Admin UI
 
-=== src/server/api/timeline.T
+src/server/api/timeline.ts
 
 - timelineEnabled
   Whether or not to enable Grafana and MR3-UI
@@ -437,7 +437,7 @@
   Displaying details of tasks in MR3-UI can be useful for debugging Hive queries, but it incurs substantial overhead in Timeline server as well as MR3 master.
   In production, displaying details of tasks is NOT recommended.
 
-=== src/server/api/superset.T
+src/server/api/superset.ts
 
 - supersetEnabled
   Whether or not to enable Superset
@@ -449,7 +449,7 @@
   Pod resource for Superset
   In production, a minimum of 8192MB (8GB) of memory is recommended.
 
-=== src/server/api/spark.T
+src/server/api/spark.ts
 
 - driverNames
   Comma-separated list of names of Spark drivers
@@ -461,7 +461,7 @@
   Example: eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/IAM_ROLE_NAME
 }
 
-=== src/server/api/sparkmr3.T
+src/server/api/sparkmr3.ts
 
 - resources.cpu, resources.memoryInMb
   Pod resource for MR3 master
@@ -571,7 +571,7 @@
   Minimum number of nodes that should remain when performing scale-in
   This parameter is necessary for fast restart, e.g., executing DAGs after a long idle period.
 
-=== src/server/api/docker.T
+src/server/api/docker.ts
 
 - docker.image
   Docker image for Hive, Metastore, and MR3 master
@@ -615,7 +615,7 @@
   Docker user in the Docker image for Spark
 }
 
-=== src/server/api/secret.T
+src/server/api/secret.ts
 
 - kerberosSecret.server.keytab, kerberosSecret.server.principal
   Service keytab for public HiveServer2
@@ -671,7 +671,7 @@
 - secretEnvVars
   Environment variables for accessing S3 with EnvironmentVariableCredentialsProvider
 
-=== src/server/api/driver.T
+src/server/api/driver.ts
 
 - name
   Name of the Spark driver to create

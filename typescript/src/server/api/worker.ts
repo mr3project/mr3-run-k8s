@@ -26,14 +26,14 @@ export interface T {
   //
   // set in validate()
   //
-  maxWorkerMemoryGb?: number,         // mr3.k8s.worker.total.max.memory.gb
-  maxWorkerCores?: number,            // mr3.k8s.worker.total.max.cpu.cores
-  coresDivisor?: number,              // hive.mr3.resource.vcores.divisor
-  taskMemoryMb?: number,              // hive.mr3.map.task.memory.mb, hive.mr3.reduce.task.memory.mb
-  taskCores?: number,                 // hive.mr3.map.task.vcores, hive.mr3.reduce.task.vcores
-  memoryMappedPath?: string,          // hive.llap.io.allocator.mmap.path, mr3.k8s.pod.worker.additional.hostpaths
-  useDaemonShuffleHandler?: number,   // hive.mr3.use.daemon.shufflehandler
-  shuffleProcessPorts?: string        // mr3.k8s.shuffle.process.ports
+  maxWorkerMemoryGb?: number;         // mr3.k8s.worker.total.max.memory.gb
+  maxWorkerCores?: number;            // mr3.k8s.worker.total.max.cpu.cores
+  coresDivisor?: number;              // hive.mr3.resource.vcores.divisor
+  taskMemoryMb?: number;              // hive.mr3.map.task.memory.mb, hive.mr3.reduce.task.memory.mb
+  taskCores?: number;                 // hive.mr3.map.task.vcores, hive.mr3.reduce.task.vcores
+  memoryMappedPath?: string;          // hive.llap.io.allocator.mmap.path, mr3.k8s.pod.worker.additional.hostpaths
+  useDaemonShuffleHandler?: number;   // hive.mr3.use.daemon.shufflehandler
+  shuffleProcessPorts?: string;       // mr3.k8s.shuffle.process.ports
   //
   // only for validate()
   //

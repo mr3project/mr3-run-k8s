@@ -140,7 +140,7 @@ const workerEnv: worker.T = {
   numShuffleHandlersPerWorker: 8,
   useShuffleHandlerProcess: true,
   numThreadsPerShuffleHandler: 10,
-  enableShuffleSsl: false
+  enableShuffleSsl: true
 };
 
 const rangerEnv: ranger.T = {
@@ -243,6 +243,11 @@ const secretEnv: secret.T = {
       principalInternal: "hive/hiveserver2-internal.hivemr3.svc.cluster.local@PL",
       dataInternal: fs.readFileSync("hive-hiveserver2-internal.hivemr3.svc.cluster.local.keytab").toString("base64")
     },
+    user: {
+      keytab: "hive.keytab",
+      principal: "hive@PL",
+      data: fs.readFileSync("hive.keytab").toString("base64")
+    },
     ranger: {
       spnego: {
         keytab: "HTTP-ranger.hivemr3.svc.cluster.local.keytab",
@@ -272,6 +277,12 @@ const secretEnv: secret.T = {
     password: "MySslPassword123",
     keystoreData: fs.readFileSync("hivemr3-ssl-certificate.jceks").toString("base64"),
     truststoreData: fs.readFileSync("hivemr3-ssl-certificate.jks").toString("base64")
+  },
+  shuffleSsl: {
+    keystore: "mr3-keystore.jks",
+    truststore: "mr3-truststore.jks",
+    keystoreData: fs.readFileSync("mr3-keystore.jks").toString("base64"),
+    truststoreData: fs.readFileSync("mr3-truststore.jks").toString("base64")
   },
   secretEnvVars: [
     { name: "AWS_ACCESS_KEY_ID", value: "accesskey" },
