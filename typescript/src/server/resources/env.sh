@@ -50,9 +50,10 @@ HIVE_SERVER2_KERBEROS_PRINCIPAL=${env.hive.secureMode ? env.secret.kerberosSecre
 
 USER_KEYTAB=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.consts.dir.keytab + '/' + env.secret.kerberosSecret.user.keytab : ''}
 USER_PRINCIPAL=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.secret.kerberosSecret.user.principal : ''}
+KEYTAB_MOUNT_FILE=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.secret.kerberosSecret.user.keytab : ''}
 
 TOKEN_RENEWAL_HIVE_ENABLED=false
-TOKEN_RENEWAL_HDFS_ENABLED=false
+TOKEN_RENEWAL_HDFS_ENABLED=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined}
 
 HIVE_SERVER2_SSL_TRUSTSTORE=${env.secret.truststorePath}
 HIVE_SERVER2_SSL_TRUSTSTORETYPE=${env.secret.truststoreType}

@@ -48,11 +48,14 @@ HIVE_METASTORE_KERBEROS_PRINCIPAL=${env.hive.secureModeMetastore ? env.secret.ke
 HIVE_SERVER2_KERBEROS_KEYTAB=${env.hive.secureModeInternal ? env.consts.dir.keytab + '/' + env.secret.kerberosSecret.server.keytabInternal : ''}
 HIVE_SERVER2_KERBEROS_PRINCIPAL=${env.hive.secureModeInternal ? env.secret.kerberosSecret.server.principalInternal : ''}
 
+# use hive.secureMode because this is about DAGAppMaster
 USER_KEYTAB=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.consts.dir.keytab + '/' + env.secret.kerberosSecret.user.keytab : ''}
 USER_PRINCIPAL=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.secret.kerberosSecret.user.principal : ''}
+KEYTAB_MOUNT_FILE=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined ? env.secret.kerberosSecret.user.keytab : ''}
 
 TOKEN_RENEWAL_HIVE_ENABLED=false
-TOKEN_RENEWAL_HDFS_ENABLED=false
+# use hive.secureMode because this is about DAGAppMaster
+TOKEN_RENEWAL_HDFS_ENABLED=${env.hive.secureMode && env.secret.kerberosSecret.user !== undefined}
 
 HIVE_SERVER2_SSL_TRUSTSTORE=${env.secret.truststorePath}
 HIVE_SERVER2_SSL_TRUSTSTORETYPE=${env.secret.truststoreType}
