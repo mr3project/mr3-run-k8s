@@ -1177,6 +1177,18 @@
   <value>100</value>
 </property>
 
+<!-- capacity scheduling when mr3.dag.queue.scheme is set to capacity -->
+
+<property>
+  <name>hive.mr3.dag.queue.name</name>
+  <value>default</value>
+</property>
+
+<property>
+  <name>hive.mr3.dag.queue.capacity.specs</name>
+  <value>default:0</value>
+</property>
+
 <!-- Kubernetes -->
 
 <property>

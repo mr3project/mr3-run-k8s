@@ -518,7 +518,19 @@
   <value>common</value>
   <description>
     Scheme for mapping DAGs to queues of TaskAttempts in TaskScheduler.
-    Available options: common, individual
+    Available options: common, individual, capacity
+    Can be set for individual ContainerGroups.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.queue.capacity.specs</name>
+  <value>default:0</value>
+  <description>
+    Comma-separated list of specifications for capacity scheduling when mr3.dag.queue.scheme is set to `capacity`.
+    Each entry consists of a queue name and the minimum capacity in percentage.
+    Queues are specified in the order of priority.
+    E.g., `high=50,medium=30,default=20,background=0`. 
     Can be set for individual ContainerGroups.
   </description>
 </property>
@@ -769,6 +781,17 @@
   <description>
     true: Speculative execution is effective on root Vertexes with no ancestors.
     false: Speculative execution is not effective on root Vertexes.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.queue.name</name>
+  <value>default</value>
+  <description>
+    Name of the queue to which the current DAG belongs.
+    Used when mr3.dag.queue.scheme is set to `capacity`.
+    If an invalid name is given, the default value `default` is used.
+    Can be set for individual DAGs.
   </description>
 </property>
 

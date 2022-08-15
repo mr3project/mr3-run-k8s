@@ -58,10 +58,20 @@
 </property>
 
 <property>
+  <name>mr3.dag.queue.scheme</name>
+  <value>common</value>
+</property>
+
+<property>
   <name>mr3.dag.priority.scheme</name>
   <value>fifo</value>
 </property>
- 
+
+<property>
+  <name>mr3.vertex.priority.scheme</name>
+  <value>intact</value>
+</property>
+
 <property>
   <name>mr3.am.task.max.failed.attempts</name>
   <value>3</value>
