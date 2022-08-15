@@ -156,11 +156,6 @@
 </property>
 
 <property>
-  <name>hive.server2.use.SSL</name>
-  <value>${env.hive.enableSsl}</value>
-</property>
-
-<property>
   <name>hive.server2.keystore.path</name>
   <value>${env.secret.truststorePath}</value>
 </property>
@@ -393,11 +388,6 @@
 <property>
   <name>hive.server2.thrift.port</name>
   <value>${env.config.copy['hive.server2.port']}</value>
-</property>
-
-<property>
-  <name>hive.server2.thrift.sasl.qop</name>
-  <value>auth-conf</value>
 </property>
 
 <property>
@@ -660,4 +650,3 @@
   <value>25</value>
 </property>
 
-</configuration>

@@ -1,5 +1,5 @@
 import * as state from '../state';
-import { expand } from '../util-fs';
+import { expand, expandAppend } from '../util-fs';
 
 export function build(s: state.T) {
   const env = s.env;
@@ -11,11 +11,11 @@ export function build(s: state.T) {
       namespace: env.basics.namespace
     },
     data: {
-      ['hive-site.xml']: expand('./server/resources/hive-site-internal.xml', s),
+      ['hive-site.xml']: expandAppend('./server/resources/hive-site.xml', './server/resources/hive-site-internal.xml.append', s),
       ['hplsql-site.xml']: expand('./server/resources/hplsql-site.xml', s),
       ['mr3-site.xml']: expand('./server/resources/mr3-site.xml', s),
       ['tez-site.xml']: expand('./server/resources/tez-site.xml', s),
-      ['core-site.xml']: expand('./server/resources/core-site-internal.xml', s),
+      ['core-site.xml']: expandAppend('./server/resources/core-site.xml', './server/resources/core-site-internal.xml.append', s),
       ['yarn-site.xml']: expand('./server/resources/yarn-site.xml', s),
       ['hadoop-metrics2-s3a-file-system.properties']: expand('./server/resources/hadoop-metrics2-s3a-file-system.properties', s),
       ['hive-log4j2.properties']: expand('./server/resources/hive-log4j2.properties', s),

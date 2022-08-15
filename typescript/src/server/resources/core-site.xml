@@ -6,18 +6,8 @@
 </property>
 
 <property>
-  <name>hadoop.security.authentication</name>
-  <value>${env.hive.secureMode ? 'kerberos' : 'simple'}</value>
-</property>
-
-<property>
   <name>dfs.encryption.key.provider.uri</name>
   <value>${env.basics.hdfsKeyProvider !== undefined ? env.basics.hdfsKeyProvider : ''}</value>
-</property>
-
-<property>
-  <name>ipc.client.fallback-to-simple-auth-allowed</name>
-  <value>${env.hive.secureMode}</value> 
 </property>
 
 <property>
@@ -95,4 +85,3 @@
   <value>${env.config.hive['hive.exec.input.listing.max.threads']}</value>
 </property>
 
-</configuration>

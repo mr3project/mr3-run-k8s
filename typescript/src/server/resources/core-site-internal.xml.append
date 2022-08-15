@@ -1,0 +1,11 @@
+<property>
+  <name>hadoop.security.authentication</name>
+  <value>${env.hive.secureModeInternal ? 'kerberos' : 'simple'}</value>
+</property>
+
+<property>
+  <name>ipc.client.fallback-to-simple-auth-allowed</name>
+  <value>${env.hive.secureModeInternal}</value> 
+</property>
+
+</configuration>
