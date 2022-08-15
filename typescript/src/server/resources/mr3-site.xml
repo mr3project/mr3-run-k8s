@@ -24,12 +24,17 @@
   <name>mr3.dag.queue.scheme</name>
   <value>${env.master.dagQueueScheme}</value>
 </property>
- 
+
 <property>
   <name>mr3.dag.priority.scheme</name>
   <value>${env.master.dagPriorityScheme}</value>
 </property>
- 
+
+<property>
+  <name>mr3.vertex.priority.scheme</name>
+  <value>intact</value>
+</property>
+
 <property>
   <name>mr3.am.task.retry.on.fatal.error</name>
   <value>true</value>

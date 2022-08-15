@@ -561,6 +561,16 @@
 </property>
 
 <property>
+  <name>hive.mr3.dag.queue.name</name>
+  <value>default</value>
+</property>
+
+<property>
+  <name>hive.mr3.dag.queue.capacity.specs</name>
+  <value>default:0</value>
+</property>
+
+<property>
   <name>hive.mr3.localize.session.jars</name>
   <value>false</value>
 </property>

@@ -229,9 +229,10 @@ src/server/api/master.ts
 
 - dagQueueScheme
   Scheduling policy for DAGs
-  Common: MR3 uses a common task queue for all DAGs.
-  Fair: MR3 creates a task queue for each individual DAG to allocate the same amount of resources to all active DAGs. Since a new DAG is instantly allocated its fair share of resources while an old DAG is not penalized for its long duration, the execution time of a DAG is predictable in concurrent environments.
-  Common usually achieves higher throughput and shorter turnaround time than Fair.
+  common: MR3 uses a common task queue for all DAGs.
+  individual: MR3 creates a task queue for each individual DAG to allocate the same amount of resources to all active DAGs. Since a new DAG is instantly allocated its fair share of resources while an old DAG is not penalized for its long duration, the execution time of a DAG is predictable in concurrent environments.
+  capacity: MR3 uses capacity scheduling. The user can set the configurion key hive.mr3.dag.queue.capacity.specs in hive-site.xml to specifications for capacity scheduling before creating MR3 worker Pods. An individual query can use the configuration key hive.mr3.dag.queue.name to specify its task queue.
+  `common` usually achieves higher throughput and shorter turnaround time than `individual`.
 
 - dagPriorityScheme
   Priority policy for DAGs

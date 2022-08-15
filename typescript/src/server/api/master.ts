@@ -6,7 +6,7 @@ export interface T {
   mr3MasterCpuLimitMultiplier: number;        // mr3.k8s.master.pod.cpu.limit.multiplier
   // scheduling
   concurrencyLevel: number;                   // mr3.am.max.num.concurrent.dags
-  dagQueueScheme: "common" | "individual";    // mr3.dag.queue.scheme
+  dagQueueScheme: "common" | "individual" | "capacity";   // mr3.dag.queue.scheme
   dagPriorityScheme: "fifo" | "concurrent";   // mr3.dag.priority.scheme
   numTaskAttempts: number;                    // hive.mr3.am.task.max.failed.attempts
   speculativeThresholdPercent: number;        // hive.mr3.am.task.concurrent.run.threshold.percent
