@@ -109,6 +109,12 @@
   <value>false</value>
 </property>
 
+<!-- affects the # of InputSplits when hive.exec.orc.split.strategy is set to BI --> 
+<property>
+  <name>fs.s3a.block.size</name>
+  <value>128M</value>
+</property>
+
 <!-- S3 input listing (Cf. hive.exec.input.listing.max.threads) -->
 <property>
   <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
