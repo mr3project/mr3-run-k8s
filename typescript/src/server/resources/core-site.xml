@@ -81,6 +81,11 @@
 </property>
 
 <property>
+  <name>fs.s3a.block.size</name>
+  <value>128M</value>
+</property>
+
+<property>
   <name>mapreduce.input.fileinputformat.list-status.num-threads</name>
   <value>${env.config.hive['hive.exec.input.listing.max.threads']}</value>
 </property>
