@@ -30,7 +30,9 @@ export function build(env: env.T) {
         ssh: {
           allow: true
         },
-        desiredCapacity: env.eks.masterCapacity,
+        desiredCapacity: Math.min(env.eks.masterCapacity, 8),
+        minSize: Math.min(env.eks.masterCapacity, 8),
+        maxSize: 8,
         iam: {
           attachPolicyARNs: [
             "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy",
@@ -41,7 +43,8 @@ export function build(env: env.T) {
           withAddonPolicies: {
             efs: true
           }
-        }
+        },
+        preBootstrapCommands: env.eks.preBootstrapCommandsMaster
       },
       { name: env.eks.workerNodeGroup,
         availabilityZones: [
@@ -79,7 +82,7 @@ export function build(env: env.T) {
           ['k8s.io/cluster-autoscaler/' + env.eks.name]: "owned",
           ['k8s.io/cluster-autoscaler/node-template/label/' + 'roles']: env.eks.workerLabelRoles
         },
-        preBootstrapCommands: env.eks.preBootstrapCommands
+        preBootstrapCommands: env.eks.preBootstrapCommandsWorker
       }
     ]
   };

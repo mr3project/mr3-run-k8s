@@ -95,18 +95,29 @@ export function validate(input: T): T {
   copy.onDemandPercentageAboveBaseCapacity =
     Math.floor(copy.workerMaxCapacityOnDemand / copy.workerMaxCapacityTotal * 100);
 
-  copy.preBootstrapCommands = [
+  copy.preBootstrapCommandsMaster = [
+    "IDX=1; for DEV in /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_*-ns-1; do mkfs.xfs ${DEV}; mkdir -p /ephemeral${IDX}; echo ${DEV} /ephemeral${IDX} xfs defaults,noatime 1 2 >> /etc/fstab; IDX=$((${IDX} + 1)); done",
+    "mount -a",
+    "IDX=1; for DEV in /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_*-ns-1; do chown ec2-user:ec2-user /ephemeral${IDX}; IDX=$((${IDX} + 1)); done",
+  ];
+  copy.preBootstrapCommandsWorker = [
     "IDX=1; for DEV in /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_*-ns-1; do mkfs.xfs ${DEV}; mkdir -p /ephemeral${IDX}; echo ${DEV} /ephemeral${IDX} xfs defaults,noatime 1 2 >> /etc/fstab; IDX=$((${IDX} + 1)); done",
     "mount -a",
     "IDX=1; for DEV in /dev/disk/by-id/nvme-Amazon_EC2_NVMe_Instance_Storage_*-ns-1; do chown ec2-user:ec2-user /ephemeral${IDX}; IDX=$((${IDX} + 1)); done",
   ];
 
+  switch (copy.masterInstanceType) {
+    case "m5d.4xlarge":
+      copy.masterMountDirs = ["/ephemeral1", "/ephemeral2"];
+      break;
+  }
+
   switch (copy.workerInstanceType) {
     case "m5d.2xlarge":
-      copy.mountDirs = ["/ephemeral1"];
+      copy.workerMountDirs = ["/ephemeral1"];
       break;
     case "m5d.4xlarge":
-      copy.mountDirs = ["/ephemeral1", "/ephemeral2"];
+      copy.workerMountDirs = ["/ephemeral1", "/ephemeral2"];
       break;
   }
 
@@ -115,21 +126,6 @@ export function validate(input: T): T {
   copy.timelineServerResources =  { cpu: 0.25, memoryInMb: 1 * 1024 };
   copy.jettyResources =           { cpu: 0.25, memoryInMb: 0.5 * 1024 };
   copy.grafanaResources =         { cpu: 0.25, memoryInMb: 0.5 * 1024 };
-
-  assert(copy.masterCapacity >= 2);
-  // assume 14 CPUs and 52GB on each node conservatively
-  // hiveResources is used twice: hive.yaml and hive-internal.yaml
-  // mr3MasterResources in the worst case =
-  //   min of:
-  //     1. (14 CPUs, 52GB) - 2 * hiveResources
-  //     2. (14 CPUs, 52GB) - hiveResources - rangerResource - supersetResource
-  copy.hiveResources =      { cpu: 4,    memoryInMb: 16 * 1024 };
-  copy.metastoreResources = { cpu: 4,    memoryInMb: 16 * 1024 };
-  copy.mr3MasterResources = { cpu: 6,    memoryInMb: 20 * 1024 };
-  copy.rangerResources =    { cpu: 2,    memoryInMb: 6 * 1024 };
-  copy.supersetResources =  { cpu: 2,    memoryInMb: 10 * 1024 };
-  // sparkmr3Resource is taken after the first Spark driver starts
-  copy.sparkmr3Resources =  { cpu: 6,    memoryInMb: 20 * 1024 };
 
   copy.mr3MasterCpuLimitMultiplier = 2.0;
 
@@ -172,7 +168,7 @@ export function initial(): T {
     zone: "ap-northeast-1a",
   
     masterNodeGroup: "hive-mr3-master",
-    masterInstanceType: "m5.4xlarge",
+    masterInstanceType: "m5d.4xlarge",
     masterLabelRoles: "masters",
     masterCapacity: 2,
   
@@ -184,6 +180,20 @@ export function initial(): T {
     workerMaxCapacityTotal: 8,
   
     autoscalingWorkerPolicy: "arn:aws:iam::",
-    accessS3Policy: "arn:aws:iam::"
+    accessS3Policy: "arn:aws:iam::",
+
+    // assume 14 CPUs and 52GB on each node conservatively
+    // hiveResources is used twice: hive.yaml and hive-internal.yaml
+    // mr3MasterResources in the worst case =
+    //   min of:
+    //     1. (14 CPUs, 52GB) - 2 * hiveResources
+    //     2. (14 CPUs, 52GB) - hiveResources - rangerResource - supersetResource
+    hiveResources:       { cpu: 4,    memoryInMb: 16 * 1024 },
+    metastoreResources:  { cpu: 4,    memoryInMb: 16 * 1024 },
+    mr3MasterResources:  { cpu: 6,    memoryInMb: 20 * 1024 },
+    rangerResources:     { cpu: 2,    memoryInMb: 6 * 1024 },
+    supersetResources:   { cpu: 2,    memoryInMb: 10 * 1024 },
+    // sparkmr3Resource is taken after the first Spark driver starts
+    sparkmr3Resources:   { cpu: 6,    memoryInMb: 20 * 1024 }
   };
 }

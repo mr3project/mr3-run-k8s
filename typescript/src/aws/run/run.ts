@@ -15,7 +15,7 @@ const eksConf: eks.T = {
   zone: "ap-northeast-2a",
 
   masterNodeGroup: "hive-mr3-master",
-  masterInstanceType: "m5.4xlarge",
+  masterInstanceType: "m5d.4xlarge",
   masterCapacity: 2,
 
   workerNodeGroup: "hive-mr3-worker",
@@ -29,6 +29,13 @@ const eksConf: eks.T = {
 
   masterLabelRoles: "masters",
   workerLabelRoles: "workers",
+
+  hiveResources:       { cpu: 4,  memoryInMb: 16 * 1024 },
+  metastoreResources:  { cpu: 4,  memoryInMb: 16 * 1024 },
+  mr3MasterResources:  { cpu: 6,  memoryInMb: 20 * 1024 },
+  rangerResources:     { cpu: 2,  memoryInMb: 6 * 1024 },
+  supersetResources:   { cpu: 2,  memoryInMb: 10 * 1024 },
+  sparkmr3Resources:   { cpu: 6,  memoryInMb: 20 * 1024 }
 };
 
 const autoscalerConf: autoscaler.T = {

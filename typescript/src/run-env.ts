@@ -21,7 +21,7 @@ import * as config from './server/validate/config';
 import { RunEnv } from './server/run-env';
 
 function getBasics(clusterConf: cluster.T, serviceConf: service.T, appsConf: apps.T): basics.T {
-  assert(clusterConf.mountDirs !== undefined);
+  assert(clusterConf.workerMountDirs !== undefined);
 
   const hostAliases = [{ ip: appsConf.hiveserver2Ip, hostnames: appsConf.hiveserver2IpHostname }];
   return {
@@ -34,7 +34,7 @@ function getBasics(clusterConf: cluster.T, serviceConf: service.T, appsConf: app
     },
     s3aEnableSsl: false,
     s3aCredentialProvider: "DoNotUseS3",
-    hostPaths: clusterConf.mountDirs.join(","),
+    hostPaths: clusterConf.workerMountDirs.join(","),
 
     // TODO: externalIp should not be set to use Ingress
     // TODO; externalIp should be set to use LoadBalancer

@@ -33,9 +33,9 @@ export function validate(input: T): T {
   const copy = { ...input };
   trimString(copy);   // still, split(",") should be followed by trim()
 
-  copy.mountDirs = [];
+  copy.workerMountDirs = [];
   for (var i = 0; i < copy.localSsdCount; i++) {
-    copy.mountDirs.push("/mnt/disks/ssd" + i);
+    copy.workerMountDirs.push("/mnt/disks/ssd" + i);
   }
 
   copy.apacheResources =          { cpu: 0.25, memoryInMb: 0.5 * 1024 };

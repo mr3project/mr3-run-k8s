@@ -18,7 +18,8 @@ export const regionNames = [
   "us-east-2", 
   "us-west-1", 
   "us-west-2"
-];
+] as const;
+type RegionNamesUnion = typeof regionNames[number];
 
 export const zoneNames = [
   "ap-northeast-1a",
@@ -76,28 +77,31 @@ export const zoneNames = [
   "us-west-2b",
   "us-west-2c",
   "us-west-2d"
-];
+] as const;
+type ZoneNamesUnion = typeof zoneNames[number];
 
 export const masterInstanceTypes = [
-  "m5.4xlarge"  // 16 CPU, 64GB
-];
+  "m5d.4xlarge"   // 16 CPU, 64GB
+] as const;
+type MasterInstanceTypesUnion = typeof masterInstanceTypes[number]; 
 
 export const workerInstanceTypes = [
   "m5d.2xlarge",
   "m5d.4xlarge"
-];
+] as const;
+type WorkerInstanceTypesUnion = typeof workerInstanceTypes[number];
 
 export interface T extends cluster.T {
   name: string;
-  region: string;
-  zone: string;
+  region: RegionNamesUnion;
+  zone: ZoneNamesUnion;
 
   masterNodeGroup: string;
-  masterInstanceType: string;
+  masterInstanceType: MasterInstanceTypesUnion;
   masterCapacity: number;
 
   workerNodeGroup: string;
-  workerInstanceType: string;
+  workerInstanceType: WorkerInstanceTypesUnion;
   workerMinCapacityOnDemand: number;
   workerMaxCapacityOnDemand: number;
   workerMaxCapacityTotal: number;
@@ -111,5 +115,6 @@ export interface T extends cluster.T {
 
   zones?: string[];
   onDemandPercentageAboveBaseCapacity?: number;
-  preBootstrapCommands?: string[];
+  preBootstrapCommandsMaster?: string[];
+  preBootstrapCommandsWorker?: string[];
 }
