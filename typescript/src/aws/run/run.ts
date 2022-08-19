@@ -8,6 +8,7 @@ import * as efs from '../validate/efs';
 import * as efs_fs from '../efs-fs';
 import * as apps from '../validate/apps';
 import * as apps_fs from '../apps-fs';
+import * as driver from '../../server/validate/driver';
 
 const eksConf: eks.T = {
   name: "hivemr3",
@@ -160,6 +161,14 @@ const appsConf: apps.T = {
   disabled: false
 };
 
+const driverEnv: driver.T = {
+  name: "spark1",
+  resources: {
+    cpu: 2,
+    memoryInMb: 8 * 1024
+  }
+};
+
 async function run() {
   try {
     await eks_fs.run(eksConf);
@@ -167,6 +176,7 @@ async function run() {
     await service_fs.run(serviceConf);
     await efs_fs.run(eksConf, serviceConf, efsConf);
     await apps_fs.run(eksConf, serviceConf, appsConf);
+    await apps_fs.runDriver(eksConf, serviceConf, appsConf, driverEnv);
   } catch (e) {
     const message = 'Run failed: ' + e;
     console.log(message);
