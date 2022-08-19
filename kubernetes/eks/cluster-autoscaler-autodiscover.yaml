@@ -37,6 +37,7 @@ rules:
       - "pods"
       - "services"
       - "deployments"
+      - "replicationcontrollers"
       - "persistentvolumeclaims"
       - "persistentvolumes"
     verbs: ["watch", "list", "get"]
@@ -160,6 +161,7 @@ spec:
             - --skip-nodes-with-system-pods=false
             - --scale-down-delay-after-add=5m
             - --scale-down-unneeded-time=1m
+            - --leader-elect=false
           volumeMounts:
             - name: ssl-certs
               mountPath: /etc/ssl/certs/ca-certificates.crt
