@@ -62,7 +62,8 @@ export function build(env: env.T) {
                 "--expander=least-waste",
                 "--node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/" + env.eks.name,
                 "--scale-down-delay-after-add=" + (Math.floor(env.autoscaler.autoscalingScaleDownDelayAfterAddMin)) + "m",
-                "--scale-down-unneeded-time=" + (Math.floor(env.autoscaler.autoscalingScaleDownUnneededTimeMin)) + "m"
+                "--scale-down-unneeded-time=" + (Math.floor(env.autoscaler.autoscalingScaleDownUnneededTimeMin)) + "m",
+                "--leader-elect=false"
               ],
               volumeMounts: [
                 { name: "ssl-certs",
