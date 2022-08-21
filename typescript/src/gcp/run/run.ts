@@ -77,7 +77,7 @@ const appsConf: apps.T = {
   dbRootUser: "root",
   dbRootPassword: "passwd",
   dbHost: "1.1.1.1",
-  dbPassword: "passwd",
+  dbPassword: "password",
   enableRangerDatabaseSsl: false,
   adminPassword: "rangeradmin1",
 
