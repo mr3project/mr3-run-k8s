@@ -11,7 +11,7 @@ import * as apps_fs from '../apps-fs';
 import * as driver from '../../server/validate/driver';
 
 const eksConf: eks.T = {
-  name: "hivemr3",
+  name: "hive-mr3",
   region: "ap-northeast-2",
   zone: "ap-northeast-2a",
 
