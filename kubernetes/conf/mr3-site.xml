@@ -99,7 +99,7 @@
 
 <property>
   <name>mr3.am.permit.custom.user.class</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- resource scheduler -->
