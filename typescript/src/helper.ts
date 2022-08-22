@@ -94,7 +94,7 @@ export function containsEmptyStringOnly(obj: any): boolean {
 
 const kubeConfigLimit = 20000;
 const dataLimit = 25000;
-const stringLimit = 100;
+const stringLimit = 1000;
 
 export function checkString(obj: any) {
   for (const [k, v] of Object.entries(obj)) {

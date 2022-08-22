@@ -82,6 +82,13 @@ export function initial(): T {
     localSsdCount: 1,
     workerLabelRoles: "workers",
 
-    iamServiceAccount: ""
+    iamServiceAccount: "",
+
+    hiveResources:       { cpu: 4,  memoryInMb: 16 * 1024 },
+    metastoreResources:  { cpu: 4,  memoryInMb: 16 * 1024 },
+    mr3MasterResources:  { cpu: 6,  memoryInMb: 20 * 1024 },
+    rangerResources:     { cpu: 2,  memoryInMb: 6 * 1024 },
+    supersetResources:   { cpu: 2,  memoryInMb: 10 * 1024 },
+    sparkmr3Resources:   { cpu: 6,  memoryInMb: 20 * 1024 }
   };
 }
