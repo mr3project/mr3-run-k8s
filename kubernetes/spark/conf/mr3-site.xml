@@ -170,7 +170,7 @@
 
 <property>
   <name>mr3.heartbeat.container.timeout.ms</name>
-  <value>300000</value>
+  <value>120000</value>
 </property>
 
 <property>
