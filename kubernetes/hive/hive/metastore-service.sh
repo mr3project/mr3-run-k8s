@@ -108,6 +108,7 @@ function main {
     pushd /opt/mr3-run/lib
     wget https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-8.0.28.tar.gz
     tar --strip-components=1 -zxf mysql-connector-java-8.0.28.tar.gz mysql-connector-java-8.0.28/mysql-connector-java-8.0.28.jar
+    rm -f mysql-connector-java-8.0.28.tar.gz
     popd
 
     hive_setup_parse_args_common $@    

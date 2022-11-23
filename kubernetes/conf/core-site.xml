@@ -109,7 +109,8 @@
   <value>false</value>
 </property>
 
-<!-- affects the # of InputSplits when hive.exec.orc.split.strategy is set to BI --> 
+<!-- with HIVE-21390, the # of InputSplits is affected by hive.exec.orc.blob.storage.split.size
+     when hive.exec.orc.split.strategy is set to BI -->
 <property>
   <name>fs.s3a.block.size</name>
   <value>128M</value>

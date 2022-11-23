@@ -401,6 +401,16 @@
 </property>
 
 <property>
+  <name>metastore.aggregate.stats.cache.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.metastore.aggregate.stats.cache.enabled</name>
+  <value>true</value>
+</property>
+
+<property>
   <name>hive.query.results.cache.enabled</name>
   <value>${env.config.hive['hive.query.results.cache.enabled']}</value>
 </property>
@@ -650,3 +660,7 @@
   <value>25</value>
 </property>
 
+<property>
+  <name>hive.exec.orc.blob.storage.split.size</name>
+  <value>134217728</value>
+</property>
