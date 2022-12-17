@@ -1,4 +1,4 @@
-## Release 1.6: 2022-??-??
+## Release 1.6: 2022-12-24
 
 MR3
   - Support capacity scheduling with `mr3.dag.queue.capacity.specs` and `mr3.dag.queue.name`.
