@@ -282,6 +282,11 @@
 </property>
 
 <property>
+  <name>hive.vectorized.adaptor.usage.mode</name>
+  <value>chosen</value>
+</property>
+
+<property>
   <name>hive.warehouse.subdir.inherit.perms</name>
   <value>true</value>
 </property>

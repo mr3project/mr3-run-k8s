@@ -241,6 +241,11 @@
 </property>
 
 <property>
+  <name>hive.vectorized.adaptor.usage.mode</name>
+  <value>chosen</value>
+</property>
+
+<property>
   <name>hive.exec.orc.split.strategy</name>
   <value>${env.config.hive['hive.exec.orc.split.strategy']}</value>
 </property>
