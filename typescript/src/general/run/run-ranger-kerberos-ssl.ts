@@ -220,8 +220,8 @@ const sparkmr3Env: sparkmr3.T = {
 
 const dockerEnv: docker.T = {
   docker: {
-    image: "mr3project/hive3:1.5",
-    containerWorkerImage: "mr3project/hive3-worker:1.5",
+    image: "mr3project/hive3:1.6",
+    containerWorkerImage: "mr3project/hive3:1.6",
     rangerImage: "mr3project/ranger:2.1.0",
     atsImage: "mr3project/mr3ui:1.5",
     supersetImage: "mr3project/superset:1.4.2",
