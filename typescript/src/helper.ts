@@ -55,7 +55,7 @@ export function isValidPositiveNumber(num: any): boolean {
 }
 
 export function isValidPort(num: any): boolean {
-  return (typeof num === "number") && !isNaN(num) && num !== Infinity && 0 <= num && num < 256;
+  return (typeof num === "number") && !isNaN(num) && num !== Infinity && 0 <= num && num <= 65535;
 }
 
 export function isValidIpv4Address(addr: string): boolean {

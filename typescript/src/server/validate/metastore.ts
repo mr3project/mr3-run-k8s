@@ -137,7 +137,7 @@ function checkInvariants(accum: CheckResult[], input: T) {
     !(input.dbType !== "DERBY" &&
       input.databasePortRaw !== undefined && !isEmptyString(input.databasePortRaw)) ||  
       isValidPort(parseInt(input.databasePortRaw)),
-    "A valid port should be specified for Database Address." + input.databasePortRaw,
+    "A valid port should be specified for Database Address: " + input.databasePortRaw,
     'databasePortRaw');
 
   accumAssert(accum,
