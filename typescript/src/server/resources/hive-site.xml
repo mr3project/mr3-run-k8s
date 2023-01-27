@@ -661,6 +661,11 @@
 </property>
 
 <property>
+  <name>hive.metastore.runworker.in</name>
+  <value>metastore</value>
+</property>
+
+<property>
   <name>hive.metastore.warehouse.external.dir</name>
   <value>${env.config.copy['hive.warehouse.dir']}</value>
 </property>

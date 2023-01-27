@@ -786,6 +786,11 @@
 <!-- Hive 4 -->
 
 <property>
+  <name>hive.metastore.runworker.in</name>
+  <value>metastore</value>
+</property>
+
+<property>
   <name>hive.metastore.warehouse.external.dir</name>
   <value>${hive.warehouse.dir}</value>
 </property>
