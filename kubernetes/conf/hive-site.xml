@@ -921,4 +921,41 @@
   <value>false</value>
 </property>
 
+<!-- Iceberg -->
+
+<property>
+  <name>iceberg.catalog</name>
+  <value>iceberg</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.type</name>
+  <value>hive</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.clients</name>
+  <value>10</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.uri</name>
+  <value>thrift://${hive.metastore.host}:${hive.metastore.port}</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.warehouse</name>
+  <value>${hive.warehouse.dir}</value>
+</property>
+
+<property>
+  <name>iceberg.mr.split.size</name>
+  <value>16777216</value>
+</property>
+
+<property>
+  <name>write.format.default</name>
+  <value>orc</value>
+</property>
+
 </configuration>

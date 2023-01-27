@@ -780,3 +780,38 @@
   <value>false</value>
 </property>
 
+<property>
+  <name>iceberg.catalog</name>
+  <value>iceberg</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.type</name>
+  <value>hive</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.clients</name>
+  <value>10</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.uri</name>
+  <value>thrift://${env.config.copy['hive.metastore.host']}:${env.config.copy['hive.metastore.port']}</value>
+</property>
+
+<property>
+  <name>iceberg.catalog.iceberg.warehouse</name>
+  <value>${env.config.copy['hive.warehouse.dir']}</value>
+</property>
+
+<property>
+  <name>iceberg.mr.split.size</name>
+  <value>16777216</value>
+</property>
+
+<property>
+  <name>write.format.default</name>
+  <value>orc</value>
+</property>
+
