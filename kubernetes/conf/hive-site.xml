@@ -286,11 +286,6 @@
   <value>chosen</value>
 </property>
 
-<property>
-  <name>hive.warehouse.subdir.inherit.perms</name>
-  <value>true</value>
-</property>
-
 <!-- Security -->
 
 <property>
@@ -403,8 +398,6 @@
   <value>${hive.warehouse.dir}</value>
 </property>
 
-<!-- new in Hive 3.0 -->
-
 <property>
   <name>hive.metastore.event.db.notification.api.auth</name>
   <value>false</value>
@@ -484,6 +477,16 @@
   <value>true</value>
 </property>
 
+<property>
+  <name>hive.server2.idle.operation.timeout</name>
+  <value>4h</value>
+</property>
+
+<property>
+  <name>hive.server2.idle.session.timeout</name>
+  <value>4h</value>
+</property>
+
 <!-- MR3 LLAP (configurable) -->
 
 <property>
@@ -533,7 +536,7 @@
 
 <property>
   <name>hive.execution.engine</name>
-  <value>mr3</value>
+  <value>tez</value>
 </property>
 
 <property>
@@ -551,7 +554,6 @@
   <value>false</value>
 </property>
 
-<!-- should be unset -->
 <property>
   <name>hive.llap.daemon.service.hosts</name>
   <value></value>
@@ -651,26 +653,6 @@
 
 <property>
   <name>hive.mr3.all-in-one.containergroup.vcores</name>
-  <value>2</value>
-</property>
-
-<property>
-  <name>hive.mr3.map.containergroup.memory.mb</name>
-  <value>16384</value>
-</property>
-
-<property>
-  <name>hive.mr3.map.containergroup.vcores</name>
-  <value>2</value>
-</property>
-
-<property>
-  <name>hive.mr3.reduce.containergroup.memory.mb</name>
-  <value>16384</value>
-</property>
-
-<property>
-  <name>hive.mr3.reduce.containergroup.vcores</name>
   <value>2</value>
 </property>
 
@@ -775,16 +757,10 @@
 <!-- Token renewal -->
 
 <property>
-  <name>dfs.namenode.delegation.token.renew-interval</name>
-  <value>86400000</value>
-</property>
-
-<property>
   <name>hive.cluster.delegation.token.renew-interval</name>
   <value>1</value>
   <description>
-    Hive 3 and Hive 4: The unit is days, not milli-seconds.
-    Hive 2: The unit is milli-seconds.
+    The unit is days, not milli-seconds.
   </description>
 </property>
 
@@ -831,11 +807,6 @@
 
 <property>
   <name>hive.llap.io.proactive.eviction.enabled</name>
-  <value>false</value>
-</property>
-
-<property>
-  <name>hive.mapred.reduce.tasks.speculative.execution</name>
   <value>false</value>
 </property>
 
@@ -886,12 +857,29 @@
   <value>10</value>
 </property>
 
-<!-- Hive 4, correctness -->
+<property>
+  <name>hive.orc.splits.include.file.footer</name>
+  <value>false</value>
+</property>
+
+<!-- Correctness -->
+
+<property>
+  <name>hive.optimize.shared.work</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>hive.optimize.shared.work.extended</name>
+  <value>true</value>
+</property>
 
 <property>
   <name>hive.optimize.shared.work.semijoin</name>
   <value>true</value>
 </property>
+
+<!-- Correctness, Hive 4 -->
 
 <property>
   <name>hive.optimize.shared.work.dppunion</name>

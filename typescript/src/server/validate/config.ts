@@ -19,24 +19,24 @@ export function initial(): T {
       'hive.compactor.worker.threads': 1
     },
     hive: {
+      'hive.exec.max.dynamic.partitions': 5000,
+      'hive.exec.max.dynamic.partitions.pernode': 2000,
+      'hive.exec.orc.split.strategy': "HYBRID",
+      'hive.exec.reducers.bytes.per.reducer': 67108864,
+      'hive.merge.nway.joins': true,
+      'hive.server2.webui.port': 10002,
       'hive.stats.autogather': true,
       'hive.stats.fetch.column.stats': true,
-      'hive.exec.orc.split.strategy': "HYBRID",
-      'hive.orc.compute.splits.num.threads': 10,
-      'hive.orc.splits.include.file.footer': false,
       'hive.server2.enable.doAs': false,
       'hive.query.results.cache.enabled': true,
+      'hive.strict.checks.cartesian.product': false,
+      'hive.mr3.delete.vertex.local.directory': false,  // may be useful when using Fargate
+      'hive.tez.llap.min.reducer.per.executor': "0.2f",
       'hive.cluster.delegation.token.renew-interval': 1,
       'hive.distcp.privileged.doAs': "hive",
       'hive.exec.input.listing.max.threads': 50,
-      'hive.server2.webui.port': 10002,
-      'hive.strict.checks.cartesian.product': false,
-      'hive.merge.nway.joins': true,
-      'hive.exec.max.dynamic.partitions': 5000,
-      'hive.exec.max.dynamic.partitions.pernode': 2000,
-      'hive.exec.reducers.bytes.per.reducer': 67108864,
-      'hive.tez.llap.min.reducer.per.executor': "0.2f",
-      'hive.mr3.delete.vertex.local.directory': false   // may be useful when using Fargate
+      'hive.orc.compute.splits.num.threads': 10,
+      'hive.orc.splits.include.file.footer': false
     },
     mr3: {
       'mr3.am.client.thread-count': 32,
