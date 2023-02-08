@@ -440,4 +440,9 @@
   <value>${env.consts.prometheus.port}</value>
 </property>
 
+<property>
+  <name>dfs.namenode.delegation.token.renew-interval</name>
+  <value>86400000</value>
+</property>
+
 </configuration>

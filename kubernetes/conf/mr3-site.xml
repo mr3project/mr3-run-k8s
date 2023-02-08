@@ -605,4 +605,13 @@
   <value>9890</value>
 </property>
 
+<property>
+  <name>dfs.namenode.delegation.token.renew-interval</name>
+  <value>86400000</value>
+  <description>
+    Internally used by mr3.common.security.TokenRenewer when Kerberos token renewal is enabled inside DAGAppMaster and ContainerWorkers.
+    Replaces org.apache.hadoop.hdfs.DFSConfigKeys.DFS_NAMENODE_DELEGATION_TOKEN_RENEW_INTERVAL_KEY.
+  </description>
+</property>
+
 </configuration>
