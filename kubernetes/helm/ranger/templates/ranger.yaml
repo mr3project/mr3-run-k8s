@@ -4,6 +4,7 @@ metadata:
   namespace: hivemr3
   name: hivemr3-ranger
 spec:
+  serviceName: ranger
   replicas: 1
   selector:
     matchLabels:
