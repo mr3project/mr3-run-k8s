@@ -31,6 +31,7 @@ LOG4J_PROPS=$SOLR_HOME/resources/log4j2.xml
 
 SOLR_LOGS_DIR=/opt/mr3-run/ranger/work-dir/log/solr/ranger_audits
 
+SOLR_HOST=
 SOLR_PORT=6083
 
 #SOLR_SSL_ENABLED=false
