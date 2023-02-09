@@ -446,6 +446,11 @@
 </property>
 
 <property>
+  <name>hive.server2.use.SSL</name>
+  <value>false</value>
+</property>
+
+<property>
   <name>hive.server2.thrift.sasl.qop</name>
   <value>auth-conf</value>
 </property>

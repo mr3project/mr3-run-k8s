@@ -32,9 +32,8 @@
   <property>
     <name>ranger.plugin.hive.policy.rest.url</name>
     <value>http://red0:6080</value>
-    <!-- <value>http://red0:6182</value> -->
     <description>
-      URL to Ranger Admin
+      URL to Ranger Admin (https://red0:6182 when using SSL)
     </description>
   </property>
 
