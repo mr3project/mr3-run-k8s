@@ -216,14 +216,14 @@
 <!-- AWS_REGION for running on AWS EKS -->
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,HADOOP_CREDSTORE_PASSWORD,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
 </property>
 
 <!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env), so do not include it -->
 <!-- AWS_REGION for running on AWS EKS -->
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/lib,HADOOP_CREDSTORE_PASSWORD,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
 </property>
 
 <property>
