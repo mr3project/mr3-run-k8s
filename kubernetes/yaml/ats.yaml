@@ -54,8 +54,8 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: env-k8s-volume
-          mountPath: /opt/mr3-run/ats/env.sh
-          subPath: env.sh
+          mountPath: /opt/mr3-run/ats/env-secret.sh
+          subPath: env-secret.sh
         - name: ats-conf-k8s-volume
           mountPath: /opt/mr3-run/ats/conf/
           readOnly: true

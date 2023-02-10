@@ -42,16 +42,9 @@ else
   kubectl create -n $MR3_NAMESPACE -f $YAML_DIR/workdir-pvc-ats.yaml
 fi
 
-# ConfigMaps
+# env-secret and ConfigMaps
 kubectl create -n $MR3_NAMESPACE secret generic env-secret --from-file=$BASE_DIR/env.sh
 kubectl create -n $MR3_NAMESPACE configmap hivemr3-ats-conf-configmap --from-file=$BASE_DIR/ats-conf/
-
-# reuse ATS_SECRET_KEY if already defined; use a random UUID otherwise
-RANDOM_ATS_SECRET_KEY=$(cat /proc/sys/kernel/random/uuid)
-ATS_SECRET_KEY=${ATS_SECRET_KEY:-$RANDOM_ATS_SECRET_KEY}
-echo "ATS_SECRET_KEY=$ATS_SECRET_KEY"
-
-kubectl create -n $MR3_NAMESPACE configmap client-ats-config --from-literal=ats-secret-key=$ATS_SECRET_KEY
 
 # Secrets
 if [ $CREATE_ATS_SECRET = true ]; then
@@ -59,6 +52,13 @@ if [ $CREATE_ATS_SECRET = true ]; then
 else 
   kubectl create -n $MR3_NAMESPACE secret generic hivemr3-ats-secret
 fi
+
+# reuse ATS_SECRET_KEY if already defined; use a random UUID otherwise
+RANDOM_ATS_SECRET_KEY=$(cat /proc/sys/kernel/random/uuid)
+ATS_SECRET_KEY=${ATS_SECRET_KEY:-$RANDOM_ATS_SECRET_KEY}
+echo "ATS_SECRET_KEY=$ATS_SECRET_KEY"
+
+kubectl create -n $MR3_NAMESPACE configmap client-ats-config --from-literal=ats-secret-key=$ATS_SECRET_KEY
 
 # App
 kubectl create -f $YAML_DIR/ats.yaml

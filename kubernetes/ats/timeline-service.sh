@@ -14,7 +14,9 @@
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 BASE_DIR=$(readlink -f $DIR)
-source $BASE_DIR/env-secret.sh
+if [[ -f "$BASE_DIR/env-secret.sh" ]]; then
+  source $BASE_DIR/env-secret.sh
+fi
 
 function main {
     cp $BASE_DIR/conf/core-site.xml $BASE_DIR/hadoop/apache-hadoop/etc/hadoop/
