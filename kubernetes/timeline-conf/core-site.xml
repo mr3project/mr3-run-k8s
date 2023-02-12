@@ -1,0 +1,34 @@
+<configuration>
+
+<property>
+  <name>fs.defaultFS</name>
+  <value>file:///</value>
+</property>
+
+<property>
+  <name>hadoop.ssl.require.client.cert</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>hadoop.ssl.hostname.verifier</name>
+  <value>DEFAULT</value>
+</property>
+
+<property>
+  <name>hadoop.ssl.keystores.factory.class</name>
+  <value>org.apache.hadoop.security.ssl.FileBasedKeyStoresFactory</value>
+</property>
+
+<property>
+  <name>hadoop.ssl.server.conf</name>
+  <value>ssl-server.xml</value>
+</property>
+
+<property>
+  <name>hadoop.security.credential.provider.path</name>
+  <value>localjceks://file/opt/mr3-run/key/hivemr3-ssl-certificate.jceks</value>
+
+</property>
+
+</configuration>

@@ -1,0 +1,23 @@
+<configuration>
+
+<property>
+  <name>ssl.server.keystore.location</name>
+  <value>/opt/mr3-run/ats/key/hivemr3-ssl-certificate.jks</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.password</name>
+  <value>_</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.keypassword</name>
+  <value>_</value>
+</property>
+
+<property>
+  <name>ssl.server.keystore.type</name>
+  <value>jks</value>
+</property>
+
+</configuration>

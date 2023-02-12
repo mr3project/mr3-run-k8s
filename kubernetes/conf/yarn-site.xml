@@ -16,18 +16,18 @@
 </property>
 
 <property>
-  <name>yarn.timeline-service.hostname</name>
-  <value>red0</value>
-</property>
-
-<property>
   <name>yarn.http.policy</name>
   <value>HTTP_ONLY</value>
 </property>
 
 <property>
-  <name>yarn.timeline-service.hostname</name>
-  <value>red0</value>
+  <name>yarn.timeline-service.webapp.address</name>
+  <value>timeline.hivemr3.svc.cluster.local:9188</value>
+</property>
+
+<property>
+  <name>yarn.timeline-service.webapp.https.address</name>
+  <value>timeline.hivemr3.svc.cluster.local:9190</value>
 </property>
 
 </configuration>

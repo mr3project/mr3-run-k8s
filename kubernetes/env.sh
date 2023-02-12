@@ -94,6 +94,8 @@ WORKER_SECRET=hivemr3-worker-secret
 
 CREATE_RANGER_SECRET=true   # specifies whether or not to create a Secret from ranger-key/*
 CREATE_ATS_SECRET=true      # specifies whether or not to create a Secret from ats-key/*
+CREATE_TIMELINE_SECRET=true # specifies whether or not to create a Secret from timeline-key/*
+
 
 #
 # Step 3. Update YAML files
