@@ -26,6 +26,11 @@
 </property>
 
 <property>
+  <name>yarn.timeline-service.http-authentication.type</name>
+  <value>simple</value>
+</property>
+
+<property>
   <name>yarn.timeline-service.principal</name>
   <value>hive/red0@RED</value>
 </property>
@@ -33,11 +38,6 @@
 <property>
   <name>yarn.timeline-service.keytab</name>
   <value>/opt/mr3-run/ats/key/hive-admin.keytab</value>
-</property>
-
-<property>
-  <name>yarn.timeline-service.http-authentication.type</name>
-  <value>simple</value>
 </property>
 
 <property>

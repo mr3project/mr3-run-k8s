@@ -26,6 +26,11 @@
 </property>
 
 <property>
+  <name>yarn.timeline-service.http-authentication.type</name>
+  <value>${env.timeline.enableKerberos && env.secret.kerberosSecret !== undefined ? 'kerberos' : 'simple'}</value>
+</property>
+
+<property>
   <name>yarn.timeline-service.principal</name>
   <value>${env.secret.kerberosSecret !== undefined ? env.secret.kerberosSecret.server.principal : ''}</value>
 </property>
@@ -33,11 +38,6 @@
 <property>
   <name>yarn.timeline-service.keytab</name>
   <value>${env.secret.kerberosSecret !== undefined ? env.consts.dir.timelineKeytab + '/' + env.secret.kerberosSecret.server.keytab : ''}</value>
-</property>
-
-<property>
-  <name>yarn.timeline-service.http-authentication.type</name>
-  <value>${env.timeline.enableKerberos && env.secret.kerberosSecret !== undefined ? 'kerberos' : 'simple'}</value>
 </property>
 
 <property>
