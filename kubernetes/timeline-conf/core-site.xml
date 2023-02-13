@@ -27,8 +27,8 @@
 
 <property>
   <name>hadoop.security.credential.provider.path</name>
-  <value>localjceks://file/opt/mr3-run/key/hivemr3-ssl-certificate.jceks</value>
-
+  <value></value>
+  <!-- <value>localjceks://file/opt/mr3-run/key/hivemr3-ssl-certificate.jceks</value> -->
 </property>
 
 </configuration>
