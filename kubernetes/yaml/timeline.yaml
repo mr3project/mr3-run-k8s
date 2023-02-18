@@ -71,8 +71,8 @@ spec:
           mountPath: /opt/mr3-run/ats/key
           readOnly: true
         - name: env-secret-k8s-volume
-          mountPath: /opt/mr3-run/ats/env-secret.sh
-          subPath: env-secret.sh
+          mountPath: /opt/mr3-run/ats/env.sh
+          subPath: env.sh
         - name: timeline-work-dir-volume
           mountPath: /opt/mr3-run/ats/work-dir
       - image: mr3project/mr3ui:1.5

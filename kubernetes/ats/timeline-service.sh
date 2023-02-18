@@ -14,6 +14,10 @@
 
 DIR="$(cd "$(dirname "$0")" && pwd)"
 BASE_DIR=$(readlink -f $DIR)
+
+# ats.yaml and timeline.yaml mount env.sh
+# TypeScript code mounts both env.sh and env-secret.sh
+source $BASE_DIR/env.sh
 if [[ -f "$BASE_DIR/env-secret.sh" ]]; then
   source $BASE_DIR/env-secret.sh
 fi
