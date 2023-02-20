@@ -21,6 +21,11 @@
 </property>
 
 <property>
+  <name>yarn.timeline-service.hostname</name>
+  <value>timeline.hivemr3.svc.cluster.local</value>
+</property>
+
+<property>
   <name>yarn.timeline-service.webapp.address</name>
   <value>timeline.hivemr3.svc.cluster.local:9188</value>
 </property>

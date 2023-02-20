@@ -98,6 +98,7 @@ ATS_HOST=$HOST
 RANGER_HOST=$HOST
 
 HIVE_METASTORE_HOST=metastore.${NAMESPACE}.svc.cluster.local
+TIMELINE_HOST=timeline.${NAMESPACE}.svc.cluster.local
 
 # Keystore file for MR3 components (HiveServer2, Timeline Server, Ranger, Metastore)
 # The administrator can extract a certificate and distribute it to users.
@@ -157,10 +158,13 @@ function generate_subject_alternative_name {
       host_to_service[$RANGER_HOST]="${host_to_service[$RANGER_HOST]} Ranger"
     fi 
     if [ ! -z $ATS_HOST ]; then
-      host_to_service[$ATS_HOST]="${host_to_service[$ATS_HOST]} TimelineServer"
+      host_to_service[$ATS_HOST]="${host_to_service[$ATS_HOST]} ATS"
     fi 
     if [ ! -z $HIVE_METASTORE_HOST ]; then
       host_to_service[$HIVE_METASTORE_HOST]="${host_to_service[$HIVE_METASTORE_HOST]} Metastore"
+    fi
+    if [ ! -z $TIMELINE_HOST ]; then
+      host_to_service[$TIMELINE_HOST]="${host_to_service[$TIMELINE_HOST]} TimelineServer"
     fi
     if [ ! -z $METASTORE_DATABASE_HOST ]; then
       host_to_service[$METASTORE_DATABASE_HOST]="${host_to_service[$METASTORE_DATABASE_HOST]} MetastoreDatabase"
