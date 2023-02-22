@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  #namespace: hivemr3
+  name: timeline
+spec:
+  type: LoadBalancer
+  selector:
+    hivemr3_app: timeline
+  ports:
+  - name: timelineserver-http
+    protocol: TCP
+    port: {{ .Values.timeline.httpPort }}
+    targetPort: 9188
+  - name: timelineserver-https
+    protocol: TCP
+    port: {{ .Values.timeline.httpsPort }}
+    targetPort: 9190
+  - name: mr3-ui-jetty
+    protocol: TCP
+    port: {{ .Values.ui.httpPort }}
+    targetPort: 8080
+  - name: prometheus
+    protocol: TCP
+    port: {{ .Values.prometheus.httpPort }}
+    targetPort: 9090
+  - name: grafana
+    protocol: TCP
+    port: {{ .Values.grafana.httpPort }}
+    targetPort: 3000
+  externalIPs:
+  - {{ .Values.timeline.externalIp }}

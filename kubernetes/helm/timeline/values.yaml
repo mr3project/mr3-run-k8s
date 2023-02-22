@@ -1,22 +1,23 @@
 name:
-  ats:
-    configMap: hivemr3-ats-configmap
-    secret: hivemr3-ats-secret
-  envConfigMap: ats-env-configmap
-  persistentVolume: workdir-ats-pv
-  persistentVolumeClaim: workdir-ats-pvc
+  timeline:
+    configMap: hivemr3-timeline-configmap
+    secret: hivemr3-timeline-secret
+  envSecret: timeline-env-secret
+  persistentVolume: workdir-timeline-pv
+  persistentVolumeClaim: workdir-timeline-pvc
 
 docker:
-  image: mr3project/ats-2.7.7:latest
+  image: mr3project/mr3ui:latest
   imagePullPolicy: Always
   imagePullSecrets: 
 
-ats:
+timeline:
   # if not set, a random value will be generated
+  # should match amConf.atsSecretKey in hive/values.yaml
   secretKey: 
     
-  httpPort: 8188
-  httpsPort: 8190
+  httpPort: 9188
+  httpsPort: 9190
   externalIp: 1.1.1.1
 
   createSecret: true
@@ -28,7 +29,36 @@ ats:
     limits:
       cpu: 1
       memory: 4Gi
-  heapSize: 2048
+
+ui:
+  httpPort: 8080
+  resources:
+    requests:
+      cpu: 0.25
+      memory: 512Mi
+    limits:
+      cpu: 0.25
+      memory: 512Mi
+
+prometheus:
+  httpPort: 9090
+  resources:
+    requests:
+      cpu: 1.25
+      memory: 4096Mi
+    limits:
+      cpu: 1.25
+      memory: 4096Mi
+
+grafana:
+  httpPort: 3000
+  resources:
+    requests:
+      cpu: 0.25
+      memory: 512Mi
+    limits:
+      cpu: 0.25
+      memory: 512Mi
 
 workDir:
   # if false, the user should manually create PersistentVolumeClaim of the same name specified by the 
@@ -38,7 +68,7 @@ workDir:
   isNfs: true
   nfs:
     server: "1.1.1.1"
-    path: "/work/nfs/ats"
+    path: "/work/nfs/timeline"
   volumeSize: 10Gi
   volumeClaimSize: 10Gi
   storageClassName: ""
@@ -48,4 +78,8 @@ workDir:
   #   ex. wrong -> volumeStr: "hostPath:\n path: /work/nfs/mr3-run-work-dir"
   volumeStr: 
 
-logLevel: INFO
+hostAliases:
+- ip: "1.1.1.1"
+  hostnames:
+  - "red0"
+
