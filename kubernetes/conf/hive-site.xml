@@ -698,7 +698,7 @@
 
 <property>
   <name>hive.mr3.am.task.concurrent.run.threshold.percent</name>
-  <value>100</value>
+  <value>99</value>
 </property>
 
 <!-- capacity scheduling when mr3.dag.queue.scheme is set to capacity -->
@@ -864,7 +864,7 @@
 <!-- for hive.exec.orc.split.strategy=ETL -->
 <property>
   <name>hive.orc.compute.splits.num.threads</name>
-  <value>10</value>
+  <value>20</value>
 </property>
 
 <property>

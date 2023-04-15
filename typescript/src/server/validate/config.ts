@@ -35,7 +35,7 @@ export function initial(): T {
       'hive.cluster.delegation.token.renew-interval': 1,
       'hive.distcp.privileged.doAs': "hive",
       'hive.exec.input.listing.max.threads': 50,
-      'hive.orc.compute.splits.num.threads': 10,
+      'hive.orc.compute.splits.num.threads': 20,
       'hive.orc.splits.include.file.footer': false
     },
     mr3: {

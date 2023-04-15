@@ -105,7 +105,7 @@ const masterEnv: master.T = {
   dagQueueScheme: "common",
   dagPriorityScheme: "fifo",
   numTaskAttempts: 3,
-  speculativeThresholdPercent: 100,
+  speculativeThresholdPercent: 99,
   workerIdleTimeoutInMinutes: 60,
   autoscalingEnabled: false,
   scaleOutThreshold: 50,

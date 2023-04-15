@@ -11,6 +11,31 @@
 </property>
 
 <property>
+  <name>tez.grouping.max-size</name>
+  <value>1073741824</value>
+</property>
+ 
+<property>
+  <name>tez.grouping.min-size</name>
+  <value>16777216</value>
+</property>
+ 
+<property>
+  <name>tez.grouping.split-waves</name>
+  <value>1.7</value>
+</property>
+ 
+<property>
+  <name>tez.runtime.compress</name>
+  <value>true</value>
+</property>
+ 
+<property>
+  <name>tez.runtime.compress.codec</name>
+  <value>org.apache.hadoop.io.compress.SnappyCodec</value>
+</property>
+
+<property>
   <name>tez.runtime.io.sort.mb</name>
   <value>1040</value>
 </property>
@@ -158,7 +183,7 @@
 
 <property>
   <name>tez.runtime.local.fetch.compare.port</name>
-  <value>true</value>
+  <value>false</value>
   <!-- irrelevant on Kubernetes because a logical host runs only one ContainerWorker -->
 </property>
 
