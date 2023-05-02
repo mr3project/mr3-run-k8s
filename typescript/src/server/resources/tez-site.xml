@@ -141,6 +141,16 @@
 </property>
 
 <property>
+  <name>tez.runtime.compress</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.runtime.compress.codec</name>
+  <value>org.apache.hadoop.io.compress.GzipCodec</value>
+</property>
+
+<property>
   <name>tez.cartesian-product.grouping-fraction</name>
   <value>0.75</value>
 </property>
