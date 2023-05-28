@@ -2,7 +2,7 @@
 
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.masterLaunchCmdOpts}</value>
+  <value>-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.masterLaunchCmdOpts}</value>
 </property>
 
 <property>
@@ -62,7 +62,7 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -XX:+AlwaysPreTouch -Xss512k -XX:TLABSize=8m -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -XX:NewRatio=8 -server -Djava.net.preferIPv4Stack=true -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.containerLaunchCmdOpts}</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.containerLaunchCmdOpts}</value>
 </property>
 
 <property>

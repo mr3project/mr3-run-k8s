@@ -147,7 +147,7 @@
 
 <property>
   <name>tez.runtime.compress.codec</name>
-  <value>org.apache.hadoop.io.compress.GzipCodec</value>
+  <value>org.apache.hadoop.io.compress.SnappyCodec</value>
 </property>
 
 <property>

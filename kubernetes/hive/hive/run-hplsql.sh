@@ -97,8 +97,7 @@ function main {
 
     run_hplsql_init
 
-    echo -e "\n# Running HPL/SQL using Hive-MR3 ($HIVE_REV) #\n"
-    hive_setup_server2_update_hadoop_opts
+    echo -e "\n# Running HPL/SQL using Hive-MR3 #\n"
     hive_setup_init_run_configs $LOCAL_MODE
 
     pushd $BASE_DIR > /dev/null

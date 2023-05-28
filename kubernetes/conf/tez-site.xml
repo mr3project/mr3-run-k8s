@@ -32,7 +32,7 @@
  
 <property>
   <name>tez.runtime.compress.codec</name>
-  <value>org.apache.hadoop.io.compress.GzipCodec</value>
+  <value>org.apache.hadoop.io.compress.SnappyCodec</value>
 </property>
 
 <property>
@@ -72,7 +72,7 @@
 
 <property>
   <name>tez.runtime.pipelined.sorter.lazy-allocate.memory</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <property>
@@ -89,7 +89,7 @@
 
 <property>
   <name>tez.shuffle-vertex-manager.enable.auto-parallel</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <property>

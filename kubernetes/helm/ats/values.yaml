@@ -8,6 +8,7 @@ name:
 
 docker:
   image: mr3project/ats-2.7.7:latest
+  user: ats
   imagePullPolicy: Always
   imagePullSecrets: 
 

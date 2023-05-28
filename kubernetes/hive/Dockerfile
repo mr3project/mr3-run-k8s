@@ -29,7 +29,7 @@ RUN mkdir -p /opt/mr3-run && \
     mkdir -p /opt/mr3-run/host-lib && \
     mkdir -p /opt/mr3-run/lib
 
-RUN apt-get update && apt-get install -y procps wget && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y procps wget libsnappy-dev && rm -rf /var/lib/apt/lists/*
 
 # copy files 
 

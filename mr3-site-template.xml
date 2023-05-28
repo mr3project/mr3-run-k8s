@@ -156,7 +156,7 @@
 
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC</value>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseParallelGC</value>
   <description>
     Command-line options for launching DAGAppMaster.
     Additional options for optimization: -XX:+UseStringDeduplication
@@ -247,9 +247,12 @@
   <name>mr3.am.worker.mode</name>
   <value>local</value>
   <description>
+    Type of the resource scheduler created in DAGAppMaster.
+    The actual type of ContainerWorkers is specified by mr3.container.resourcescheduler.type for each ContainerGroup.
     local: ContainerWorkers start as threads inside DAGAppMaster.
     yarn: ContainerWorkers start as containers in the Hadoop cluster.
     kubernetes: ContainerWorkers start as Pods in the Kubernetes cluster.
+    process: ContainerWorkers executed by users contact DAGAppMaster.
   </description>
 </property>
 
@@ -572,9 +575,11 @@
   <name>mr3.container.resourcescheduler.type</name>
   <value>local</value>
   <description>
+    Type of ContainerWorkers.
     local: create local ContainerWorkers in DAGAppMaster for the current ContainerGroup.
     yarn: create Yarn ContainerWorkers for the current ContainerGroup.
     kubernetes: create Kubernetes ContainerWorkers for the current ContainerGroup.
+    process: use ContainerWorkers executed by users.
     Can be set for individual ContainerGroups.
   </description>
 </property>
@@ -618,7 +623,7 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+PrintGCDetails -verbose:gc -XX:+PrintGCTimeStamps -XX:+UseNUMA -XX:+UseParallelGC</value>
+  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseParallelGC</value>
   <description>
     Command-line options for launching ContainerWorkers
   </description>
@@ -1834,6 +1839,24 @@
   <value>40</value>
   <description>
     Time interval in seconds for performing the liveness probe
+  </description>
+</property>
+
+<!-- Process ContainerWorker -->
+
+<property>
+  <name>mr3.heartbeat.process.timeout.ms</name>
+  <value>120000</value>
+  <description>
+    Time in milliseconds for triggering heartbeat timeout for Process ContainerWorkers executed by the user
+  </description>
+</property>
+
+<property>
+  <name>mr3.process.heartbeat.timeout.check.ms</name>
+  <value>15000</value>
+  <description>
+    Time interval in milliseconds for checking heartbeat timeout for Process ContainerWorkers
   </description>
 </property>
 

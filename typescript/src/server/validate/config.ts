@@ -60,7 +60,7 @@ export function initial(): T {
       'tez.runtime.pipelined.sorter.sort.threads': 2,
       'tez.shuffle-vertex-manager.max-src-fraction': 0.4,
       'tez.shuffle-vertex-manager.min-src-fraction': 0.2,
-      'tez.runtime.pipelined.sorter.lazy-allocate.memory': false,
+      'tez.runtime.pipelined.sorter.lazy-allocate.memory': true,
       'tez.runtime.shuffle.parallel.copies': 20, 
       'tez.shuffle-vertex-manager.auto-parallel.min.num.tasks': 40,
       'tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage': 10,

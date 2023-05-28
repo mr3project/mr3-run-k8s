@@ -1,3 +1,14 @@
+## Release 1.7: 2023-5-15
+
+MR3
+  - Support standalone mode which does not require Yarn or Kubernetes as the resource manager.
+
+Hive on MR3
+  - Use Hadoop 3.3.1.
+  - `hive.query.reexecution.stats.persist.scope` can be set to `hiveserver`.
+  - `HIVE_JVM_OPTION` in `env.sh` specifies the JMV options for Metastore and HiveServer2.
+  - Do not use `TEZ_USE_MINIMAL` in `env.sh`.
+
 ## Release 1.6: 2022-12-24
 
 MR3

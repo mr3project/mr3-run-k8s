@@ -89,30 +89,10 @@ function hiveserver2_service_init {
     common_setup_cleanup 
 }
 
-function hive_setup_server2_update_hadoop_opts {
-    export HADOOP_OPTS="$HADOOP_OPTS \
--Dhive.server2.host=$HIVE_SERVER2_HOST \
--Dhive.server2.port=$HIVE_SERVER2_PORT \
--Dhive.server2.http.port=$HIVE_SERVER2_HTTP_PORT \
--Dhive.server2.authentication.mode=$HIVE_SERVER2_AUTHENTICATION \
--Dhive.server2.keytab.file=$HIVE_SERVER2_KERBEROS_KEYTAB \
--Dhive.server2.principal=$HIVE_SERVER2_KERBEROS_PRINCIPAL \
--Djavax.security.auth.useSubjectCredsOnly=false \
--Djava.security.auth.login.config=$REMOTE_BASE_DIR/conf/jgss.conf \
--Djava.security.krb5.conf=$REMOTE_BASE_DIR/conf/krb5.conf \
--Dsun.security.jgss.debug=true"
-    # TODO: unnecessary because of hive_setup_init_run_configs --> hive_setup_metastore_update_hadoop_opts 
-    if [ -f $HIVE_SERVER2_SSL_TRUSTSTORE ]; then
-      export HADOOP_OPTS="$HADOOP_OPTS \
--Djavax.net.ssl.trustStore=$HIVE_SERVER2_SSL_TRUSTSTORE \
--Djavax.net.ssl.trustStoreType=$HIVE_SERVER2_SSL_TRUSTSTORETYPE"
-    fi
-}
-
 function start_hiveserver2 {
     return_code=0
     echo "Starting HiveServer2 on port $HIVE_SERVER2_PORT/$HIVE_SERVER2_HTTP_PORT..."
-    hive --service hiveserver2 --skiphbasecp  # remove --skiphbasecp for Hive 1.2.2
+    hive --service hiveserver2 --skiphbasecp
     return $return_code
 }
 
@@ -124,7 +104,6 @@ function main {
     log_dir="$OUT/hive-logs"
 
     hive_setup_config_hive_logs "$log_dir"
-    hive_setup_server2_update_hadoop_opts 
     hive_setup_init_run_configs $LOCAL_MODE 
 
     return_code=0

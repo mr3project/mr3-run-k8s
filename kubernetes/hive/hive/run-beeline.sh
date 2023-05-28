@@ -100,7 +100,7 @@ function run_beeline_main {
     hive_setup_config_hadoop_classpath
 
     pushd $BASE_DIR > /dev/null
-    echo -e "\n# Running Beeline using Hive-MR3 ($HIVE_REV) #\n" >&2
+    echo -e "\n# Running Beeline using Hive-MR3 #\n" >&2
     run_beeline_start
     exit_code=$?
     popd > /dev/null

@@ -76,7 +76,9 @@ function hive_setup_init {
 function hive_setup_init_heapsize_mb {
     heapsize=$1
 
-    export HADOOP_CLIENT_OPTS="$HADOOP_CLIENT_OPTS -Xmx${heapsize}m"
+    # hard-code JVM options because we use JDK 8
+    HIVE_JVM_OPTION="-server -XX:+UseG1GC -XX:+AggressiveOpts -XX:+UseNUMA -Djava.net.preferIPv4Stack=true"
+    export HADOOP_CLIENT_OPTS="-Xmx${heapsize}m $HIVE_JVM_OPTION $HADOOP_CLIENT_OPTS"
 }
 
 #
@@ -182,6 +184,12 @@ function hive_setup_metastore_update_hadoop_opts {
 -Dhive.metastore.secure.mode=$METASTORE_SECURE_MODE \
 -Dhive.metastore.keytab.file=$HIVE_METASTORE_KERBEROS_KEYTAB \
 -Dhive.metastore.principal=$HIVE_METASTORE_KERBEROS_PRINCIPAL \
+-Dhive.server2.host=$HIVE_SERVER2_HOST \
+-Dhive.server2.port=$HIVE_SERVER2_PORT \
+-Dhive.server2.http.port=$HIVE_SERVER2_HTTP_PORT \
+-Dhive.server2.authentication.mode=$HIVE_SERVER2_AUTHENTICATION \
+-Dhive.server2.keytab.file=$HIVE_SERVER2_KERBEROS_KEYTAB \
+-Dhive.server2.principal=$HIVE_SERVER2_KERBEROS_PRINCIPAL \
 -Djavax.security.auth.useSubjectCredsOnly=false \
 -Djava.security.auth.login.config=$REMOTE_BASE_DIR/conf/jgss.conf \
 -Djava.security.krb5.conf=$REMOTE_BASE_DIR/conf/krb5.conf \

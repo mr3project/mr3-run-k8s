@@ -127,7 +127,7 @@ function getWorker(clusterConf: cluster.T, appsConf: apps.T): worker.T {
     useSoftReference: false,
     tezIoSortMb: 1040,
     tezUnorderedOutputBufferSizeInMb: 307,
-    noConditionalTaskSize: 1145044992,
+    noConditionalTaskSize: 4000000000,
     maxReducers: 1009,
     javaHeapFraction: 0.7,
     numShuffleHandlersPerWorker: clusterConf.numShuffleHandlersPerWorker,

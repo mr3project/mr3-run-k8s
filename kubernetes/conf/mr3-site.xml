@@ -30,7 +30,7 @@
      -Dsun.security.jgss.debug=true -->
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseG1GC -XX:+ResizeTLAB -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
 
 <property>
@@ -111,8 +111,6 @@
 
 <!-- container -->
 
-<!-- for using soft references:
-     -XX:SoftRefLRUPolicyMSPerMB=25 --> 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
   <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/hivemr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
@@ -200,7 +198,7 @@
 <!-- AWS_REGION for running on AWS EKS -->
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HADOOP_HOME/lib/native/,HADOOP_CREDSTORE_PASSWORD,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,AWS_ACCESS_KEY_ID,AWS_SECRET_ACCESS_KEY,AWS_REGION</value>
 </property>
 
 <!-- $LD_LIBRARY_PATH is automatically expanded to the current value inside DAGAppMaster (from mr3.am.launch.env), so do not include it -->
@@ -533,7 +531,7 @@
 <!-- set to false when using S3 instead of PersistentVolume on AWS EKS -->
 <property>
   <name>mr3.am.staging.dir.check.ownership.permission</name>
-  <value>true</value>
+  <value>false</value>
 </property>
 
 <property>

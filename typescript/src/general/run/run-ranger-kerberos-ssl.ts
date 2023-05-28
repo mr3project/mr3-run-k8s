@@ -134,7 +134,7 @@ const workerEnv: worker.T = {
   useSoftReference: false,
   tezIoSortMb: 1040,
   tezUnorderedOutputBufferSizeInMb: 307,
-  noConditionalTaskSize: 1145044992,
+  noConditionalTaskSize: 4000000000,
   maxReducers: 1009,
   javaHeapFraction: 0.7,
   numShuffleHandlersPerWorker: 8,
@@ -220,8 +220,8 @@ const sparkmr3Env: sparkmr3.T = {
 
 const dockerEnv: docker.T = {
   docker: {
-    image: "mr3project/hive3:1.6",
-    containerWorkerImage: "mr3project/hive3:1.6",
+    image: "mr3project/hive3:1.7",
+    containerWorkerImage: "mr3project/hive3:1.7",
     rangerImage: "mr3project/ranger:2.1.0",
     atsImage: "mr3project/mr3ui:1.5",
     supersetImage: "mr3project/superset:1.4.2",

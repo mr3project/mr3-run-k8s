@@ -247,7 +247,7 @@
 
 <property>
   <name>hive.vectorized.adaptor.usage.mode</name>
-  <value>chosen</value>
+  <value>all</value>
 </property>
 
 <property>
@@ -403,6 +403,11 @@
 <property>
   <name>hive.metastore.aggregate.stats.cache.enabled</name>
   <value>true</value>
+</property>
+
+<property>
+  <name>hive.query.reexecution.stats.persist.scope</name>
+  <value>query</value>
 </property>
 
 <property>

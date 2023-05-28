@@ -174,12 +174,6 @@ HIVE_METASTORE_DB_TYPE={{.Values.metastore.dbType}}
 # With --local option, mr3.am.resource.memory.mb and mr3.am.local.resourcescheduler.max.memory.mb should be smaller. 
 HIVE_CLIENT_HEAPSIZE=16384
 
-# Note. Specify the same garbage collector in all of the following:
-#   hive.tez.java.opts in hive-site.xml 
-#   tez.am.launch.cmd-opts and tez.task.launch.cmd-opts in tez-site.xml 
-#   mr3.am.launch.cmd-opts and mr3.container.launch.cmd-opts in mr3-site.xml 
-
 # unset because 'hive' command reads SPARK_HOME and may accidentally expand the classpath with HiveConf.class from Spark. 
-
 unset SPARK_HOME
 

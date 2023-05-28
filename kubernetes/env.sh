@@ -44,10 +44,10 @@ CREATE_SERVICE_ACCOUNTS=true
 # Step 1. Building a Docker image
 #
 
-DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.6}
+DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.7}
 DOCKER_HIVE_FILE=${DOCKER_HIVE_FILE:-Dockerfile}
 
-DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3:1.6}
+DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3:1.7}
 DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 
 DOCKER_RANGER_IMG=mr3project/ranger:2.1.0
@@ -225,16 +225,9 @@ HIVE_METASTORE_DB_TYPE=mysql
 # With --local option, mr3.am.resource.memory.mb and mr3.am.local.resourcescheduler.max.memory.mb should be smaller. 
 HIVE_CLIENT_HEAPSIZE=16384
 
-# Note. Specify the same garbage collector in all of the following:
-#   hive.tez.java.opts in hive-site.xml 
-#   tez.am.launch.cmd-opts and tez.task.launch.cmd-opts in tez-site.xml 
-#   mr3.am.launch.cmd-opts and mr3.container.launch.cmd-opts in mr3-site.xml 
-
 #
 # For running Timeline Server 
 #
-
-ATS_HEAPSIZE=2048
 
 # unset because 'hive' command reads SPARK_HOME and may accidentally expand the classpath with HiveConf.class from Spark. 
 # SPARK_HOME is automatically set by spark-setup.sh if Spark-MR3 is executed
