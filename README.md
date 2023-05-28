@@ -2,7 +2,7 @@ MR3
 ===
 MR3 is a new execution engine for Hadoop and Kubernetes. Similar in spirit to
 MapReduce and Tez, it is a new execution engine with simpler design, better
-performance, and more features. MR3 serves as a framework for running jobs in
+performance, and more features. MR3 serves as a framework for running jobs on
 Hadoop and Kubernetes. MR3 also supports standalone mode which does not require
 a resource manager such as Hadoop or Kubernetes.
 
@@ -30,7 +30,8 @@ mr3-run-k8s
 ===========
 Code for running Hive/Spark on MR3 on Kubernetes
 
-  /kubernetes - Executable scripts with YAML files
+  /kubernetes - Executable scripts with YAML files, Helm charts
+
   /typescript - TypeScript code for generating YAML files
 
 For instructions, visit:
