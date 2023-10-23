@@ -47,7 +47,7 @@
 
 <property>
   <name>tez.runtime.pipelined.sorter.use.soft.reference</name>
-  <value>${env.config.mr3.useSoftReference}</value>
+  <value>${env.worker.useSoftReference}</value>
 </property>
 
 <property>
