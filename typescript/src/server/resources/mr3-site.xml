@@ -2,7 +2,7 @@
 
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.masterLaunchCmdOpts}</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dhadoop.metrics.log.level=WARN -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.masterLaunchCmdOpts}</value>
 </property>
 
 <property>
@@ -62,7 +62,7 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.containerLaunchCmdOpts}</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configurationFile=k8s-mr3-container-log4j2.properties ${env.secret.containerLaunchCmdOpts}</value>
 </property>
 
 <property>
@@ -122,12 +122,12 @@
 
 <property>
   <name>mr3.am.launch.env</name>
-  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,${env.secret.envVarSeq}</value>
+  <value>LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,USE_JAVA_17,${env.secret.envVarSeq}</value>
 </property>
 
 <property>
   <name>mr3.container.launch.env</name>
-  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,${env.secret.envVarSeq}</value>
+  <value>LD_LIBRARY_PATH=/opt/mr3-run/hadoop/apache-hadoop/lib/native,HADOOP_CREDSTORE_PASSWORD,USE_JAVA_17,${env.secret.envVarSeq}</value>
 </property>
 
 <property>
