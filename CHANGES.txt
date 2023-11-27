@@ -1,4 +1,4 @@
-## Release 1.8: 2023-12-?
+## Release 1.8: 2023-12-12
 
 MR3
   - Shuffle handlers can send multiple consecutive partitions at once.

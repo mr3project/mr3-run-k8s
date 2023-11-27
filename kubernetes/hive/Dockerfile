@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM openjdk:8-jre-slim
+FROM azul/zulu-openjdk-centos:17.0.8.1-17.44.53
 
 USER root
 
@@ -29,7 +29,7 @@ RUN mkdir -p /opt/mr3-run && \
     mkdir -p /opt/mr3-run/host-lib && \
     mkdir -p /opt/mr3-run/lib
 
-RUN apt-get update && apt-get install -y procps wget libsnappy-dev && rm -rf /var/lib/apt/lists/*
+RUN yum install -y procps wget libsnappy-dev && yum clean all
 
 # copy files 
 
@@ -50,7 +50,7 @@ COPY tez/tezjar /opt/mr3-run/tez/tezjar
 WORKDIR /opt/mr3-run/hive
 
 ARG UID=1000
-RUN adduser --no-create-home --disabled-login --gecos "" --uid $UID hive && \
+RUN adduser --no-create-home --uid $UID hive && \
     chown hive /opt/mr3-run/scratch-dir && \
     chown hive /opt/mr3-run/work-dir && \
     chown hive /opt/mr3-run/work-local-dir && \

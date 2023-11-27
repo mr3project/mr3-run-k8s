@@ -26,7 +26,7 @@
      -Djava.security.krb5.conf=/opt/mr3-run/conf/krb5.conf -->
 <property>
   <name>mr3.am.launch.cmd-opts</name>
-  <value>-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -server -Djava.net.preferIPv4Stack=true -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
 
 <property>
@@ -130,7 +130,7 @@
 
 <property>
   <name>mr3.container.launch.cmd-opts</name>
-  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:TLABSize=8m -XX:+ResizeTLAB -XX:+UseNUMA -XX:+AggressiveOpts -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
+  <value>-XX:+AlwaysPreTouch -Xss512k -XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -XX:InitiatingHeapOccupancyPercent=40 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=200 -XX:MetaspaceSize=1024m -server -Djava.net.preferIPv4Stack=true -XX:NewRatio=8 -Dlog4j.configuration=file:/opt/mr3-run/conf/log4j.properties -Djavax.net.ssl.trustStore=/opt/mr3-run/key/sparkmr3-ssl-certificate.jks -Djavax.net.ssl.trustStoreType=jks</value>
 </property>
 
 <property>
