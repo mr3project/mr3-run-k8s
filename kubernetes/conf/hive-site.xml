@@ -795,6 +795,24 @@
   <value>/opt/mr3-run/work-dir</value>
 </property>
 
+<!-- Clean JobConf to be passed to Tez -->
+
+<property>
+  <name>hive.mr3.config.remove.keys</name>
+  <value>hive.txn.valid.txns,hive.query.string</value>
+</property>
+
+<!--
+  ipc.*: do not remove (e.g., ipc.maximum.data.length)
+  mapreduce.job.*: used by MapReduce interfaces
+  mapreduce.workflow.*, mapreduce.client.*: not worth removing
+  Cf. dfs.balancer.*, dfs.federation.*, dfs.ha*, dfs.qjournal*, dfs.webhdfs*, hadoop.*, mapreduce.application.*, mapreduce.map.*, mapreduce.reduce.*, mapreduce.task.*
+  -->
+<property>
+  <name>hive.mr3.config.remove.prefixes</name>
+  <value>atlas.hook.,datanucleus.,ftp.,ha.,javax.,mapreduce.jobhistory.,metastore.,hive.metastore.,nfs.,yarn.</value>
+</property>
+
 <!-- Hive 4 -->
 
 <property>

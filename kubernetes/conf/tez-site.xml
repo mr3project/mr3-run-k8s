@@ -60,11 +60,11 @@
   <value>307</value>
 </property>
 
+<!-- configurable in Hive (Cf. HIVE-24485)  --> 
 <property>
   <name>tez.shuffle-vertex-manager.max-src-fraction</name>
   <value>0.4</value>
 </property>
-
 <property>
   <name>tez.shuffle-vertex-manager.min-src-fraction</name>
   <value>0.2</value>
@@ -166,7 +166,7 @@
 
 <property>
   <name>tez.runtime.shuffle.src-attempt.abort.limit</name>
-  <value>10</value>
+  <value>3</value>
 </property>
 
 <!-- MR3 0.8 -->

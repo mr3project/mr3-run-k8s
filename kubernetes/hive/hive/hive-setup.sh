@@ -76,9 +76,7 @@ function hive_setup_init {
 function hive_setup_init_heapsize_mb {
     heapsize=$1
 
-    # hard-code JVM options because we use JDK 8
-    HIVE_JVM_OPTION="-server -XX:+UseG1GC -XX:+AggressiveOpts -XX:+UseNUMA -Djava.net.preferIPv4Stack=true"
-    export HADOOP_CLIENT_OPTS="-Xmx${heapsize}m $HIVE_JVM_OPTION $HADOOP_CLIENT_OPTS"
+    export HADOOP_CLIENT_OPTS="-Xmx${heapsize}m $HIVE_MR3_JVM_OPTION $HADOOP_CLIENT_OPTS"
 }
 
 #

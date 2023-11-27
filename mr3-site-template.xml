@@ -114,6 +114,20 @@
 </property>
 
 <property>
+  <name>mr3.application.am.node.label</name>
+  <description>
+    Node label expression for DAGAppMaster on Yarn
+  </description>
+</property>
+
+<property>
+  <name>mr3.application.worker.node.label</name>
+  <description>
+    Node label expression for ContainerWorkers on Yarn
+  </description>
+</property>
+
+<property>
   <name>mr3.credentials.path</name>
   <description>
     Path to the credentials for MR3 
@@ -543,11 +557,12 @@
   <value>simple</value>
   <description>
     Scheme for managing the queue of TaskAttempts in TaskScheduler.
-    Available options: basic, simple, opt, indexed
+    Available options: `basic`, `simple`, `opt`, `indexed`, `spark`.
     Can be set for individual ContainerGroups.
-    For common workloads, simple should be used.
-    Scheduling in opt and indexed can be slightly faster than in simple.
-    basic does not use the optimization for increasing the temporal locality of intermediate data and should be used only for performance comparison.
+    For common workloads, `simple` should be used.
+    Scheduling in `opt` and `indexed` can be slightly faster than in `simple`.
+    `basic` does not use the optimization for increasing the temporal locality of intermediate data and should be used only for performance comparison.
+    `spark` uses a Spark-style TaskScheduler which schedules consumer Tasks after all producer Tasks are finished.
   </description>
 </property>
 
@@ -675,7 +690,7 @@
 
 <property>
   <name>mr3.am.min.cluster.resource.memory.mb</name>
-  <value>40960</value>
+  <value>102400</value>
   <description>
     Min size of memory in MB that DAGAppMaster assumes as the cluster resource when initializing Map Tasks. Usually affects DAGs when no ContainerWorkers are running.
     Can be set for individual DAGs.
@@ -684,7 +699,7 @@
 
 <property>
   <name>mr3.am.min.cluster.resource.cpu.cores</name>
-  <value>10</value>
+  <value>100</value>
   <description>
     Min number of cores that DAGAppMaster assumes as the cluster resource when initializing Map Tasks. Usually affects DAGs when no ContainerWorkers are running.
     Can be set for individual DAGs.
@@ -797,6 +812,33 @@
     Used when mr3.dag.queue.scheme is set to `capacity`.
     If an invalid name is given, the default value `default` is used.
     Can be set for individual DAGs.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.vertex.schedule.by.stage</name>
+  <value>false</value>
+  <description>
+    true: A Vertex creates Tasks only after all source Vertexes are completed.
+    false: A Vertex can creates Tasks while source Vertexes are running.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.route.event.after.source.vertex</name>
+  <value>false</value>
+  <description>
+    true: A Vertex receives events only after all source Vertexes are completed.
+    false: A Vertex can receive events while source Vertexes are running.
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.include.indeterminate.vertex</name>
+  <value>false</value>
+  <description>
+    true: The DAG contains indeterminate Vertexes whose output can vary at each execution. Fault tolerance is not suppported when fetch failures occur.
+    false: The DAG contains no indeterminate Vertexes.
   </description>
 </property>
 

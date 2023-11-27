@@ -26,6 +26,23 @@ WORK_DIR_PERSISTENT_VOLUME_CLAIM_MOUNT_DIR={{.Values.dir.persistentVolumeClaim}}
 
 # JAVA_HOME and PATH are already set inside the container.
 
+# If USE_JAVA_17 is set to true,
+#
+#   1) update mr3.am.launch.cmd-opts and mr3.container.launch.cmd-opts in conf/mr3-site.xml.
+#     remove: -XX:+AggressiveOpts
+#
+# Cf. run-master.sh and run-worker.sh set "--add-opens".
+#
+USE_JAVA_17=false
+
+# HIVE_MR3_JVM_OPTION = JVM options for Metastore and HiveServer2
+if [[ $USE_JAVA_17 = false ]]; then
+  HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true -XX:+AggressiveOpts"
+else
+  HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true"
+  HIVE_MR3_JVM_OPTION="$HIVE_MR3_JVM_OPTION --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
+fi
+
 #
 # Step 1. Building a Docker image
 #

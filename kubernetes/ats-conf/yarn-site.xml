@@ -35,7 +35,7 @@
 
 <property>
   <name>yarn.timeline-service.http-authentication.type</name>
-  <value>kerberos</value>
+  <value>simple</value>
 </property>
 
 <property>
@@ -55,7 +55,7 @@
 
 <property>
   <name>yarn.admin.acl</name>
-  <value> </value>
+  <value></value>
 </property>
 
 </configuration>
