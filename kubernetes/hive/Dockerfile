@@ -29,7 +29,7 @@ RUN mkdir -p /opt/mr3-run && \
     mkdir -p /opt/mr3-run/host-lib && \
     mkdir -p /opt/mr3-run/lib
 
-RUN yum install -y procps wget libsnappy-dev && yum clean all
+RUN yum install -y epel-release && yum install -y procps wget snappy-devel libzstd-devel && yum clean all
 
 # copy files 
 

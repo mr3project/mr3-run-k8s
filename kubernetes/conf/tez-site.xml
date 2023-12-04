@@ -195,6 +195,18 @@
   <!-- do not use racks on Kubernetes -->
 </property>
 
+<!-- MR3 1.8 -->
+
+<property>
+  <name>tez.shuffle.indexcache.mb</name>
+  <value>20</value>
+</property>
+
+<property>
+  <name>tez.shuffle.indexcache.share</name>
+  <value>true</value>
+</property>
+
 <!-- CartesianProductVertexManager -->
 
 <property>

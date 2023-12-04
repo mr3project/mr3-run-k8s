@@ -173,7 +173,6 @@
   <value>-server -Djava.net.preferIPv4Stack=true -Dhadoop.metrics.log.level=WARN -XX:+UseNUMA -XX:+UseParallelGC</value>
   <description>
     Command-line options for launching DAGAppMaster.
-    Additional options for optimization: -XX:+UseStringDeduplication
   </description>
 </property>
 
