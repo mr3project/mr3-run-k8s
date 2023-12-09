@@ -666,6 +666,16 @@
 </property>
 
 <property>
+  <name>hive.mr3.config.remove.keys</name>
+  <value>hive.txn.valid.txns,hive.query.string</value>
+</property>
+
+<property>
+  <name>hive.mr3.config.remove.prefixes</name>
+  <value>atlas.hook.,datanucleus.,ftp.,ha.,javax.,mapreduce.jobhistory.,metastore.,hive.metastore.,nfs.,yarn.</value>
+</property>
+
+<property>
   <name>hive.metastore.runworker.in</name>
   <value>metastore</value>
 </property>

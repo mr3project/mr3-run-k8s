@@ -1,9 +1,9 @@
-## Release 1.8: 2023-12-12
+## Release 1.8: 2023-12-9
 
 MR3
   - Shuffle handlers can send multiple consecutive partitions at once.
   - Fix a bug in TaskScheduler which can get stuck when the number of ContainerWorkers is smaller than the value for mr3.am.task.max.failed.attempts.
-  - Avoid unnecessary attempts to delete directores created by DAGs.
+  - Avoid unnecessary attempts to delete directories created by DAGs.
   - `mr3.taskattempt.queue.scheme` can be set to `spark` to use a Spark-style TaskScheduler which schedules consumer Tasks after all producer Tasks are finished.
   - `mr3.dag.vertex.schedule.by.stage` can be set to true to process Vertexes by stages similarly to Spark.
   - YarnResourceScheduler does not use AMRMClient.getAvailableResources() which returns incorrect values in some cases.
