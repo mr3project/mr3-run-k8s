@@ -40,7 +40,7 @@ if [[ $USE_JAVA_17 = false ]]; then
   HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true -XX:+AggressiveOpts"
 else
   HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true"
-  HIVE_MR3_JVM_OPTION="$HIVE_MR3_JVM_OPTION --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util.regex=ALL-UNNAMED"
+  HIVE_MR3_JVM_OPTION="$HIVE_MR3_JVM_OPTION --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.util.regex=ALL-UNNAMED --add-opens java.base/java.util.zip=ALL-UNNAMED --add-opens java.base/java.util.stream=ALL-UNNAMED --add-opens java.base/java.util.jar=ALL-UNNAMED --add-opens java.base/java.util.function=ALL-UNNAMED --add-opens java.logging/java.util.logging=ALL-UNNAMED"
 fi
 
 #
