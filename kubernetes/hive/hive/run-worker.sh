@@ -32,7 +32,7 @@ function run_worker {
 -Dsun.security.jgss.debug=true"
 
     if [[ $USE_JAVA_17 = true ]]; then
-      JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED"
+      JAVA_OPTS="$JAVA_OPTS --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util.regex=ALL-UNNAMED"
     fi
 
     runShuffleHandlerProcess=${@: -1}
