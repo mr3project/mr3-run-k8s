@@ -594,7 +594,7 @@
 <!-- set to false when not using HDFS -->
 <property>
   <name>hive.resource.use.hdfs.location</name>
-  <value>true</value>
+  <value>false</value>
   <description>
     Can be set to false if no additional resources are added (other than hive.aux.jars.path)
   </description>
