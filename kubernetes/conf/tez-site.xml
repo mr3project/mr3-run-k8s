@@ -165,6 +165,16 @@
 </property>
 
 <property>
+  <name>tez.runtime.shuffle.memory-to-memory.enable</name>
+  <value>false</value>
+</property>
+
+<property>
+  <name>tez.runtime.task.input.post-merge.buffer.percent</name>
+  <value>0.0</value>
+</property>
+
+<property>
   <name>tez.runtime.shuffle.src-attempt.abort.limit</name>
   <value>3</value>
 </property>
@@ -205,6 +215,13 @@
 <property>
   <name>tez.shuffle.indexcache.share</name>
   <value>true</value>
+</property>
+
+<!-- MR3 1.9 -->
+
+<property>
+  <name>tez.runtime.use.free.memory.fetched.input</name>
+  <value>false</value>
 </property>
 
 <!-- CartesianProductVertexManager -->

@@ -62,7 +62,7 @@
 
 <property>
   <name>hive.exec.orc.default.compress</name>
-  <value>ZLIB</value>
+  <value>SNAPPY</value>
 </property>
 
 <property>

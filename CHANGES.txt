@@ -1,3 +1,13 @@
+## Release 1.9: 2024-??-??
+
+MR3
+  - Introduce `tez.runtime.use.free.memory.fetched.input` to use free memory for storing fetched data.
+  - The default value of `tez.runtime.transfer.data-via-events.max-size` increases from 512 to 2048.
+
+Hive on MR3
+  - Execute TRUNCATE using MR3 instead of MapReduce.
+  - `hive.exec.orc.default.compress` is set to SNAPPY in hive-site.xml.
+
 ## Release 1.8: 2023-12-9
 
 MR3

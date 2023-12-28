@@ -10,7 +10,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM openjdk:8-jdk-stretch
+FROM openjdk:8-jdk-slim
 MAINTAINER Sungwoo Park "glapark@gmail.com"
 
 USER root
@@ -34,7 +34,7 @@ COPY lib /opt/mr3-run/lib
 # set environments
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && apt-get install -y python2.7 bc
+RUN apt-get update && apt-get install -y python2.7 bc procps wget
 
 WORKDIR /opt/mr3-run/ranger
 

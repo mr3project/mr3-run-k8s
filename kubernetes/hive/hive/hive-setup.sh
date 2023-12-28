@@ -233,7 +233,7 @@ function hive_setup_beeline_update_hadoop_opts {
 
 function hive_setup_config_hadoop_classpath {
     # do not include HIVE_CLASSPATH which is added to HADOOP_CLASSPATH by hive command
-    export HADOOP_CLASSPATH=$MR3_CLASSPATH:$TEZ_CLASSPATH:$BASE_DIR/lib/*:$HADOOP_CLASSPATH:$BASE_DIR/host-lib/*
+    export HADOOP_CLASSPATH=$MR3_CLASSPATH:$TEZ_CLASSPATH:$BASE_DIR/lib/*:$HADOOP_CLASSPATH:$BASE_DIR/host-lib/*:$HIVE_JARS/ranger-hive-plugin-impl/*
 }
 
 #

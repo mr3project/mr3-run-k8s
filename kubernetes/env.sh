@@ -44,7 +44,7 @@ if [[ $USE_JAVA_17 = false ]]; then
   HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true -XX:+AggressiveOpts"
 else
   HIVE_MR3_JVM_OPTION="-XX:+UseG1GC -XX:+ResizeTLAB -XX:+UseNUMA -server -Djava.net.preferIPv4Stack=true"
-  HIVE_MR3_JVM_OPTION="$HIVE_MR3_JVM_OPTION --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.util.regex=ALL-UNNAMED --add-opens java.base/java.util.zip=ALL-UNNAMED --add-opens java.base/java.util.stream=ALL-UNNAMED --add-opens java.base/java.util.jar=ALL-UNNAMED --add-opens java.base/java.util.function=ALL-UNNAMED --add-opens java.logging/java.util.logging=ALL-UNNAMED"
+  HIVE_MR3_JVM_OPTION="$HIVE_MR3_JVM_OPTION --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.time=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.util.regex=ALL-UNNAMED --add-opens java.base/java.util.zip=ALL-UNNAMED --add-opens java.base/java.util.stream=ALL-UNNAMED --add-opens java.base/java.util.jar=ALL-UNNAMED --add-opens java.base/java.util.function=ALL-UNNAMED --add-opens java.logging/java.util.logging=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
 fi
 
 # If hive.mr3.compaction.using.mr3 in conf/hive-site.xml is set to true, Metastore needs a PersistentVolume.
@@ -67,7 +67,7 @@ DOCKER_HIVE_FILE=${DOCKER_HIVE_FILE:-Dockerfile}
 DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3:1.8}
 DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 
-DOCKER_RANGER_IMG=mr3project/ranger:2.1.0
+DOCKER_RANGER_IMG=mr3project/ranger:2.4.0
 DOCKER_RANGER_FILE=Dockerfile
 
 DOCKER_ATS_IMG=mr3project/mr3ui:1.5

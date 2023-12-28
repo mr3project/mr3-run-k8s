@@ -39,7 +39,7 @@
 
   <property>
     <name>ranger.plugin.hive.policy.rest.ssl.config.file</name>
-    <value>/opt/mr3-run/conf/ranger-policymgr-ssl.xml</value>
+    <value>/opt/mr3-run/conf/ranger-hive-policymgr-ssl.xml</value>
     <description>
       Path to the file containing SSL details to contact Ranger Admin
     </description>
