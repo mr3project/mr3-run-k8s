@@ -25,7 +25,7 @@ spec:
       nodeSelector:
         kubernetes.io/hostname: blue1
       containers:
-      - image: mr3project/ranger:2.1.0
+      - image: mr3project/ranger:2.4.0
         command: ["/opt/mr3-run/ranger/start-solr.sh"]
         imagePullPolicy: Always
         name: solr
@@ -48,7 +48,7 @@ spec:
           readOnly: true
         - name: work-dir-volume
           mountPath: /opt/mr3-run/ranger/work-dir/
-      - image: mr3project/ranger:2.1.0
+      - image: mr3project/ranger:2.4.0
         command: ["/opt/mr3-run/ranger/start-ranger.sh"]
         imagePullPolicy: Always
         name: ranger

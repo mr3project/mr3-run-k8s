@@ -151,6 +151,21 @@
 </property>
 
 <property>
+  <name>tez.shuffle.indexcache.mb</name>
+  <value>20</value>
+</property>
+
+<property>
+  <name>tez.shuffle.indexcache.share</name>
+  <value>true</value>
+</property>
+
+<property>
+  <name>tez.runtime.use.free.memory.fetched.input</name>
+  <value>true</value>
+</property>
+
+<property>
   <name>tez.cartesian-product.grouping-fraction</name>
   <value>0.75</value>
 </property>

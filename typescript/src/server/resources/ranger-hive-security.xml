@@ -16,7 +16,7 @@
 
   <property>
     <name>ranger.plugin.hive.policy.rest.ssl.config.file</name>
-    <value>${env.consts.dir.conf}/ranger-policymgr-ssl.xml</value>
+    <value>${env.consts.dir.conf}/ranger-hive-policymgr-ssl.xml</value>
   </property>
 
   <property>

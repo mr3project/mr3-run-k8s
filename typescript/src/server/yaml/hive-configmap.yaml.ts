@@ -23,7 +23,7 @@ export function build(s: state.T) {
       ['krb5.conf']: expand('./server/resources/krb5.conf', s),
       ['ranger-hive-audit.xml']: expand('./server/resources/ranger-hive-audit.xml', s),
       ['ranger-hive-security.xml']: expand('./server/resources/ranger-hive-security.xml', s),
-      ['ranger-policymgr-ssl.xml']: expand('./server/resources/ranger-policymgr-ssl.xml', s)
+      ['ranger-hive-policymgr-ssl.xml']: expand('./server/resources/ranger-hive-policymgr-ssl.xml', s)
     }
   };
 }

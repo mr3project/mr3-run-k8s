@@ -1,12 +1,18 @@
-## Release 1.9: 2024-??-??
+## Release 1.9: 2024-1-7
 
 MR3
   - Introduce `tez.runtime.use.free.memory.fetched.input` to use free memory for storing fetched data.
   - The default value of `tez.runtime.transfer.data-via-events.max-size` increases from 512 to 2048.
+  - Tasks can be canceled if no more output records are needed (as part of incorporating HIVE-24207).
 
 Hive on MR3
   - Execute TRUNCATE using MR3 instead of MapReduce.
-  - `hive.exec.orc.default.compress` is set to SNAPPY in hive-site.xml.
+  - `hive.exec.orc.default.compress` is set to SNAPPY in `hive-site.xml`.
+  - Support Ranger 2.4.0.
+  - Adjust the default configuration in `hive-site.xml` and `tez-site.xml` to use auto parallelism less aggressively.
+    * `tez.shuffle-vertex-manager.auto-parallel.min.num.tasks` to 251
+    * `tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage` to 50
+  - Set `metastore.stats.fetch.bitvector` to true in `hive-site.xml`.
 
 ## Release 1.8: 2023-12-9
 

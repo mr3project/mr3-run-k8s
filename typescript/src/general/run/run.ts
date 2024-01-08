@@ -31,7 +31,7 @@ const basicsEnv: basics.T = {
     pvType: "nfs",
     nfs: {
       server: "192.168.10.1",
-      path: "/home/nfs/hivemr3/orange"
+      path: "/home/nfs/hivemr3/"
     }
   },
   persistentVolumeClaim: {
@@ -97,8 +97,8 @@ const hiveEnv: hive.T = {
 
 const masterEnv: master.T = {
   resources: {
-    cpu: 2,
-    memoryInMb: 4 * 1024
+    cpu: 8,
+    memoryInMb: 12 * 1024
   },
   mr3MasterCpuLimitMultiplier: 1.0,
   concurrencyLevel: 32,
@@ -159,7 +159,7 @@ const rangerEnv: ranger.T = {
 };
 
 const timelineEnv: timeline.T = {
-  timelineEnabled: true,
+  timelineEnabled: false,
   apacheResources: {         // for Apache server
     cpu: 0.25,
     memoryInMb: 0.5 * 1024
@@ -173,7 +173,7 @@ const timelineEnv: timeline.T = {
 };
 
 const supersetEnv: superset.T = {
-  supersetEnabled: true,
+  supersetEnabled: false,
   resources: {
     cpu: 2,
     memoryInMb: 8 * 1024
@@ -215,9 +215,9 @@ const sparkmr3Env: sparkmr3.T = {
 
 const dockerEnv: docker.T = {
   docker: {
-    image: "mr3project/hive3:1.8",
-    containerWorkerImage: "mr3project/hive3:1.8",
-    rangerImage: "mr3project/ranger:2.1.0",
+    image: "mr3project/hive3:1.9",
+    containerWorkerImage: "mr3project/hive3:1.9",
+    rangerImage: "mr3project/ranger:2.4.0",
     atsImage: "mr3project/mr3ui:1.5",
     supersetImage: "mr3project/superset:1.4.2",
     apacheImage: "mr3project/httpd:2.4",

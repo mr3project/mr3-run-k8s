@@ -6,7 +6,7 @@ name:
   persistentVolumeClaim: workdir-ranger-pvc
 
 docker:
-  image: mr3project/ranger:2.1.0
+  image: mr3project/ranger:2.4.0
   user: ranger
   imagePullPolicy: Always
   imagePullSecrets: 

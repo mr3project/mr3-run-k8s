@@ -166,6 +166,11 @@
 </property>
 
 <property>
+  <name>metastore.stats.fetch.bitvector</name>
+  <value>true</value>
+</property>
+
+<property>
   <name>hive.optimize.bucketmapjoin</name>
   <value>true</value>
 </property>
@@ -310,7 +315,7 @@
 </property>
 
 <!-- set to false in order not to create ZooKeeperClient in HiveServer2
-  With Ranger 2.1.0:
+  With Ranger:
     RangerHiveAuthorizerBase.getHivePolicyProvider() returns RangerHivePolicyProvider.
     Hence we should explicitly set hive.privilege.synchronizer to false.
  -->
@@ -640,7 +645,7 @@
 
 <property>
   <name>hive.mr3.map.task.memory.mb</name>
-  <value>8192</value>
+  <value>6144</value>
 </property>
 
 <property>
@@ -650,7 +655,7 @@
 
 <property>
   <name>hive.mr3.reduce.task.memory.mb</name>
-  <value>8192</value>
+  <value>6144</value>
 </property>
 
 <property>
@@ -660,17 +665,17 @@
 
 <property>
   <name>hive.mr3.all-in-one.containergroup.memory.mb</name>
-  <value>16384</value>
+  <value>110592</value>
 </property>
 
 <property>
   <name>hive.mr3.all-in-one.containergroup.vcores</name>
-  <value>2</value>
+  <value>18</value>
 </property>
 
 <property>
   <name>hive.mr3.use.daemon.shufflehandler</name>
-  <value>4</value>
+  <value>12</value>
   <description>
     Adjust tez.shuffle.max.threads in tez-site.xml (to a non-zero value) if necessary
   </description>

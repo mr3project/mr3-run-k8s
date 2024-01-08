@@ -36,6 +36,11 @@
 </property>
 
 <property>
+  <name>metastore.stats.fetch.bitvector</name>
+  <value>true</value>
+</property>
+
+<property>
   <name>hive.enforce.sortmergebucketmapjoin</name>
   <value>true</value>
 </property>

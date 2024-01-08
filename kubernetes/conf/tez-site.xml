@@ -92,14 +92,15 @@
   <value>true</value>
 </property>
 
+<!-- to disable auto parallelism, set tez.shuffle-vertex-manager.auto-parallel.min.num.tasks to a value larger than hive.exec.reducers.max in hive-site.xml -->
 <property>
   <name>tez.shuffle-vertex-manager.auto-parallel.min.num.tasks</name>
-  <value>40</value>
+  <value>251</value>
 </property>
 
 <property>
   <name>tez.shuffle-vertex-manager.auto-parallel.max.reduction.percentage</name>
-  <value>10</value>
+  <value>50</value>
 </property>
 
 <property>
@@ -109,7 +110,7 @@
 
 <property>
   <name>tez.shuffle.vertex.manager.auto.parallelism.min.percent</name>
-  <value>20</value>
+  <value>0</value>
 </property>
 
 <!-- MR3 0.5 -->
@@ -221,7 +222,7 @@
 
 <property>
   <name>tez.runtime.use.free.memory.fetched.input</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- CartesianProductVertexManager -->
