@@ -97,8 +97,8 @@ const hiveEnv: hive.T = {
 
 const masterEnv: master.T = {
   resources: {
-    cpu: 8,
-    memoryInMb: 12 * 1024
+    cpu: 2,
+    memoryInMb: 4 * 1024
   },
   mr3MasterCpuLimitMultiplier: 1.0,
   concurrencyLevel: 32,
@@ -159,7 +159,7 @@ const rangerEnv: ranger.T = {
 };
 
 const timelineEnv: timeline.T = {
-  timelineEnabled: false,
+  timelineEnabled: true,
   apacheResources: {         // for Apache server
     cpu: 0.25,
     memoryInMb: 0.5 * 1024
@@ -173,7 +173,7 @@ const timelineEnv: timeline.T = {
 };
 
 const supersetEnv: superset.T = {
-  supersetEnabled: false,
+  supersetEnabled: true,
   resources: {
     cpu: 2,
     memoryInMb: 8 * 1024
