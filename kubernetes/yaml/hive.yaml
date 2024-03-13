@@ -34,7 +34,7 @@ spec:
                 matchLabels:
                   hivemr3_app: metastore
       containers:
-      - image: mr3project/hive3:1.9
+      - image: mr3project/hive3:1.10
         command: ["/opt/mr3-run/hive/hiveserver2-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always

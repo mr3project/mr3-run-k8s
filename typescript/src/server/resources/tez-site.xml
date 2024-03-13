@@ -166,6 +166,26 @@
 </property>
 
 <property>
+  <name>tez.runtime.shuffle.total.parallel.copies</name>
+  <value>${env.config.tez['tez.runtime.shuffle.total.parallel.copies']}</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.fetch.max.task.output.at.once</name>
+  <value>20</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.max.input.hostports</name>
+  <value>10000</value>
+</property>
+
+<property>
+  <name>tez.runtime.shuffle.read.timeout</name>
+  <value>60000</value>
+</property>
+
+<property>
   <name>tez.cartesian-product.grouping-fraction</name>
   <value>0.75</value>
 </property>

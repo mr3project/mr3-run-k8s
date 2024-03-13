@@ -841,6 +841,15 @@
   </description>
 </property>
 
+<property>
+  <name>mr3.dag.create.daemon.vertex.always</name>
+  <value>false</value>
+  <description>
+    true: create DaemonVertex in every DAG
+    false: do not create DaemonVertex except in the creator DAG (which creates ContainerGroups)
+  </description>
+</property>
+
 <!-- ContainerWorker -->
 
 <property>

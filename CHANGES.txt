@@ -1,3 +1,18 @@
+## Release 1.10: 2024-3-12
+
+MR3
+  - Every ContainerWorker runs a central shuffle server which manages all Fetchers from all TaskAttempts.
+    * All Fetchers share a common thread pool.
+    * The shuffle server does not distinguish between ordered and ordered fetches.
+    * The shuffle server controls the maximum number of concurrent fetches for each input (with `tez.runtime.shuffle.parallel.copies`).
+    * The shuffle server controls the total number of concurrent fetches (with `tez.runtime.shuffle.total.parallel.copies`).
+  - Adjust the default configuration in `tez-site.xml` for shuffling:
+    * `tez.runtime.shuffle.parallel.copies` to 10
+    * `tez.runtime.shuffle.total.parallel.copies` to 360
+    * `tez.runtime.shuffle.read.timeout` to 60000 (60 seconds)
+  - Introduce `mr3.dag.create.daemon.vertex.always` to control whether or not to create DaemonVertexes in DAGs (with the default value of false).
+  - Fix a bug in speculative execution where a Task is killed after OutOfMemoryError while TaskAttempts are still running.
+
 ## Release 1.9: 2024-1-7
 
 MR3
