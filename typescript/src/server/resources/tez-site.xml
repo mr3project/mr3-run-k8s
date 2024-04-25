@@ -171,6 +171,11 @@
 </property>
 
 <property>
+  <name>tez.runtime.shuffle.max.copies.per.host</name>
+  <value>20</value>
+</property>
+
+<property>
   <name>tez.runtime.shuffle.fetch.max.task.output.at.once</name>
   <value>20</value>
 </property>
