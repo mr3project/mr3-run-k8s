@@ -804,7 +804,7 @@
 
 <property>
   <name>hive.mr3.config.remove.keys</name>
-  <value>hive.txn.valid.txns,hive.query.string</value>
+  <value>hive.query.string</value>
 </property>
 
 <!--
@@ -914,12 +914,11 @@
   <value>true</value>
 </property>
 
+<!-- set to false by default in HIVE-24812 -->
 <property>
   <name>hive.optimize.shared.work.semijoin</name>
-  <value>true</value>
+  <value>false</value>
 </property>
-
-<!-- Correctness, Hive 4 -->
 
 <property>
   <name>hive.optimize.shared.work.dppunion</name>
@@ -953,12 +952,12 @@
 
 <property>
   <name>hive.tez.bloom.filter.merge.threads</name>
-  <value>0</value>
+  <value>1</value>
 </property>
 
 <property>
   <name>hive.auto.convert.anti.join</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <!-- Iceberg -->
@@ -989,13 +988,13 @@
 </property>
 
 <property>
-  <name>iceberg.mr.split.size</name>
-  <value>16777216</value>
+  <name>write.format.default</name>
+  <value>orc</value>
 </property>
 
 <property>
-  <name>write.format.default</name>
-  <value>orc</value>
+  <name>iceberg.mr.split.size</name>
+  <value>16777216</value>
 </property>
 
 </configuration>

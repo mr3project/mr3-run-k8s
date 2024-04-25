@@ -433,6 +433,14 @@
 </property>
 
 <property>
+  <name>mr3.dag.timeout.kill.check.ms</name>
+  <value>15000</value>
+  <description>
+    Time interval in milliseconds for checking DAG timeout
+  </description>
+</property>
+
+<property>
   <name>mr3.container.idle.timeout.ms</name>
   <value>300000</value>
   <description>
@@ -847,6 +855,16 @@
   <description>
     true: create DaemonVertex in every DAG
     false: do not create DaemonVertex except in the creator DAG (which creates ContainerGroups)
+  </description>
+</property>
+
+<property>
+  <name>mr3.dag.timeout.kill.threshold.secs</name>
+  <value>0</value>
+  <description>
+    Maximum execution time (in seconds) of DAGs.
+    Set to 0 in order to disable timeout check.
+    Can be set for individual DAGs.
   </description>
 </property>
 

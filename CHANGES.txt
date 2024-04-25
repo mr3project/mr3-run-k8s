@@ -1,3 +1,8 @@
+## Release 1.11: 2024-5-??
+
+MR3
+  - Introduce `mr3.dag.timeout.kill.threshold.secs` and `mr3.dag.timeout.kill.check.ms` for checking DAG timeout
+
 ## Release 1.10: 2024-3-12
 
 MR3
