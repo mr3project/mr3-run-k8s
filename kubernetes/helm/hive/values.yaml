@@ -25,8 +25,8 @@ name:
   persistentVolumeClaim: workdir-pvc
 
 docker:
-  image: mr3project/hive3:1.10
-  containerWorkerImage: mr3project/hive3:1.10
+  image: mr3project/hive3:1.11
+  containerWorkerImage: mr3project/hive3:1.11
   # do not use a composite name like hive@RED, hive/red0@RED
   user: hive
   imagePullPolicy: IfNotPresent

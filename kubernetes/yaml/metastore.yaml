@@ -43,7 +43,7 @@ spec:
         hostnames:
         - "red0"
       containers:
-      - image: mr3project/hive3:1.10
+      - image: mr3project/hive3:1.11
         command: ["/opt/mr3-run/hive/metastore-service.sh"]
         args: ["start", "--kubernetes"]
         imagePullPolicy: Always

@@ -671,6 +671,14 @@
 </property>
 
 <property>
+  <name>mr3.daemon.task.message.buffer.size</name>
+  <value>16</value>
+  <description>
+    Size of the message queue for each DaemonTask
+  </description>
+</property>
+
+<property>
   <name>mr3.use.daemon.shufflehandler</name>
   <value>0</value>
   <description>

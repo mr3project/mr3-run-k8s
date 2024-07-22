@@ -1,7 +1,13 @@
-## Release 1.11: 2024-5-??
+## Release 1.11: 2024-7-21
 
 MR3
-  - Introduce `mr3.dag.timeout.kill.threshold.secs` and `mr3.dag.timeout.kill.check.ms` for checking DAG timeout
+  - Introduce `mr3.dag.timeout.kill.threshold.secs` and `mr3.dag.timeout.kill.check.ms` for checking DAG timeout.
+  - `mr3.daemon.task.message.buffer.size` specifies the message queue size for DaemonTasks.
+
+Hive on MR3
+  - The cache hit ratio of LLAP I/O is usually higher and more stable because LLAP I/O (with LlapInputFormat) is used only when a Task is placed on nodes matching its location hints.
+  - LimitOperator is correctly controlled by MR3 DAGAppMaster (which implements HIVE-24207).
+  - Support Hive 4.0.0.
 
 ## Release 1.10: 2024-3-12
 
