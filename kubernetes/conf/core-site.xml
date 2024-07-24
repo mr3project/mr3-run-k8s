@@ -65,7 +65,7 @@
 <!-- set to true when using path-style access to S3-compliant storage -->
 <property>
   <name>fs.s3a.path.style.access</name>
-  <value>false</value>
+  <value>true</value>
 </property>
 
 <property>

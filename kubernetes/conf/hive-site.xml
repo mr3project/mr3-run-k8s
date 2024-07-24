@@ -831,16 +831,6 @@
 </property>
 
 <property>
-  <name>hive.acid.direct.insert.enabled</name>
-  <value>true</value>
-</property>
-
-<property>
-  <name>hive.optimize.scan.probedecode</name>
-  <value>true</value>
-</property>
-
-<property>
   <name>hive.zookeeper.killquery.enable</name>
   <value>false</value>
 </property>

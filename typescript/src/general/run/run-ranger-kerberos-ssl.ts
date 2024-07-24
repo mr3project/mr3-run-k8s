@@ -76,7 +76,7 @@ const metastoreEnv: metastore.T = {
   port: 0,
   dbType: "MYSQL",
   databaseHost: "192.168.10.1",
-  databaseName: "hive3mr3",
+  databaseName: "hivemr3",
   userName: "root",
   password: "_",
   initSchema: false,
@@ -220,8 +220,8 @@ const sparkmr3Env: sparkmr3.T = {
 
 const dockerEnv: docker.T = {
   docker: {
-    image: "mr3project/hive3:1.9",
-    containerWorkerImage: "mr3project/hive3:1.9",
+    image: "mr3project/hive4:4.0.0",
+    containerWorkerImage: "mr3project/hive4:4.0.0",
     rangerImage: "mr3project/ranger:2.4.0",
     atsImage: "mr3project/mr3ui:1.5",
     supersetImage: "mr3project/superset:1.4.2",

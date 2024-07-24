@@ -61,10 +61,10 @@ CREATE_SERVICE_ACCOUNTS=true
 # Step 1. Building a Docker image
 #
 
-DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive3:1.11}
+DOCKER_HIVE_IMG=${DOCKER_HIVE_IMG:-mr3project/hive4:4.0.0}
 DOCKER_HIVE_FILE=${DOCKER_HIVE_FILE:-Dockerfile}
 
-DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive3:1.11}
+DOCKER_HIVE_WORKER_IMG=${DOCKER_HIVE_WORKER_IMG:-mr3project/hive4:4.0.0}
 DOCKER_HIVE_WORKER_FILE=${DOCKER_HIVE_WORKER_FILE:-Dockerfile-worker}
 
 DOCKER_RANGER_IMG=mr3project/ranger:2.4.0
@@ -136,7 +136,7 @@ HIVE_DATABASE_HOST=1.1.1.1
 HIVE_METASTORE_HOST=hivemr3-metastore-0.metastore.hivemr3.svc.cluster.local
 
 HIVE_METASTORE_PORT=9850
-HIVE_DATABASE_NAME=hive3mr3
+HIVE_DATABASE_NAME=hive4mr3
 
 # path to the data warehouse, e.g.,
 #   hdfs://foo:8020/user/hive/warehouse

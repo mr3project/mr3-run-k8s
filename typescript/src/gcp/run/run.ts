@@ -38,7 +38,7 @@ const appsConf: apps.T = {
   //
   // basics.T
   //
-  warehouseDir: "gs://mr3-warehouse/hive3mr3",
+  warehouseDir: "gs://mr3-warehouse/hivemr3",
   persistentVolumeClaimStorageInGb: 100,
   externalIpHostname: "foo.com",
   hiveserver2Ip: "1.1.1.1",
